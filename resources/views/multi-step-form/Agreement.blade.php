@@ -19,7 +19,7 @@
         <p>
             Before proceeding, please take time to read the 
             <a target="_blank" href="https://our.upcebu.edu.ph/information/privacy-notice-for-students/"
-               class="font-medium text-[#850038] hover:text-[#850038] underline">
+               class="font-medium text-[#8A1538] hover:text-[#8A1538] underline">
                 University of the Philippines Privacy Notice for Students
             </a>
             and indicate your agreement.
@@ -38,7 +38,7 @@
             I agree to the
             <a target="_blank"
                href="https://our.upcebu.edu.ph/information/privacy-notice-for-students/"
-               class="font-medium text-[#850038] hover:text-[#850038] underline">
+               class="font-medium text-[#8A1538] hover:text-[#8A1538] underline">
                 UP Privacy Notice for Students
             </a>
             <span class="text-red-600">*</span>

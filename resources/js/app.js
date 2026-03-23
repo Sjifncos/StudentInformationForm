@@ -177,11 +177,11 @@ $(document).ready(function() {
         $(`.step[data-step="${step}"]`).removeClass('hidden');
 
         $('.step-label')
-            .removeClass('text-[#850038] border-b-2 border-[#850038]')
+            .removeClass('text-[#8A1538] border-b-2 border-[#8A1538]')
             .addClass('text-slate-400');
         $(`.step-label[data-step="${step}"]`)
             .removeClass('text-slate-400')
-            .addClass('text-[#850038] border-b-2 border-[#850038]');
+            .addClass('text-[#8A1538] border-b-2 border-[#8A1538]');
 
         const currentIndex = visibleSteps.indexOf(step);
         if (currentIndex > maxVisibleIndex) {

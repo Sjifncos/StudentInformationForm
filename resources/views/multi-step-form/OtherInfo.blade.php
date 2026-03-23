@@ -62,15 +62,15 @@
         <div class="relative w-full">
             <label for="pwd" class="font-medium">
                 Do you identify as a Person With Disability (PWD), as defined under 
-                <span class="font-semibold text-[#850038]">
+                <span class="font-semibold text-[#8A1538]">
                     <a target="_blank" href="https://www.officialgazette.gov.ph/1992/03/24/republic-act-no-7277/"
-                    class="font-medium text-[#850038] hover:text-[#850038]">
+                    class="font-medium text-[#8A1538] hover:text-[#8A1538]">
                     RA 7277
                     </a>
                 </span> and 
-                <span class="font-semibold text-[#850038]">
+                <span class="font-semibold text-[#8A1538]">
                     <a target="_blank" href="https://lpr.adb.org/resource/magna-carta-disabled-persons-amended-republic-act-no-9442-philippines"
-                    class="font-medium text-[#850038] hover:text-[#850038]">
+                    class="font-medium text-[#8A1538] hover:text-[#8A1538]">
                     RA 9442
                     </a>
                 </span>?
@@ -105,14 +105,14 @@
                             <!-- Trigger: SVG icon -->
                             <div class="cursor-pointer">
                                 <svg width="16px" height="16px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <circle cx="12" cy="12" r="10" stroke="#850038" stroke-width="2"/>
-                                    <path d="M10 8.48352C10.5 7.49451 11 7 12 7C13.2461 7 14 7.98901 14 8.97802C14 9.96703 13.5 10.4615 12 11.4505V13M12 16.5V17" stroke="#850038" stroke-width="2" stroke-linecap="round"/>
+                                    <circle cx="12" cy="12" r="10" stroke="#8A1538" stroke-width="2"/>
+                                    <path d="M10 8.48352C10.5 7.49451 11 7 12 7C13.2461 7 14 7.98901 14 8.97802C14 9.96703 13.5 10.4615 12 11.4505V13M12 16.5V17" stroke="#8A1538" stroke-width="2" stroke-linecap="round"/>
                                 </svg>
                             </div>
 
                             <!-- Tooltip content (RIGHT SIDE) -->
                            <div class="absolute left-1/2 bottom-full -translate-x-1/2 mb-2 opacity-0 group-hover:opacity-100 transition duration-100 transform group-hover:translate-y-0 translate-y-2 pointer-events-none">
-                            <div class="bg-[#850038] w-max max-w-xs text-white rounded-lg px-4 py-4">
+                            <div class="bg-[#8A1538] w-max max-w-xs text-white rounded-lg px-4 py-4">
                                 <p class="font-bold text-md mb-1">Visual disability:</p>
                                 <p class="text-sm">
                                     Difficulty seeing or visual impairment that significantly affects daily activities,
@@ -131,14 +131,14 @@
                             <!-- Trigger: SVG icon -->
                             <div class="cursor-pointer">
                                 <svg width="16px" height="16px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <circle cx="12" cy="12" r="10" stroke="#850038" stroke-width="2"/>
-                                    <path d="M10 8.48352C10.5 7.49451 11 7 12 7C13.2461 7 14 7.98901 14 8.97802C14 9.96703 13.5 10.4615 12 11.4505V13M12 16.5V17" stroke="#850038" stroke-width="2" stroke-linecap="round"/>
+                                    <circle cx="12" cy="12" r="10" stroke="#8A1538" stroke-width="2"/>
+                                    <path d="M10 8.48352C10.5 7.49451 11 7 12 7C13.2461 7 14 7.98901 14 8.97802C14 9.96703 13.5 10.4615 12 11.4505V13M12 16.5V17" stroke="#8A1538" stroke-width="2" stroke-linecap="round"/>
                                 </svg>
                             </div>
 
                             <!-- Tooltip content (RIGHT SIDE) -->
                             <div class="absolute left-full top-1/2 -translate-y-1/2 ml-2 opacity-0 group-hover:opacity-100 transition duration-100 transform group-hover:translate-x-0 translate-x-2 pointer-events-none">
-                                <div class="bg-[#850038] w-max max-w-xs text-white rounded-lg px-4 py-4">
+                                <div class="bg-[#8A1538] w-max max-w-xs text-white rounded-lg px-4 py-4">
                                     <p class="font-bold text-md mb-1">Visual disability:</p>
                                     <p class="text-sm">
                                        Difficulty seeing or visual impairment that significantly affects daily activities,
@@ -162,14 +162,14 @@
                             <!-- Trigger: SVG icon -->
                             <div class="cursor-pointer">
                                 <svg width="16px" height="16px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <circle cx="12" cy="12" r="10" stroke="#850038" stroke-width="2"/>
-                                    <path d="M10 8.48352C10.5 7.49451 11 7 12 7C13.2461 7 14 7.98901 14 8.97802C14 9.96703 13.5 10.4615 12 11.4505V13M12 16.5V17" stroke="#850038" stroke-width="2" stroke-linecap="round"/>
+                                    <circle cx="12" cy="12" r="10" stroke="#8A1538" stroke-width="2"/>
+                                    <path d="M10 8.48352C10.5 7.49451 11 7 12 7C13.2461 7 14 7.98901 14 8.97802C14 9.96703 13.5 10.4615 12 11.4505V13M12 16.5V17" stroke="#8A1538" stroke-width="2" stroke-linecap="round"/>
                                 </svg>
                             </div>
 
                             <!-- Tooltip content (RIGHT SIDE) -->
                             <div class="absolute left-full top-1/2 -translate-y-1/2 ml-2 opacity-0 group-hover:opacity-100 transition duration-100 transform group-hover:translate-x-0 translate-x-2 pointer-events-none">
-                                <div class="bg-[#850038] w-max max-w-xs text-white rounded-lg px-4 py-4">
+                                <div class="bg-[#8A1538] w-max max-w-xs text-white rounded-lg px-4 py-4">
                                     <p class="font-bold text-md mb-1">Hearing disability:</p>
                                     <p class="text-sm">
                                         Partial or total difficulty hearing that affects communication or daily functioning.
@@ -193,14 +193,14 @@
                             <!-- Trigger: SVG icon -->
                             <div class="cursor-pointer">
                                 <svg width="16px" height="16px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <circle cx="12" cy="12" r="10" stroke="#850038" stroke-width="2"/>
-                                    <path d="M10 8.48352C10.5 7.49451 11 7 12 7C13.2461 7 14 7.98901 14 8.97802C14 9.96703 13.5 10.4615 12 11.4505V13M12 16.5V17" stroke="#850038" stroke-width="2" stroke-linecap="round"/>
+                                    <circle cx="12" cy="12" r="10" stroke="#8A1538" stroke-width="2"/>
+                                    <path d="M10 8.48352C10.5 7.49451 11 7 12 7C13.2461 7 14 7.98901 14 8.97802C14 9.96703 13.5 10.4615 12 11.4505V13M12 16.5V17" stroke="#8A1538" stroke-width="2" stroke-linecap="round"/>
                                 </svg>
                             </div>
 
                             <!-- Tooltip content (RIGHT SIDE) -->
                             <div class="absolute left-full top-1/2 -translate-y-1/2 ml-2 opacity-0 group-hover:opacity-100 transition duration-100 transform group-hover:translate-x-0 translate-x-2 pointer-events-none">
-                                <div class="bg-[#850038] w-max max-w-xs text-white rounded-lg px-4 py-4">
+                                <div class="bg-[#8A1538] w-max max-w-xs text-white rounded-lg px-4 py-4">
                                     <p class="font-bold text-md mb-1">Speech or language impairment:</p>
                                     <p class="text-sm">
                                        Difficulty speaking, understanding speech, or using language to communicate effectively.
@@ -218,14 +218,14 @@
                             <!-- Trigger: SVG icon -->
                             <div class="cursor-pointer">
                                 <svg width="16px" height="16px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <circle cx="12" cy="12" r="10" stroke="#850038" stroke-width="2"/>
-                                    <path d="M10 8.48352C10.5 7.49451 11 7 12 7C13.2461 7 14 7.98901 14 8.97802C14 9.96703 13.5 10.4615 12 11.4505V13M12 16.5V17" stroke="#850038" stroke-width="2" stroke-linecap="round"/>
+                                    <circle cx="12" cy="12" r="10" stroke="#8A1538" stroke-width="2"/>
+                                    <path d="M10 8.48352C10.5 7.49451 11 7 12 7C13.2461 7 14 7.98901 14 8.97802C14 9.96703 13.5 10.4615 12 11.4505V13M12 16.5V17" stroke="#8A1538" stroke-width="2" stroke-linecap="round"/>
                                 </svg>
                             </div>
 
                             <!-- Tooltip content (RIGHT SIDE) -->
                            <div class="absolute left-1/2 bottom-full -translate-x-1/2 mb-2 opacity-0 group-hover:opacity-100 transition duration-100 transform group-hover:translate-y-0 translate-y-2 pointer-events-none">
-                            <div class="bg-[#850038] w-max max-w-xs text-white rounded-lg px-4 py-4">
+                            <div class="bg-[#8A1538] w-max max-w-xs text-white rounded-lg px-4 py-4">
                                 <p class="font-bold text-md mb-1">Speech or language impairment:</p>
                                 <p class="text-sm">
                                    Difficulty speaking, understanding speech, or using language to communicate effectively.
@@ -248,14 +248,14 @@
                             <!-- Trigger: SVG icon -->
                             <div class="cursor-pointer">
                                 <svg width="16px" height="16px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <circle cx="12" cy="12" r="10" stroke="#850038" stroke-width="2"/>
-                                    <path d="M10 8.48352C10.5 7.49451 11 7 12 7C13.2461 7 14 7.98901 14 8.97802C14 9.96703 13.5 10.4615 12 11.4505V13M12 16.5V17" stroke="#850038" stroke-width="2" stroke-linecap="round"/>
+                                    <circle cx="12" cy="12" r="10" stroke="#8A1538" stroke-width="2"/>
+                                    <path d="M10 8.48352C10.5 7.49451 11 7 12 7C13.2461 7 14 7.98901 14 8.97802C14 9.96703 13.5 10.4615 12 11.4505V13M12 16.5V17" stroke="#8A1538" stroke-width="2" stroke-linecap="round"/>
                                 </svg>
                             </div>
 
                             <!-- Tooltip content (RIGHT SIDE) -->
                             <div class="absolute left-full top-1/2 -translate-y-1/2 ml-2 opacity-0 group-hover:opacity-100 transition duration-100 transform group-hover:translate-x-0 translate-x-2 pointer-events-none">
-                                <div class="bg-[#850038] w-max max-w-xs text-white rounded-lg px-4 py-4">
+                                <div class="bg-[#8A1538] w-max max-w-xs text-white rounded-lg px-4 py-4">
                                     <p class="font-bold text-md mb-1">Physical disability:</p>
                                     <p class="text-sm">
                                        Difficulty in movement or bodily function due to muscle, nerve, or neurological conditions.
@@ -278,14 +278,14 @@
                             <!-- Trigger: SVG icon -->
                             <div class="cursor-pointer">
                                 <svg width="16px" height="16px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <circle cx="12" cy="12" r="10" stroke="#850038" stroke-width="2"/>
-                                    <path d="M10 8.48352C10.5 7.49451 11 7 12 7C13.2461 7 14 7.98901 14 8.97802C14 9.96703 13.5 10.4615 12 11.4505V13M12 16.5V17" stroke="#850038" stroke-width="2" stroke-linecap="round"/>
+                                    <circle cx="12" cy="12" r="10" stroke="#8A1538" stroke-width="2"/>
+                                    <path d="M10 8.48352C10.5 7.49451 11 7 12 7C13.2461 7 14 7.98901 14 8.97802C14 9.96703 13.5 10.4615 12 11.4505V13M12 16.5V17" stroke="#8A1538" stroke-width="2" stroke-linecap="round"/>
                                 </svg>
                             </div>
 
                             <!-- Tooltip content (RIGHT SIDE) -->
                             <div class="absolute left-full top-1/2 -translate-y-1/2 ml-2 opacity-0 group-hover:opacity-100 transition duration-100 transform group-hover:translate-x-0 translate-x-2 pointer-events-none">
-                                <div class="bg-[#850038] w-max max-w-xs text-white rounded-lg px-4 py-4">
+                                <div class="bg-[#8A1538] w-max max-w-xs text-white rounded-lg px-4 py-4">
                                     <p class="font-bold text-md mb-1">Orthopedic disability:</p>
                                     <p class="text-sm">
                                         Difficulty in movement due to conditions affecting bones, joints, limbs, or the skeletal system.
@@ -308,14 +308,14 @@
                             <!-- Trigger: SVG icon -->
                             <div class="cursor-pointer">
                                 <svg width="16px" height="16px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <circle cx="12" cy="12" r="10" stroke="#850038" stroke-width="2"/>
-                                    <path d="M10 8.48352C10.5 7.49451 11 7 12 7C13.2461 7 14 7.98901 14 8.97802C14 9.96703 13.5 10.4615 12 11.4505V13M12 16.5V17" stroke="#850038" stroke-width="2" stroke-linecap="round"/>
+                                    <circle cx="12" cy="12" r="10" stroke="#8A1538" stroke-width="2"/>
+                                    <path d="M10 8.48352C10.5 7.49451 11 7 12 7C13.2461 7 14 7.98901 14 8.97802C14 9.96703 13.5 10.4615 12 11.4505V13M12 16.5V17" stroke="#8A1538" stroke-width="2" stroke-linecap="round"/>
                                 </svg>
                             </div>
 
                             <!-- Tooltip content (RIGHT SIDE) -->
                             <div class="absolute left-full top-1/2 -translate-y-1/2 ml-2 opacity-0 group-hover:opacity-100 transition duration-100 transform group-hover:translate-x-0 translate-x-2 pointer-events-none">
-                                <div class="bg-[#850038] w-max max-w-xs text-white rounded-lg px-4 py-4">
+                                <div class="bg-[#8A1538] w-max max-w-xs text-white rounded-lg px-4 py-4">
                                     <p class="font-bold text-md mb-1">Learning disability:</p>
                                     <p class="text-sm">
                                         Difficulty in learning specific skills such as reading, writing, or mathematics, despite average intelligence.
@@ -341,14 +341,14 @@
                             <!-- Trigger: SVG icon -->
                             <div class="cursor-pointer">
                                 <svg width="16px" height="16px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <circle cx="12" cy="12" r="10" stroke="#850038" stroke-width="2"/>
-                                    <path d="M10 8.48352C10.5 7.49451 11 7 12 7C13.2461 7 14 7.98901 14 8.97802C14 9.96703 13.5 10.4615 12 11.4505V13M12 16.5V17" stroke="#850038" stroke-width="2" stroke-linecap="round"/>
+                                    <circle cx="12" cy="12" r="10" stroke="#8A1538" stroke-width="2"/>
+                                    <path d="M10 8.48352C10.5 7.49451 11 7 12 7C13.2461 7 14 7.98901 14 8.97802C14 9.96703 13.5 10.4615 12 11.4505V13M12 16.5V17" stroke="#8A1538" stroke-width="2" stroke-linecap="round"/>
                                 </svg>
                             </div>
 
                             <!-- Tooltip content (RIGHT SIDE) -->
                             <div class="absolute left-full top-1/2 -translate-y-1/2 ml-2 opacity-0 group-hover:opacity-100 transition duration-100 transform group-hover:translate-x-0 translate-x-2 pointer-events-none">
-                                <div class="bg-[#850038] w-max max-w-xs text-white rounded-lg px-4 py-4">
+                                <div class="bg-[#8A1538] w-max max-w-xs text-white rounded-lg px-4 py-4">
                                     <p class="font-bold text-md mb-1">Intellectual disability:</p>
                                     <p class="text-sm">
                                         Significant limitations in intellectual functioning and everyday adaptive skills, beginning before adulthood.
@@ -371,14 +371,14 @@
                             <!-- Trigger: SVG icon -->
                             <div class="cursor-pointer">
                                 <svg width="16px" height="16px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <circle cx="12" cy="12" r="10" stroke="#850038" stroke-width="2"/>
-                                    <path d="M10 8.48352C10.5 7.49451 11 7 12 7C13.2461 7 14 7.98901 14 8.97802C14 9.96703 13.5 10.4615 12 11.4505V13M12 16.5V17" stroke="#850038" stroke-width="2" stroke-linecap="round"/>
+                                    <circle cx="12" cy="12" r="10" stroke="#8A1538" stroke-width="2"/>
+                                    <path d="M10 8.48352C10.5 7.49451 11 7 12 7C13.2461 7 14 7.98901 14 8.97802C14 9.96703 13.5 10.4615 12 11.4505V13M12 16.5V17" stroke="#8A1538" stroke-width="2" stroke-linecap="round"/>
                                 </svg>
                             </div>
 
                             <!-- Tooltip content (RIGHT SIDE) -->
                             <div class="absolute left-full top-1/2 -translate-y-1/2 ml-2 opacity-0 group-hover:opacity-100 transition duration-100 transform group-hover:translate-x-0 translate-x-2 pointer-events-none">
-                                <div class="bg-[#850038] w-max max-w-xs text-white rounded-lg px-4 py-4">
+                                <div class="bg-[#8A1538] w-max max-w-xs text-white rounded-lg px-4 py-4">
                                     <p class="font-bold text-md mb-1">Autism spectrum disorder:</p>
                                     <p class="text-sm">
                                         A developmental condition affecting communication, social interaction, and behavior, with varying levels of support needs.
@@ -401,14 +401,14 @@
                             <!-- Trigger: SVG icon -->
                             <div class="cursor-pointer">
                                 <svg width="16px" height="16px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <circle cx="12" cy="12" r="10" stroke="#850038" stroke-width="2"/>
-                                    <path d="M10 8.48352C10.5 7.49451 11 7 12 7C13.2461 7 14 7.98901 14 8.97802C14 9.96703 13.5 10.4615 12 11.4505V13M12 16.5V17" stroke="#850038" stroke-width="2" stroke-linecap="round"/>
+                                    <circle cx="12" cy="12" r="10" stroke="#8A1538" stroke-width="2"/>
+                                    <path d="M10 8.48352C10.5 7.49451 11 7 12 7C13.2461 7 14 7.98901 14 8.97802C14 9.96703 13.5 10.4615 12 11.4505V13M12 16.5V17" stroke="#8A1538" stroke-width="2" stroke-linecap="round"/>
                                 </svg>
                             </div>
 
                             <!-- Tooltip content (RIGHT SIDE) -->
                             <div class="absolute left-full top-1/2 -translate-y-1/2 ml-2 opacity-0 group-hover:opacity-100 transition duration-100 transform group-hover:translate-x-0 translate-x-2 pointer-events-none">
-                                <div class="bg-[#850038] w-max max-w-xs text-white rounded-lg px-4 py-4">
+                                <div class="bg-[#8A1538] w-max max-w-xs text-white rounded-lg px-4 py-4">
                                     <p class="font-bold text-md mb-1">Psychosocial disability:</p>
                                     <p class="text-sm">
                                         Conditions that affect mood, thinking, behavior, or social interaction and result in significant functional limitations.
@@ -431,14 +431,14 @@
                             <!-- Trigger: SVG icon -->
                             <div class="cursor-pointer">
                                 <svg width="16px" height="16px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <circle cx="12" cy="12" r="10" stroke="#850038" stroke-width="2"/>
-                                    <path d="M10 8.48352C10.5 7.49451 11 7 12 7C13.2461 7 14 7.98901 14 8.97802C14 9.96703 13.5 10.4615 12 11.4505V13M12 16.5V17" stroke="#850038" stroke-width="2" stroke-linecap="round"/>
+                                    <circle cx="12" cy="12" r="10" stroke="#8A1538" stroke-width="2"/>
+                                    <path d="M10 8.48352C10.5 7.49451 11 7 12 7C13.2461 7 14 7.98901 14 8.97802C14 9.96703 13.5 10.4615 12 11.4505V13M12 16.5V17" stroke="#8A1538" stroke-width="2" stroke-linecap="round"/>
                                 </svg>
                             </div>
 
                             <!-- Tooltip content (RIGHT SIDE) -->
                             <div class="absolute left-full top-1/2 -translate-y-1/2 ml-2 opacity-0 group-hover:opacity-100 transition duration-100 transform group-hover:translate-x-0 translate-x-2 pointer-events-none">
-                                <div class="bg-[#850038] w-max max-w-xs text-white rounded-lg px-4 py-4">
+                                <div class="bg-[#8A1538] w-max max-w-xs text-white rounded-lg px-4 py-4">
                                     <p class="font-bold text-md mb-1">Mental disability:</p>
                                     <p class="text-sm">
                                         Conditions that substantially affect cognitive or emotional functioning and daily living, as recognized under Philippine law.
@@ -461,14 +461,14 @@
                             <!-- Trigger: SVG icon -->
                             <div class="cursor-pointer">
                                 <svg width="16px" height="16px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <circle cx="12" cy="12" r="10" stroke="#850038" stroke-width="2"/>
-                                    <path d="M10 8.48352C10.5 7.49451 11 7 12 7C13.2461 7 14 7.98901 14 8.97802C14 9.96703 13.5 10.4615 12 11.4505V13M12 16.5V17" stroke="#850038" stroke-width="2" stroke-linecap="round"/>
+                                    <circle cx="12" cy="12" r="10" stroke="#8A1538" stroke-width="2"/>
+                                    <path d="M10 8.48352C10.5 7.49451 11 7 12 7C13.2461 7 14 7.98901 14 8.97802C14 9.96703 13.5 10.4615 12 11.4505V13M12 16.5V17" stroke="#8A1538" stroke-width="2" stroke-linecap="round"/>
                                 </svg>
                             </div>
 
                             <!-- Tooltip content (RIGHT SIDE) -->
                             <div class="absolute left-full top-1/2 -translate-y-1/2 ml-2 opacity-0 group-hover:opacity-100 transition duration-100 transform group-hover:translate-x-0 translate-x-2 pointer-events-none">
-                                <div class="bg-[#850038] w-max max-w-xs text-white rounded-lg px-4 py-4">
+                                <div class="bg-[#8A1538] w-max max-w-xs text-white rounded-lg px-4 py-4">
                                     <p class="font-bold text-md mb-1">Cancer (PWD-recognized):</p>
                                     <p class="text-sm">
                                         Cancer that results in significant functional limitations or long-term effects impacting daily activities.
@@ -491,14 +491,14 @@
                             <!-- Trigger: SVG icon -->
                             <div class="cursor-pointer">
                                 <svg width="16px" height="16px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <circle cx="12" cy="12" r="10" stroke="#850038" stroke-width="2"/>
-                                    <path d="M10 8.48352C10.5 7.49451 11 7 12 7C13.2461 7 14 7.98901 14 8.97802C14 9.96703 13.5 10.4615 12 11.4505V13M12 16.5V17" stroke="#850038" stroke-width="2" stroke-linecap="round"/>
+                                    <circle cx="12" cy="12" r="10" stroke="#8A1538" stroke-width="2"/>
+                                    <path d="M10 8.48352C10.5 7.49451 11 7 12 7C13.2461 7 14 7.98901 14 8.97802C14 9.96703 13.5 10.4615 12 11.4505V13M12 16.5V17" stroke="#8A1538" stroke-width="2" stroke-linecap="round"/>
                                 </svg>
                             </div>
 
                             <!-- Tooltip content (RIGHT SIDE) -->
                             <div class="absolute left-full top-1/2 -translate-y-1/2 ml-2 opacity-0 group-hover:opacity-100 transition duration-100 transform group-hover:translate-x-0 translate-x-2 pointer-events-none">
-                                <div class="bg-[#850038] w-max max-w-xs text-white rounded-lg px-4 py-4">
+                                <div class="bg-[#8A1538] w-max max-w-xs text-white rounded-lg px-4 py-4">
                                     <p class="font-bold text-md mb-1">Rare disease:</p>
                                     <p class="text-sm">
                                         A medically recognized rare condition that results in significant functional limitations.
@@ -566,9 +566,9 @@
                 <label for="ipra" class="font-medium">
                     Do you identify as a member of an Indigenous Peoples (IP) community, as defined under the Indigenous Peoples’ 
                     Rights Act 
-                    <span class="font-semibold text-[#850038]">
+                    <span class="font-semibold text-[#8A1538]">
                             <a target="_blank" href="https://www.officialgazette.gov.ph/1997/10/29/republic-act-no-8371/"
-                            class="font-medium text-[#850038] hover:text-[#850038]">
+                            class="font-medium text-[#8A1538] hover:text-[#8A1538]">
                             (IPRA)
                             </a>
                         </span>

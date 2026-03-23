@@ -53,7 +53,7 @@
                 <option value="Professional Master in Data Science (Computing)">Professional Master in Data Science (Computing)</option>
             </select>
             <p class="text-[12px] text-gray-500 mt-1">
-                For any questions regarding your primary program, please proceed to <span class="font-semibold text-[#850038]">OUR</span>.
+                For any questions regarding your primary program, please proceed to <span class="font-semibold text-[#8A1538]">OUR</span>.
             </p>
         </div>
 
@@ -148,7 +148,7 @@
                     </div>
                     <div id="birth-days" class="grid grid-cols-7 gap-1 text-sm"></div>
                     <div class="mt-3 text-right">
-                        <button type="button" id="birth-today" class="text-xs text-[#850038] hover:text-[#850038] font-medium px-2 py-1 rounded hover:bg-blue-50 transition-colors">
+                        <button type="button" id="birth-today" class="text-xs text-[#8A1538] hover:text-[#8A1538] font-medium px-2 py-1 rounded hover:bg-blue-50 transition-colors">
                             Today
                         </button>
                     </div>
@@ -239,7 +239,7 @@
                         </div>
                         <div id="marriage-days" class="grid grid-cols-7 gap-1 text-sm"></div>
                         <div class="mt-3 text-right">
-                            <button type="button" id="marriage-today" class="text-xs text-[#850038] hover:text-[#850038] font-medium px-2 py-1 rounded hover:bg-blue-50 transition-colors">
+                            <button type="button" id="marriage-today" class="text-xs text-[#8A1538] hover:text-[#8A1538] font-medium px-2 py-1 rounded hover:bg-blue-50 transition-colors">
                                 Today
                             </button>
                         </div>
@@ -253,9 +253,9 @@
             <!-- Article 370 Info + Preferred Name (with ID) -->
             <div id="preferred_name_section" class="col-span-1 md:col-span-2 text-justify">
                 <p class="text-black-700">
-                    Under <span class="font-semibold text-[#850038]">
+                    Under <span class="font-semibold text-[#8A1538]">
                         <a target="_blank" href="https://pcw.gov.ph/republic-act-386-the-civil-code-of-the-philippines/"
-                           class="font-medium text-[#850038] hover:text-[#850038]">
+                           class="font-medium text-[#8A1538] hover:text-[#8A1538]">
                             Article 370
                         </a>
                     </span>
@@ -264,18 +264,18 @@
                     While marriage does not legally require a change in name, the law allows a woman to:
                 </p>
 
-                <ol class="list-decimal pl-6 mt-3 space-y-3 marker:text-[#850038]">
+                <ol class="list-decimal pl-6 mt-3 space-y-3 marker:text-[#8A1538]">
                     <li id="fullmaidenname">
                         Retain her full maiden name
-                        <span class="text-[#850038]">(Juana Luna Santos)</span>
+                        <span class="text-[#8A1538]">(Juana Luna Santos)</span>
                     </li>
                     <li id="hyphenatedsurname">
                         Use a hyphenated surname, combining her maiden surname and her husband’s surname
-                        <span class="text-[#850038]">(Juana Luna Santos-Cruz)</span>
+                        <span class="text-[#8A1538]">(Juana Luna Santos-Cruz)</span>
                     </li>
                     <li id="husbandsurname">
                         Adopt her husband’s surname by placing it after her maiden first name and surname
-                        <span class="text-[#850038]">(Juana Santos Cruz)</span>
+                        <span class="text-[#8A1538]">(Juana Santos Cruz)</span>
                     </li>
                 </ol>
 

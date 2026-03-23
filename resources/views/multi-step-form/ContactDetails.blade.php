@@ -28,7 +28,7 @@
 
         <!-- Heading for Permanent Address Outside the Philippines (added ID) -->
         <div id="outside_ph_heading" class="col-span-1 md:col-span-2">
-            <h1 class="text-[18px] font-semibold text-[#850038] text-center">Permanent Address Outside the Philippines</h1>
+            <h1 class="text-[18px] font-semibold text-[#8A1538] text-center">Permanent Address Outside the Philippines</h1>
         </div>
         <div class="relative w-full">
             <label for="outside_ph_addressline1" class="font-medium">
@@ -97,7 +97,7 @@
 
         <!-- Address inside the Philippines (added ID for heading) -->
         <div id="permanent_ph_heading" class="col-span-1 md:col-span-2">
-            <h1 class="text-[18px] font-semibold text-[#850038] text-center">Permanent Address Inside the Philippines</h1>
+            <h1 class="text-[18px] font-semibold text-[#8A1538] text-center">Permanent Address Inside the Philippines</h1>
         </div>
         
         <div class="relative w-full">
@@ -181,7 +181,7 @@
         <div id="current_address_section" class="col-span-1 md:col-span-2" style="display: none;">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4 w-full">
                 <div class="col-span-1 md:col-span-2">
-                    <h1 class="text-[18px] font-semibold text-[#850038] text-center">Current Address Inside the Philippines</h1>
+                    <h1 class="text-[18px] font-semibold text-[#8A1538] text-center">Current Address Inside the Philippines</h1>
                 </div>
 
                 <!-- Room/Flr/Unit/Building -->

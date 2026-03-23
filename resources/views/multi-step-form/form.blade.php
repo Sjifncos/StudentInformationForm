@@ -37,13 +37,13 @@
 
                     <div class="flex flex-col sm:flex-row gap-4 sm:gap-2 w-full sm:w-auto sm:ml-auto">
                         <button type="button" id="nextBtn" 
-                            class="w-full sm:w-auto px-8 py-3 bg-[#850038] text-white font-semibold rounded 
+                            class="w-full sm:w-auto px-8 py-3 bg-[#8A1538] text-white font-semibold rounded 
                                 hover:bg-[#FFAD0D] transition-colors duration-200">
                             Next
                         </button>
 
                         <button type="submit" id="submitBtn" 
-                            class="w-full sm:w-auto px-8 py-3 bg-[#850038] text-white font-semibold rounded 
+                            class="w-full sm:w-auto px-8 py-3 bg-[#8A1538] text-white font-semibold rounded 
                                 hover:bg-[#FFAD0D] transition-colors duration-200">
                             Submit
                         </button>

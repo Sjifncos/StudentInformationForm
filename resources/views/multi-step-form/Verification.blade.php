@@ -31,7 +31,7 @@
                     <div class="relative w-full">
                         <button
                             id="validateBtn"
-                            class="w-full sm:w-auto px-8 py-3 bg-[#850038] text-white font-semibold rounded 
+                            class="w-full sm:w-auto px-8 py-3 bg-[#8A1538] text-white font-semibold rounded 
                                 hover:bg-[#FFAD0D] transition-colors duration-200">
                             Validate
                         </button>

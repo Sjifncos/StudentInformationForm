@@ -7,7 +7,7 @@
         </div>
         <!-- Contact Details - Full Width Heading -->
         <div class="col-span-1 md:col-span-2">
-            <h1 class="text-[18px] font-semibold text-[#850038]">Contact Details</h1>
+            <h1 class="text-[18px] font-semibold text-[#8A1538]">Contact Details</h1>
         </div>
 
         <!-- Personal Email -->
@@ -45,7 +45,7 @@
 
         <!-- Emergency Contact -->
         <div class="col-span-1 md:col-span-2">
-            <h1 class="text-[18px] font-semibold text-[#850038]">Emergency Contact Information</h1>
+            <h1 class="text-[18px] font-semibold text-[#8A1538]">Emergency Contact Information</h1>
         </div>
 
         <div class="md:col-span-1 flex flex-col w-full">
@@ -71,7 +71,7 @@
 
         <!-- Father's Information - Full Width Heading -->
         <div class="col-span-1 md:col-span-2">
-            <h1 class="text-[18px] font-semibold text-[#850038]">Father's Information</h1>
+            <h1 class="text-[18px] font-semibold text-[#8A1538]">Father's Information</h1>
         </div>
 
         <!-- Father's First Name -->
@@ -145,7 +145,7 @@
 
         <!-- Mother's Information - Full Width Heading -->
         <div class="col-span-1 md:col-span-2">
-            <h1 class="text-[18px] font-semibold text-[#850038]">Mother's Maiden Information</h1>
+            <h1 class="text-[18px] font-semibold text-[#8A1538]">Mother's Maiden Information</h1>
         </div>
 
         <!-- Mother's First Name -->
@@ -194,7 +194,7 @@
 
         <!-- Guardian's Information - Hidden by default -->
         <div id="guardian-section" class="col-span-1 md:col-span-2 hidden">
-            <h1 class="text-[18px] font-semibold text-[#850038]">Guardian's Information</h1>
+            <h1 class="text-[18px] font-semibold text-[#8A1538]">Guardian's Information</h1>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">
                 <!-- Guardian's First Name -->
                 <div class="md:col-span-1 flex flex-col w-full">
@@ -247,7 +247,7 @@
             <div class="relative mx-auto w-96 bg-white rounded-2xl shadow-2xl border border-white/10 p-0">
                 
                 <div class="px-6 pt-2 pb-6 text-center">
-                    <h3 id="modalTitle" class="text-2xl font-semibold tracking-tight text-[#850038] mt-2 mb-3">
+                    <h3 id="modalTitle" class="text-2xl font-semibold tracking-tight text-[#8A1538] mt-2 mb-3">
                         Confirm Mother's Last Name
                     </h3>
 

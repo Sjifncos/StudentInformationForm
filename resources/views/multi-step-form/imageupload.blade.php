@@ -8,7 +8,7 @@
         <!-- Left Column: Profile Upload + Required Documents -->
         <div class="bg-white p-6 rounded-lg shadow-md border border-gray-200">
             <!-- Original Profile Upload Section -->
-            <h3 class="text-lg font-semibold text-[#850038] mb-4">Upload Image</h3>
+            <h3 class="text-lg font-semibold text-[#8A1538] mb-4">Upload Image</h3>
             
             <div class="space-y-4">
                 <!-- File Input -->
@@ -32,15 +32,15 @@
             <!-- Accepted formats hint (mobile-friendly) -->
             <p class="text-xs text-gray-400 mt-3">
                 Allowed: PNG, JPG, JPEG, WEBP (max. 2MB) <br>
-                <span class="text-[#850038]">Image must be square (aspect ratio 1:1)</span>
+                <span class="text-[#8A1538]">Image must be square (aspect ratio 1:1)</span>
             </p>
 
             <!-- Instructions Accordion (unchanged) -->
             <div class="accordion space-y-2 mt-2">
                 <details class="bg-white rounded-lg shadow-sm border border-gray-200">
-                    <summary class="font-medium text-[#850038] px-4 py-3 cursor-pointer list-none flex justify-between items-center">
+                    <summary class="font-medium text-[#8A1538] px-4 py-3 cursor-pointer list-none flex justify-between items-center">
                         <span>Instructions</span>
-                        <svg fill="#850038" width="24px" height="24px" viewBox="-2 -2 24 24" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMinYMin" class="jam jam-chevron-circle-down-f">
+                        <svg fill="#8A1538" width="24px" height="24px" viewBox="-2 -2 24 24" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMinYMin" class="jam jam-chevron-circle-down-f">
                             <path d='M10 11.828L6.464 8.293A1 1 0 0 0 5.05 9.707l4.243 4.243a.997.997 0 0 0 1.414 0l4.243-4.243a1 1 0 1 0-1.414-1.414L10 11.828zM10 20C4.477 20 0 15.523 0 10S4.477 0 10 0s10 4.477 10 10-4.477 10-10 10z' />
                         </svg>
                     </summary>
@@ -64,7 +64,7 @@
         <div class="bg-white p-6 rounded-lg shadow-md border border-gray-200">
             <div class="accordion space-y-2">
                 <div class="bg-white rounded-lg shadow-sm">
-                    <summary class="font-medium text-[#850038] px-4 py-3 cursor-pointer list-none flex justify-between items-center">
+                    <summary class="font-medium text-[#8A1538] px-4 py-3 cursor-pointer list-none flex justify-between items-center">
                         <span>Sample Picture Format</span>
                     </summary>
                     <div class="px-4 pb-4 text-sm text-gray-700">
@@ -76,7 +76,7 @@
         <div class="col-span-1 md:col-span-2">
     <!-- ========== NEW: Required Documents Section ========== -->
     <div class="mt-8 border-t pt-6 bg-white p-6 rounded-lg shadow-md border border-gray-200">
-        <h3 class="text-lg font-semibold text-[#850038] mb-4">Other Documents</h3>
+        <h3 class="text-lg font-semibold text-[#8A1538] mb-4">Other Documents</h3>
         
         <!-- Two-column grid for file inputs -->
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
