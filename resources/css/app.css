@@ -1,0 +1,18 @@
+@import 'tailwindcss';
+
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../storage/framework/views/*.php';
+@source '../**/*.blade.php';
+@source '../**/*.js';
+
+@theme {
+    --font-sans: 'Inter', sans-serif;
+    --font-palatino: 'Palatino Linotype', 'Book Antiqua', Palatino, serif;
+    --font-poppins: 'Poppins', sans-serif;
+}
+ summary::-webkit-details-marker {
+    display: none;
+  }
+  summary {
+    list-style: none;
+  }
