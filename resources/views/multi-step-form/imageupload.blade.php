@@ -32,7 +32,7 @@
             <!-- Accepted formats hint (mobile-friendly) -->
             <p class="text-xs text-gray-400 mt-3">
                 Allowed: PNG, JPG, JPEG, WEBP (max. 2MB) <br>
-                <span class="text-[#8A1538]">Image must be square (aspect ratio 1:1)</span>
+                <span class="text-gray">Image must be square (aspect ratio 1:1)</span>
             </p>
 
             <!-- Instructions Accordion (unchanged) -->
@@ -84,12 +84,6 @@
             <div>
                 <label class="block text-sm font-medium text-gray-700 mb-2">Medical Certificate (required)</label>
                 <input type="file" name="medical_certificate" accept=".pdf" class="w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
-            </div>
-
-            <!-- Student Directory -->
-            <div>
-                <label class="block text-sm font-medium text-gray-700 mb-2">Student Directory (required)</label>
-                <input type="file" name="student_directory" accept=".pdf,.jpg,.jpeg,.png" class="w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
             </div>
 
             <!-- Notice of Admission -->

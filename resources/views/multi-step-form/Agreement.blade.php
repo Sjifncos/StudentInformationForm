@@ -41,7 +41,7 @@
                class="font-medium text-[#8A1538] hover:text-[#8A1538] underline">
                 UP Privacy Notice for Students
             </a>
-            <span class="text-red-600">*</span>
+            {{-- <span class="text-red-600">*</span> --}}
         </label>
     </div>
 </div>

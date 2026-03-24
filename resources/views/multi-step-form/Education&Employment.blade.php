@@ -1,7 +1,7 @@
 <div class="step hidden" data-step="7">
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">
         <div class="col-span-1 md:col-span-2">
-            <h1 class="text-[24px] font-semibold text-[#8A1538]">
+            <h1 class="text-[24px] font-semibold text-[#0E6021]">
                 Education & Employment
             </h1>
         </div>

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>UP CEBU OUR</title>
+    <title>OUR</title>
     <link href="https://fonts.cdnfonts.com/css/palatino" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -19,7 +19,7 @@
         {{-- Header --}}
         <div class="bg-[#8A1538] px-6 py-5">
             <p class="text-white font-semibold text-[18px] leading-snug">
-                Before Proceeding To The Student Information Form, Please Prepare The Following Documents:
+                Before Proceeding to the Student Information Form, Please prepare the following Documents:
             </p>
         </div>
 
@@ -35,11 +35,6 @@
                 <li class="flex items-start gap-3 px-2 py-2 rounded-lg hover:bg-red-50">
                     <span class="mt-[6px] w-2 h-2 rounded-full bg-gray-400 flex-shrink-0"></span>
                     <span class="text-black-800 text-sm">Medical Certificate <span class="text-[#8A1538] font-semibold">(Required)</span></span>
-                </li>
-
-                <li class="flex items-start gap-3 px-2 py-2 rounded-lg hover:bg-red-50">
-                    <span class="mt-[6px] w-2 h-2 rounded-full bg-gray-400 flex-shrink-0"></span>
-                    <span class="text-black-800 text-sm">Student Directory <span class="text-[#8A1538] font-semibold">(Required)</span></span>
                 </li>
 
                 <li class="flex items-start gap-3 px-2 py-2 rounded-lg hover:bg-red-50">

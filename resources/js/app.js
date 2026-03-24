@@ -70,6 +70,30 @@ $(document).ready(function() {
         closeToast($(this).data('toast-id'));
     });
 
+    // ---------- Toggle sublabels for mobile number fields based on citizenship ----------
+    function toggleMobileSublabels() {
+        const citizenship = $('#citizenship').val();
+        const isNonCitizen = (citizenship === 'no');
+
+        // List of mobile number fields that have sublabels
+        const mobileFieldIds = ['mobilenumber', 'emergency_mobilenumber', 'guardian_phonenumber'];
+
+        mobileFieldIds.forEach(id => {
+            const $field = $('#' + id);
+            if ($field.length) {
+                // The sublabel is the immediate sibling <p> with the example text
+                const $sublabel = $field.next('p');
+                if ($sublabel.length && $sublabel.hasClass('text-gray-500')) {
+                    if (isNonCitizen) {
+                        $sublabel.hide();
+                    } else {
+                        $sublabel.show();
+                    }
+                }
+            }
+        });
+    }
+
     // ---------- Toggle Guardian Section based on Category ----------
     function toggleGuardianSection() {
         const category = $('#category').val();
@@ -78,6 +102,27 @@ $(document).ready(function() {
         } else {
             $('#guardian-section').addClass('hidden');
             $('#guardian-section input, #guardian-section select').val('');
+        }
+    }
+
+    // ---------- Toggle first-person fields based on Category ----------
+    function toggleFirstPersonFields() {
+        const category = $('#category').val();
+        const shouldHide = category === 'graduate';
+
+        // Find the parent containers of the two fields
+        const $collegeContainer = $('#firstperson_to_attend_college').closest('.relative.w-full');
+        const $upContainer = $('#firstpersonup').closest('.relative.w-full');
+
+        if (shouldHide) {
+            $collegeContainer.addClass('hidden');
+            $upContainer.addClass('hidden');
+            // Clear the values when hidden
+            $('#firstperson_to_attend_college').val('');
+            $('#firstpersonup').val('');
+        } else {
+            $collegeContainer.removeClass('hidden');
+            $upContainer.removeClass('hidden');
         }
     }
 
@@ -127,6 +172,7 @@ $(document).ready(function() {
         }
 
         toggleGuardianSection();
+        toggleFirstPersonFields();
     }
 
     function toggleMarriageCertificate() {
@@ -219,6 +265,7 @@ $(document).ready(function() {
 
         if (step === 8) {
             toggleMarriageCertificate();
+            toggleFirstPersonFields(); // Ensure first-person fields toggle when step 8 loads
         }
         if (step === 9) {
             togglePWDContainer();
@@ -421,49 +468,22 @@ $(document).ready(function() {
                 }
             }
 
-            // --- Mobile numbers (Philippines) ---
-            if (fieldName === 'mobilenumber' && value) {
+            // --- Mobile numbers (conditional based on citizenship) ---
+            const mobileFields = ['mobilenumber', 'emergency_mobilenumber', 'guardian_phonenumber', 'fathers_phonenumber', 'mother_phonenumber'];
+            if (mobileFields.includes(fieldName) && value) {
                 const cleanNumber = value.replace(/[\s\-\(\)]/g, '');
-                const isValid = /^0\d{10}$/.test(cleanNumber);     
-                if (!isValid) {
-                    errors.push(`Phone number is invalid. Please enter a valid Philippines mobile number.`);
-                    $field.addClass('border-red-500');
-                }
-            }
-
-            if (fieldName === 'emergency_mobilenumber' && value) {
-                const cleanNumber = value.replace(/[\s\-\(\)]/g, '');
-                const isValid = /^0\d{10}$/.test(cleanNumber);     
-                if (!isValid) {
-                    errors.push(`Phone number is invalid. Please enter a valid Philippines mobile number.`);
-                    $field.addClass('border-red-500');
-                }
-            }
-
-            if (fieldName === 'fathers_phonenumber' && value) {
-                const cleanNumber = value.replace(/[\s\-\(\)]/g, '');
-                const isValid = /^0\d{10}$/.test(cleanNumber);     
-                if (!isValid) {
-                    errors.push(`Phone number is invalid. Please enter a valid Philippines mobile number.`);
-                    $field.addClass('border-red-500');
-                }
-            }
-
-            if (fieldName === 'mother_phonenumber' && value) {
-                const cleanNumber = value.replace(/[\s\-\(\)]/g, '');
-                const isValid = /^0\d{10}$/.test(cleanNumber);     
-                if (!isValid) {
-                    errors.push(`Phone number is invalid. Please enter a valid Philippines mobile number.`);
-                    $field.addClass('border-red-500');
-                }
-            }
-
-            if (fieldName === 'guardian_phonenumber' && value) {
-                const cleanNumber = value.replace(/[\s\-\(\)]/g, '');
-                const isValid = /^0\d{10}$/.test(cleanNumber);     
-                if (!isValid) {
-                    errors.push(`Phone number is invalid. Please enter a valid Philippines mobile number.`);
-                    $field.addClass('border-red-500');
+                if (citizenship === 'yes') {
+                    // Philippine format: starts with 0, total 11 digits
+                    if (!/^0\d{10}$/.test(cleanNumber)) {
+                        errors.push(`Phone number is invalid. Please enter a valid Philippines mobile number.`);
+                        $field.addClass('border-red-500');
+                    }
+                } else {
+                    // Non-citizen: only digits allowed
+                    if (!/^\d+$/.test(cleanNumber)) {
+                        errors.push(`Phone number must contain only digits.`);
+                        $field.addClass('border-red-500');
+                    }
                 }
             }
 
@@ -782,9 +802,14 @@ $(document).ready(function() {
     });
 
     $(document).on('change', '#citizenship', function() {
-        if (currentStep === 2) {
+        // Toggle sublabels for mobile fields
+        toggleMobileSublabels();
+        // Re-validate current step if it's step 5
+        if (currentStep === 5) {
             validateStep(currentStep);
         }
+        // Also trigger custom event for any other listeners
+        $(document).trigger('citizenshipChanged');
     });
 
     $(document).on('change', '#typeofincome', function() {
@@ -954,6 +979,8 @@ $(document).ready(function() {
     showStep(currentStep);
     updateVisibleSteps();
     toggleCourtOrderContainer(); // ensure initial state
+    toggleFirstPersonFields(); // ensure initial state for first-person fields
+    toggleMobileSublabels(); // ensure sublabels visibility matches initial citizenship
 
     $(document).on('citizenshipChanged', function() {
         if (currentStep === 4) {

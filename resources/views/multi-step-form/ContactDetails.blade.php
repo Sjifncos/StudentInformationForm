@@ -39,7 +39,7 @@
         </div>
         <div class="relative w-full">
             <label for="outside_ph_addressline2" class="font-medium">
-                Street Address Line 2
+                Street Address
             </label>
             <input required id="outside_ph_addressline2" name="outside_ph_addressline2" type="text" 
                 class="peer w-full px-4 py-3 text-base bg-white outline-none border-2 border-gray-300 rounded-[12px] focus:border-[#0E6021] focus:ring-1 focus:ring-[#0E6021] transition-colors mt-2"/>
@@ -125,7 +125,7 @@
 
         <div class="relative w-full">
             <label for="subdivision_line2" class="font-medium">
-                Subdivision / Line 2 
+                Subdivision
             </label>
             <input required id="subdivision_line2" name="subdivision_line2" type="text" 
                 class="peer w-full px-4 py-3 text-base bg-white outline-none border-2 border-gray-300 rounded-[12px] focus:border-[#0E6021] focus:ring-1 focus:ring-[#0E6021] transition-colors mt-2"/>
@@ -207,7 +207,7 @@
 
                 <!-- Subdivision / Line 2 -->
                 <div class="relative w-full">
-                    <label for="current_subdivision_line2" class="font-medium">Subdivision / Line 2</label>
+                    <label for="current_subdivision_line2" class="font-medium">Subdivision</label>
                     <input id="current_subdivision_line2" name="current_subdivision_line2" type="text"
                         class="peer w-full px-4 py-3 text-base bg-white outline-none border-2 border-gray-300 rounded-[12px] focus:border-[#0E6021] focus:ring-1 focus:ring-[#0E6021] transition-colors mt-2"/>
                 </div>

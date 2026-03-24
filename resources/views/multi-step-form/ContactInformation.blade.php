@@ -126,23 +126,6 @@
                 class="peer w-full px-4 py-3 text-base bg-white outline-none border-2 border-gray-300 rounded-[12px] focus:border-[#0E6021] focus:ring-1 focus:ring-[#0E6021] transition-colors mt-2"/>
         </div>
 
-        <!-- Father's Phone Number -->
-        <div class="md:col-span-1 flex flex-col w-full">
-            <label for="fathers_phonenumber" class="font-medium">Mobile Number</label>
-            <input required id="fathers_phonenumber" name="fathers_phonenumber" type="text" 
-                placeholder="0000 000 0000"
-                class="peer w-full px-4 py-3 text-base bg-white outline-none border-2 border-gray-300 rounded-[12px] focus:border-[#0E6021] focus:ring-1 focus:ring-[#0E6021] transition-colors mt-2"/>
-            <p class="text-[12px] text-gray-500 mt-1">ex. 0912 345 6789</p>
-        </div>
-
-        <!-- Father's Email -->
-        <div class="md:col-span-1 flex flex-col w-full">
-            <label for="fathers_email" class="font-medium">E-mail</label>
-            <input required id="fathers_email" name="fathers_email" type="text" 
-                placeholder="ex: myname@example.com"
-                class="peer w-full px-4 py-3 text-base bg-white outline-none border-2 border-gray-300 rounded-[12px] focus:border-[#0E6021] focus:ring-1 focus:ring-[#0E6021] transition-colors mt-2"/>
-        </div>
-
         <!-- Mother's Information - Full Width Heading -->
         <div class="col-span-1 md:col-span-2">
             <h1 class="text-[18px] font-semibold text-[#8A1538]">Mother's Maiden Information</h1>
@@ -172,23 +155,6 @@
                 <span class="text-red-500 ml-1">*</span>
             </label>
             <input required id="mother_lastname" name="mother_lastname" type="text" 
-                class="peer w-full px-4 py-3 text-base bg-white outline-none border-2 border-gray-300 rounded-[12px] focus:border-[#0E6021] focus:ring-1 focus:ring-[#0E6021] transition-colors mt-2"/>
-        </div>
-
-        <!-- Mother's Phone Number -->
-        <div class="md:col-span-1 flex flex-col w-full">
-            <label for="mother_phonenumber" class="font-medium">Mobile Number</label>
-            <input required id="mother_phonenumber" name="mother_phonenumber" type="text" 
-                placeholder="0000 000 0000"
-                class="peer w-full px-4 py-3 text-base bg-white outline-none border-2 border-gray-300 rounded-[12px] focus:border-[#0E6021] focus:ring-1 focus:ring-[#0E6021] transition-colors mt-2"/>
-                <p class="text-[12px] text-gray-500 mt-1">ex. 0912 345 6789</p>
-        </div>
-
-        <!-- Mother's Email -->
-        <div class="md:col-span-1 flex flex-col w-full">
-            <label for="mother_email" class="font-medium">E-mail</label>
-            <input required id="mother_email" name="mother_email" type="text"
-                placeholder="ex: myname@example.com" 
                 class="peer w-full px-4 py-3 text-base bg-white outline-none border-2 border-gray-300 rounded-[12px] focus:border-[#0E6021] focus:ring-1 focus:ring-[#0E6021] transition-colors mt-2"/>
         </div>
 
