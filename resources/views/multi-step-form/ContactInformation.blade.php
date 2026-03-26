@@ -18,7 +18,7 @@
             <input required id="personalemail" name="personalemail" type="text" 
                 {{--    placeholder="ex: myname@example.com" --}}
                 class="peer w-full px-4 py-3 text-base bg-white outline-none border-2 border-gray-300 rounded-[12px] focus:border-[#0E6021] focus:ring-1 focus:ring-[#0E6021] transition-colors mt-2"/>
-            <p class="text-[12px] text-gray-500 mt-1">Personal E-mail will be Autofill</p>
+            {{--    <p class="text-[12px] text-gray-500 mt-1">Personal E-mail will be Autofill</p> --}}
             <span class="error-message text-red-500 text-sm hidden" data-for="personalemail"></span>
         </div>
 
@@ -30,7 +30,7 @@
             <input required id="mobilenumber" name="mobilenumber" type="text" 
                 placeholder="0000 000 0000"
                 class="peer w-full px-4 py-3 text-base bg-white outline-none border-2 border-gray-300 rounded-[12px] focus:border-[#0E6021] focus:ring-1 focus:ring-[#0E6021] transition-colors mt-2"/>
-            <p class="text-[12px] text-gray-500 mt-1">ex. 0912 345 6789</p>
+            <p class="text-[12px] text-gray-500 mt-1">ex. 09123456789</p>
             <span class="error-message text-red-500 text-sm hidden" data-for="mobilenumber"></span>
         </div>
 
@@ -65,7 +65,7 @@
             <input required id="emergency_mobilenumber" name="emergency_mobilenumber" type="text" 
                 placeholder="0000 000 0000"
                 class="peer w-full px-4 py-3 text-base bg-white outline-none border-2 border-gray-300 rounded-[12px] focus:border-[#0E6021] focus:ring-1 focus:ring-[#0E6021] transition-colors mt-2"/>
-            <p class="text-[12px] text-gray-500 mt-1">ex. 0912 345 6789</p>
+            <p class="text-[12px] text-gray-500 mt-1">ex. 09123456789</p>
             <span class="error-message text-red-500 text-sm hidden" data-for="emergency_mobilenumber"></span>
         </div>
 
@@ -74,7 +74,7 @@
             <h1 class="text-[18px] font-semibold text-[#8A1538]">Father's Information</h1>
         </div>
 
-        <!-- Father's First Name -->
+        <!-- Father's First Name -->    
         <div class="md:col-span-1 flex flex-col w-full">
             <label for="fathers_firstname" class="font-medium">
                 First Name
@@ -96,7 +96,7 @@
             <label for="father_suffix" class="font-medium">
                 Name Suffix
             </label>
-            <select id="father_suffix" name="father_suffix" required
+            <select id="father_suffix" name="father_suffix"
                 class="w-full px-4 py-3 border-2 border-gray-300 rounded-[12px] 
                 focus:outline-none focus:border-[#0E6021] focus:ring-1 focus:ring-[#0E6021] transition-colors mt-2 appearance-none">
                 <option value="" disabled selected>Please Select</option>
@@ -211,15 +211,14 @@
         <div id="motherLastnameModal" class="fixed inset-0 flex items-center justify-center bg-black/40 backdrop-blur-sm overflow-y-hidden h-full w-full hidden z-50 transition-opacity" style="display: none;" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
             <!-- modal card -->
             <div class="relative mx-auto w-96 bg-white rounded-2xl shadow-2xl border border-white/10 p-0">
-                
                 <div class="px-6 pt-2 pb-6 text-center">
                     <h3 id="modalTitle" class="text-2xl font-semibold tracking-tight text-[#8A1538] mt-2 mb-3">
-                        Confirm Mother's Last Name
+                        Confirm Mother's Maiden Last Name
                     </h3>
 
                     <div class="mt-1 mb-6 text-black-700 text-base leading-relaxed">
                         <p class="px-1">
-                            Mother's maiden name is the same as father's last name.
+                            Mother's maiden last name "<span class="font-semibold text-[#850038]" id="modal-mother-lastname"></span>" is the same as father's last name "<span class="font-semibold text-[#850038]" id="modal-father-lastname"></span>".
                         </p>
                         <p class="font-medium text-black-800 mt-1">
                             Are you sure this is correct?
@@ -228,11 +227,40 @@
 
                     <div class="flex justify-center gap-3">
                         <button id="modalYes" 
-                                class="px-6 py-2.5 bg-[#2CAC4B] hover:bg-[#23913e] text-white text-base font-medium rounded-full shadow-md hover:shadow-lg transition-all duration-150 ease-in-out transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-[#2CAC4B]/50 focus:ring-offset-2">
+                                class="px-6 py-2.5 bg-[#2CAC4B] hover:bg-[#23913e] text-white text-base font-medium rounded-[6px] shadow-md hover:shadow-lg transition-all duration-150 ease-in-out transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-[#2CAC4B]/50 focus:ring-offset-2">
                             Yes
                         </button>
                         <button id="modalNo" 
-                                class="px-6 py-2.5 bg-[#E60023] hover:bg-[#c4001e] text-white text-base font-medium rounded-full shadow-md hover:shadow-lg transition-all duration-150 ease-in-out transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-[#E60023]/50 focus:ring-offset-2">
+                                class="px-6 py-2.5 bg-[#E60023] hover:bg-[#c4001e] text-white text-base font-medium rounded-[6px] shadow-md hover:shadow-lg transition-all duration-150 ease-in-out transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-[#E60023]/50 focus:ring-offset-2">
+                            No
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Match Confirmation Modal -->
+        <div id="mobileMatchModal" class="fixed inset-0 flex items-center justify-center bg-black/40 backdrop-blur-sm overflow-y-hidden h-full w-full hidden z-50 transition-opacity" style="display: none;" role="dialog" aria-modal="true" aria-labelledby="mobileModalTitle">
+            <div class="relative mx-auto w-96 bg-white rounded-2xl shadow-2xl border border-white/10 p-0">
+                <div class="px-6 pt-2 pb-6 text-center">
+                    <h3 id="mobileModalTitle" class="text-2xl font-semibold tracking-tight text-[#8A1538] mt-2 mb-3">
+                        Confirm Contact Information
+                    </h3>
+                    <div class="mt-1 mb-6 text-black-700 text-base leading-relaxed">
+                        <p class="px-1">
+                            You entered the same number for both the <span class="font-semibold text-[#850038]">Personal Mobile Number </span> and<span class="font-semibold text-[#850038]"> Emergency Mobile Number.</span>
+                        </p>
+                        <p class="font-medium text-black-800 mt-1">
+                            Do you want to keep this?
+                        </p>
+                    </div>
+                    <div class="flex justify-center gap-3">
+                        <button id="mobileMatchModalYes"
+                                class="px-6 py-2.5 bg-[#2CAC4B] hover:bg-[#23913e] text-white text-base font-medium rounded-[6px] shadow-md hover:shadow-lg transition-all duration-150 ease-in-out transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-[#2CAC4B]/50 focus:ring-offset-2">
+                            Yes
+                        </button>
+                        <button id="mobileMatchModalNo"
+                                class="px-6 py-2.5 bg-[#E60023] hover:bg-[#c4001e] text-white text-base font-medium rounded-[6px] shadow-md hover:shadow-lg transition-all duration-150 ease-in-out transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-[#E60023]/50 focus:ring-offset-2">
                             No
                         </button>
                     </div>

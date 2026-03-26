@@ -26,20 +26,20 @@
         'name_format'   => 'required_if:civilstatus,married|in:maiden,hyphenated,husband|nullable',
 
         // Contact Details (always required)
-        'citizenship' => 'required|in:yes,no',
-        'citizenship_country' => 'exclude_if:citizenship,yes|required|string|max:255',
-        'same_address' => 'required|in:yes,no',
-        'outside_ph_addressline1' => 'exclude_if:citizenship,yes|required|string|max:255',
-        'outside_ph_addressline2' => 'exclude_if:citizenship,yes|nullable|string|max:255',
-        'city_foreign' => 'exclude_if:citizenship,yes|required|string|max:255',
-        'state/province_foreign' => 'exclude_if:citizenship,yes|required|string|max:255',
-        'zipcode_foreign' => 'exclude_if:citizenship,yes|required|string|max:255',
-        'foreign_country' => 'exclude_if:citizenship,yes|required|string|max:255',
-        'streetaddressline1_ph' => 'required|string|max:255',
-        'region' => 'required|string|max:255',
-        'province' => 'required|string|max:255',
-        'city' => 'required|string|max:255',
-        'barangay' => 'required|string|max:255',
+        'citizenship'               => 'required|in:yes,no',
+        'citizenship_country'       => 'exclude_if:citizenship,yes|required|string|max:255',
+        'same_address'              => 'required|in:yes,no',
+        'outside_ph_addressline1'   => 'exclude_if:citizenship,yes|required|string|max:255',
+        'outside_ph_addressline2'   => 'exclude_if:citizenship,yes|nullable|string|max:255',
+        'city_foreign'              => 'exclude_if:citizenship,yes|required|string|max:255',
+        'state/province_foreign'    => 'exclude_if:citizenship,yes|required|string|max:255',
+        'zipcode_foreign'           => 'exclude_if:citizenship,yes|required|string|max:255',
+        'foreign_country'           => 'exclude_if:citizenship,yes|required|string|max:255',
+        'streetaddressline1_ph'     => 'required|string|max:255',
+        'region'                    => 'required|string|max:255',
+        'province'                  => 'required|string|max:255',
+        'city'                      => 'required|string|max:255',
+        'barangay'                  => 'required|string|max:255',
         //'PSGC' => 'required|string|max:255',
 
         // Current Address (inside the Philippines) – required only if same_address == 'no'
@@ -72,6 +72,12 @@
         'undergraddegree'       => 'exclude_if:category,undergraduate|required|string|max:255',
         'listofdegree'          => 'exclude_if:category,undergraduate|nullable|string|max:255',
         'lastschoolattended'    => 'exclude_if:category,undergraduate|required|string|max:255',
+
+        'school'                => 'exclude_if:category,undergraduate|required|in:bachelorsdegree,postbaccalaureate,mastersdegree,postmasters,doctoral',
+        'program'               => 'exclude_if:category,undergraduate|required|string|max:255',
+        'degree'                => 'exclude_if:category,undergraduate|nullable|string|max:255',
+        'year_graduated'        => 'exclude_if:category,undergraduate|required|string|max:255',
+
         'degrees[]'             => 'required|string|max:255',
         'typeofincome'          => 'exclude_if:category,undergraduate|required|in:employeed,self-employeed,combination,passiveincome,notearning',
         'nameofemployer'        => 'exclude_if:category,undergraduate|required_if:typeofincome,employeed,self-employeed,combination,passiveincome|string|max:255',
@@ -82,7 +88,7 @@
         'funding_other'         => 'exclude_if:category,undergraduate|required_if:funding_sources.*,other|nullable|string|max:255',
 
         // ===== Additional Information (step 7) – always required =====
-        'firstperson_to_attend_college' => 'required|in:yes,no',
+        'firstperson_to_attend_college'  => 'required|in:yes,no',
         'firstpersonup'                  => 'required|in:yes,no',
         'annualincome'                   => 'required|in:below250k,250-499k,500-749k,750-999k,1m-1.49m,1.5m-1.9m,1.9m-2.9m,3m,idk,prefernottosay',
         'pwd'                            => 'required|in:Yes,No,prefernottosay',

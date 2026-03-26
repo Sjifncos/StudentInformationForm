@@ -64,6 +64,35 @@ $(document).ready(function() {
     // Modal confirmation variables
     let motherConfirmPending = false;
     let pendingTargetStep = null;
+    let mobileMatchPending = false;
+    let pendingMobileStep = null;
+
+    // NEW: Flags to remember if the user has confirmed the conflict
+    let motherNameConfirmed = false;
+    let mobileMatchConfirmed = false;
+    let pendingModalQueue = []; // Queue for sequential modals
+
+    // ---------- Helper Functions ----------
+    function resetStep5ConfirmationFlags() {
+        motherNameConfirmed = false;
+        mobileMatchConfirmed = false;
+        pendingModalQueue = [];
+    }
+
+    function showNextModal() {
+        if (pendingModalQueue.length === 0) return;
+        const next = pendingModalQueue.shift();
+        if (next === 'mother') {
+            // Populate modal with current names
+            const motherLastname = $('#mother_lastname').val().trim();
+            const fatherLastname = $('#fathers_lastname').val().trim();
+            $('#modal-mother-lastname').text(motherLastname);
+            $('#modal-father-lastname').text(fatherLastname);
+            $('#motherLastnameModal').removeClass('hidden').show();
+        } else if (next === 'mobile') {
+            $('#mobileMatchModal').removeClass('hidden').show();
+        }
+    }
 
     // ---------- Close Toast Button Handler ----------
     $(document).on('click', '.close-toast-btn', function() {
@@ -75,13 +104,11 @@ $(document).ready(function() {
         const citizenship = $('#citizenship').val();
         const isNonCitizen = (citizenship === 'no');
 
-        // List of mobile number fields that have sublabels
         const mobileFieldIds = ['mobilenumber', 'emergency_mobilenumber', 'guardian_phonenumber'];
 
         mobileFieldIds.forEach(id => {
             const $field = $('#' + id);
             if ($field.length) {
-                // The sublabel is the immediate sibling <p> with the example text
                 const $sublabel = $field.next('p');
                 if ($sublabel.length && $sublabel.hasClass('text-gray-500')) {
                     if (isNonCitizen) {
@@ -94,7 +121,6 @@ $(document).ready(function() {
         });
     }
 
-    // ---------- Toggle Guardian Section based on Category ----------
     function toggleGuardianSection() {
         const category = $('#category').val();
         if (category === 'undergraduate') {
@@ -105,19 +131,16 @@ $(document).ready(function() {
         }
     }
 
-    // ---------- Toggle first-person fields based on Category ----------
     function toggleFirstPersonFields() {
         const category = $('#category').val();
         const shouldHide = category === 'graduate';
 
-        // Find the parent containers of the two fields
         const $collegeContainer = $('#firstperson_to_attend_college').closest('.relative.w-full');
         const $upContainer = $('#firstpersonup').closest('.relative.w-full');
 
         if (shouldHide) {
             $collegeContainer.addClass('hidden');
             $upContainer.addClass('hidden');
-            // Clear the values when hidden
             $('#firstperson_to_attend_college').val('');
             $('#firstpersonup').val('');
         } else {
@@ -126,7 +149,6 @@ $(document).ready(function() {
         }
     }
 
-    // ---------- Step Visibility Based on Category ----------
     function updateVisibleSteps() {
         const category = $('#category').val();
         let newVisibleSteps;
@@ -195,7 +217,6 @@ $(document).ready(function() {
         }
     }
 
-    // ---------- Toggle Court Order upload (marriage_container) ----------
     function toggleCourtOrderContainer() {
         const sex = $('#sexatbirth').val();
         const civil = $('#civilstatus').val();
@@ -206,17 +227,26 @@ $(document).ready(function() {
             $('#marriage_container').removeClass('hidden');
         } else {
             $('#marriage_container').addClass('hidden');
-            // Clear the file input when hidden to avoid stale data
             $('#marriage_container input[type="file"]').val('');
         }
     }
 
     function showStep(step) {
-        // Close modal if open when navigating manually
+        // Close any open modals when manually navigating
         if (motherConfirmPending) {
             $('#motherLastnameModal').hide().addClass('hidden');
             motherConfirmPending = false;
             pendingTargetStep = null;
+        }
+        if (mobileMatchPending) {
+            $('#mobileMatchModal').hide().addClass('hidden');
+            mobileMatchPending = false;
+            pendingMobileStep = null;
+        }
+
+        // Reset confirmation flags if we are leaving step 5
+        if (step !== 5) {
+            resetStep5ConfirmationFlags();
         }
 
         $('.step').addClass('hidden');
@@ -250,7 +280,6 @@ $(document).ready(function() {
             $('#nextBtn').show();
             $('#submitBtn').addClass('hidden');
         }
-        // Disable Next button on step 1 if agreement not checked
         if (step === 1) {
             const isChecked = $('#agreement').is(':checked');
             $('#nextBtn').prop('disabled', !isChecked);
@@ -265,11 +294,11 @@ $(document).ready(function() {
 
         if (step === 8) {
             toggleMarriageCertificate();
-            toggleFirstPersonFields(); // Ensure first-person fields toggle when step 8 loads
+            toggleFirstPersonFields();
         }
         if (step === 9) {
             togglePWDContainer();
-            toggleCourtOrderContainer(); // ensure court order visibility when step 9 loads
+            toggleCourtOrderContainer();
         }
         if (step === 5) {
             toggleGuardianSection();
@@ -344,6 +373,12 @@ $(document).ready(function() {
                 'scholarship',
                 'educationalattainment',
                 'undergraddegree',
+
+                'school',
+                'program',
+                'degree',
+                'year_graduated',
+
                 'lastschoolattended',
                 'typeofincome',
                 'funding_sources',
@@ -366,7 +401,6 @@ $(document).ready(function() {
             const foreignFields = [
                 'citizenship_country',
                 'outside_ph_addressline1',
-                //'outside_ph_addressline2',
                 'city_foreign',
                 'state/province_foreign',
                 'zipcode_foreign',
@@ -382,7 +416,6 @@ $(document).ready(function() {
                 isRequired = isNonPhilippineCitizen;
             }
 
-            // Updated condition for current address fields
             if (fieldName && fieldName.startsWith('current_')) {
                 const citizenshipVal = $('#citizenship').val();
                 const showCurrent = (citizenshipVal === 'no') || (citizenshipVal === 'yes' && sameAddressValue === 'no');
@@ -430,32 +463,10 @@ $(document).ready(function() {
                 }
             }
 
-            if (fieldName === 'fathers_email' && value) {
-                const emailPattern = /^\S+@\S+\.\S+$/;
-                if (!emailPattern.test(value)) {
-                    errors.push(`Please enter a valid email address.`);
-                    $field.addClass('border-red-500');
-                }
-            }
-            if (fieldName === 'mother_email' && value) {
-                const emailPattern = /^\S+@\S+\.\S+$/;
-                if (!emailPattern.test(value)) {
-                    errors.push(`Please enter a valid email address.`);
-                    $field.addClass('border-red-500');
-                }
-            }
-            if (fieldName === 'guardian_email' && value) {
-                const emailPattern = /^\S+@\S+\.\S+$/;
-                if (!emailPattern.test(value)) {
-                    errors.push(`Please enter a valid email address.`);
-                    $field.addClass('border-red-500');
-                }
-            }
-
             // --- ZIP Code ---
             if (fieldName === 'zipcode_foreign' && value) {
-                if (!/^\d{4}$/.test(value)) {
-                    errors.push(`ZIP Code must be 4 digits only.`);
+                if (!/^\d{1,10}$/.test(value)) {
+                    errors.push(`ZIP Code must be digits only.`);
                     $field.addClass('border-red-500');
                 }
             }
@@ -469,17 +480,15 @@ $(document).ready(function() {
             }
 
             // --- Mobile numbers (conditional based on citizenship) ---
-            const mobileFields = ['mobilenumber', 'emergency_mobilenumber', 'guardian_phonenumber', 'fathers_phonenumber', 'mother_phonenumber'];
+            const mobileFields = ['mobilenumber', 'emergency_mobilenumber', 'guardian_phonenumber'];
             if (mobileFields.includes(fieldName) && value) {
                 const cleanNumber = value.replace(/[\s\-\(\)]/g, '');
                 if (citizenship === 'yes') {
-                    // Philippine format: starts with 0, total 11 digits
                     if (!/^0\d{10}$/.test(cleanNumber)) {
                         errors.push(`Phone number is invalid. Please enter a valid Philippines mobile number.`);
                         $field.addClass('border-red-500');
                     }
                 } else {
-                    // Non-citizen: only digits allowed
                     if (!/^\d+$/.test(cleanNumber)) {
                         errors.push(`Phone number must contain only digits.`);
                         $field.addClass('border-red-500');
@@ -489,7 +498,7 @@ $(document).ready(function() {
 
             // --- BIRTH DATE validation ---
             if (fieldName === 'dob') {
-                const dobValue = value; // YYYY-MM-DD
+                const dobValue = value;
                 if (!dobValue) {
                     errors.push(`Birth Date is required.`);
                     $('#birth-input').addClass('border-red-500');
@@ -536,7 +545,7 @@ $(document).ready(function() {
             // --- MARRIAGE DATE validation ---
             if (fieldName === 'marriagedate') {
                 const civilStatus = $('#civilstatus').val();
-                const marriageValue = value; // YYYY-MM-DD
+                const marriageValue = value;
 
                 if (civilStatus === 'married') {
                     if (!marriageValue) {
@@ -564,7 +573,6 @@ $(document).ready(function() {
                                     $('#marriage-input').addClass('border-red-500');
                                 }
 
-                                // Compare with birth date
                                 const dobValue = $('#dob').val();
                                 if (dobValue) {
                                     const dobParts = dobValue.split('-');
@@ -579,7 +587,6 @@ $(document).ready(function() {
                                             $('#marriage-input').addClass('border-red-500');
                                         }
 
-                                        // Age at marriage
                                         const ageAtMarriage = marriageDate.getUTCFullYear() - birthDate.getUTCFullYear();
                                         const monthDiff = marriageDate.getUTCMonth() - birthDate.getUTCMonth();
                                         const dayDiff = marriageDate.getUTCDate() - birthDate.getUTCDate();
@@ -592,7 +599,6 @@ $(document).ready(function() {
                                     }
                                 }
 
-                                // Too far in the past
                                 const minValidDate = new Date(today);
                                 minValidDate.setUTCFullYear(today.getUTCFullYear() - 100);
                                 if (marriageDate < minValidDate) {
@@ -624,12 +630,11 @@ $(document).ready(function() {
             $scholarshipInputs.each(function() {
                 if ($(this).val().trim() !== '') {
                     hasValue = true;
-                    return false; // break loop
+                    return false;
                 }
             });
             if (!hasValue) {
                 errors.push('Please specify at least one scholarship.');
-                // Highlight the first empty scholarship input
                 $scholarshipInputs.first().addClass('border-red-500');
             } else {
                 $scholarshipInputs.removeClass('border-red-500');
@@ -654,6 +659,49 @@ $(document).ready(function() {
                     $otherInput.addClass('border-red-500');
                 }
             }
+
+            const $entries = $('.educational-entry');
+            let hasEmptyEntry = false;
+            $entries.each(function(index) {
+                const $school = $(this).find('input[name="schools[]"]');
+                const $program = $(this).find('input[name="programs[]"]');
+                const $degree = $(this).find('input[name="degrees[]"]');
+                const $year = $(this).find('input[name="year_graduateds[]"]');
+                
+                const schoolVal = $school.val()?.trim() || '';
+                const programVal = $program.val()?.trim() || '';
+                const degreeVal = $degree.val()?.trim() || '';
+                const yearVal = $year.val()?.trim() || '';
+                
+                if (!schoolVal || !programVal || !degreeVal || !yearVal) {
+                    hasEmptyEntry = true;
+                    if (!schoolVal) $school.addClass('border-red-500');
+                    if (!programVal) $program.addClass('border-red-500');
+                    if (!degreeVal) $degree.addClass('border-red-500');
+                    if (!yearVal) $year.addClass('border-red-500');
+                }
+            });
+            if (hasEmptyEntry) {
+                errors.push('Please complete all fields for each educational background entry.');
+            }
+            $entries.each(function(index) {
+                const $year = $(this).find('input[name="year_graduateds[]"]');
+                const yearVal = $year.val()?.trim() || '';
+                
+                if (yearVal) {
+                    if (!/^\d{4}$/.test(yearVal)) {
+                        errors.push(`Year Graduated must be a 4-digit year (e.g., 2023).`);
+                        $year.addClass('border-red-500');
+                    } else {
+                        const yearNum = parseInt(yearVal, 10);
+                        const currentYear = new Date().getFullYear();
+                        if (yearNum < 1970 || yearNum > currentYear) {
+                            errors.push(`Year Graduated must be between 1970 and ${currentYear}.`);
+                            $year.addClass('border-red-500');
+                        }
+                    }
+                }
+            });
         }
 
         // Step 8 (Other Info) validation
@@ -710,9 +758,7 @@ $(document).ready(function() {
 
             const docFields = [
                 { name: 'medical_certificate', label: 'Medical Certificate' },
-                { name: 'student_directory', label: 'Student Directory' },
                 { name: 'notice_of_admission', label: 'Notice of Admission' },
-               // { name: 'honorable_dismissal', label: 'Honorable Dismissal' },
                 { name: 'tor_remarks', label: 'TOR with Remarks' },
                 { name: 'birth_certificate', label: 'Birth Certificate (PSA/LCR)' }
             ];
@@ -749,11 +795,8 @@ $(document).ready(function() {
                 }
             }
 
-            // Court Order re: Change of Name (if visible) – now optional
             if (!$('#marriage_container').hasClass('hidden')) {
-                // Optional: you can still remove the red border if it was previously added
                 $('input[name="marriage_container"]').removeClass('border-red-500');
-                // No required validation – no error is pushed
             }
         }
 
@@ -772,13 +815,32 @@ $(document).ready(function() {
             }
         }
 
-        // Step 5 specific validation: mother's last name should not equal father's last name
+        // Step 5 specific validation: mother's last name and mobile number conflicts
         if (step === 5) {
             const mothersLastname = $('#mother_lastname').val()?.trim() || '';
             const fathersLastname = $('#fathers_lastname').val()?.trim() || '';
             if (mothersLastname && fathersLastname && mothersLastname.toLowerCase() === fathersLastname.toLowerCase()) {
-                errors.push("Mother's maiden name should be different from father's last name. Are you sure?");
-                $('#mother_lastname').addClass('border-red-500');
+                // Only add error if user has not confirmed it
+                if (!motherNameConfirmed) {
+                    errors.push("Mother's maiden name should be different from father's last name. Are you sure?");
+                    $('#mother_lastname').addClass('border-red-500');
+                }
+            } else {
+                // If they become different, clear the flag
+                motherNameConfirmed = false;
+            }
+
+            const mobileNumber = $('#mobilenumber').val()?.trim() || '';
+            const emergencyMobile = $('#emergency_mobilenumber').val()?.trim() || '';
+            const cleanMobile = mobileNumber.replace(/[\s\-\(\)]/g, '');
+            const cleanEmergency = emergencyMobile.replace(/[\s\-\(\)]/g, '');
+            if (cleanMobile && cleanEmergency && cleanMobile === cleanEmergency) {
+                if (!mobileMatchConfirmed) {
+                    errors.push("Mobile number and emergency contact mobile number must be different.");
+                    $('#mobilenumber, #emergency_mobilenumber').addClass('border-red-500');
+                }
+            } else {
+                mobileMatchConfirmed = false;
             }
         }
 
@@ -802,13 +864,10 @@ $(document).ready(function() {
     });
 
     $(document).on('change', '#citizenship', function() {
-        // Toggle sublabels for mobile fields
         toggleMobileSublabels();
-        // Re-validate current step if it's step 5
         if (currentStep === 5) {
             validateStep(currentStep);
         }
-        // Also trigger custom event for any other listeners
         $(document).trigger('citizenshipChanged');
     });
 
@@ -842,39 +901,70 @@ $(document).ready(function() {
         }
     });
 
+    // ---------- Next Button Handler (with sequential modal handling) ----------
     $('#nextBtn').click(function() {
-        if (motherConfirmPending) return; // ignore if modal is open
+        if (motherConfirmPending || mobileMatchPending) return;
 
         const currentIndex = visibleSteps.indexOf(currentStep);
         const errors = validateStep(currentStep);
 
-        // Special case: only mother's last name conflict
+        // Define error strings
         const motherNameError = "Mother's maiden name should be different from father's last name. Are you sure?";
-        if (errors.length === 1 && errors[0] === motherNameError) {
-            // Show modal
-            $('#motherLastnameModal').removeClass('hidden').show();
-            motherConfirmPending = true;
-            pendingTargetStep = visibleSteps[currentIndex + 1];
-            return;
+        const mobileMatchError = "Mobile number and emergency contact mobile number must be different.";
+
+        let modalErrors = [];
+        let otherErrors = [];
+
+        errors.forEach(err => {
+            if (err === motherNameError) {
+                modalErrors.push('mother');
+            } else if (err === mobileMatchError) {
+                modalErrors.push('mobile');
+            } else {
+                otherErrors.push(err);
+            }
+        });
+
+        // Show non-modal errors as toasts
+        if (otherErrors.length > 0) {
+            otherErrors.forEach(error => showToast(error, 'error'));
         }
 
+        // If there are modal errors, set up the queue and show the first modal
+        if (modalErrors.length > 0) {
+            pendingModalQueue = modalErrors; // e.g., ['mother', 'mobile']
+            // Store target step for after modals are confirmed
+            if (currentIndex < totalSteps - 1) {
+                pendingTargetStep = visibleSteps[currentIndex + 1];
+            } else {
+                pendingTargetStep = null;
+            }
+            showNextModal();
+            return; // Stop navigation until modals are handled
+        }
+
+        // No errors of any kind
         if (errors.length === 0) {
             if (currentIndex < totalSteps - 1) {
                 currentStep = visibleSteps[currentIndex + 1];
                 showStep(currentStep);
             }
-        } else {
-            errors.forEach(error => showToast(error, 'error'));
         }
     });
 
     $('#prevBtn').click(function() {
-        // Close modal if open
         if (motherConfirmPending) {
             $('#motherLastnameModal').hide().addClass('hidden');
             motherConfirmPending = false;
             pendingTargetStep = null;
         }
+        if (mobileMatchPending) {
+            $('#mobileMatchModal').hide().addClass('hidden');
+            mobileMatchPending = false;
+            pendingMobileStep = null;
+        }
+        // Reset flags when going back
+        resetStep5ConfirmationFlags();
 
         const currentIndex = visibleSteps.indexOf(currentStep);
         if (currentIndex > 0) {
@@ -884,6 +974,17 @@ $(document).ready(function() {
     });
 
     $('.step-label').click(function () {
+        if (motherConfirmPending) {
+            $('#motherLastnameModal').hide().addClass('hidden');
+            motherConfirmPending = false;
+            pendingTargetStep = null;
+        }
+        if (mobileMatchPending) {
+            $('#mobileMatchModal').hide().addClass('hidden');
+            mobileMatchPending = false;
+            pendingMobileStep = null;
+        }
+
         const targetStep = parseInt($(this).data('step'));
         if (!visibleSteps.includes(targetStep)) return;
 
@@ -896,6 +997,10 @@ $(document).ready(function() {
                 errors.forEach(error => showToast(error, 'error'));
                 return;
             }
+        }
+        // Reset flags if stepping to step 5
+        if (targetStep === 5) {
+            resetStep5ConfirmationFlags();
         }
         currentStep = targetStep;
         showStep(currentStep);
@@ -933,7 +1038,6 @@ $(document).ready(function() {
         if (currentStep === 8) {
             toggleMarriageCertificate();
         }
-        // Also trigger court order toggle when civil status changes
         toggleCourtOrderContainer();
     });
 
@@ -943,21 +1047,26 @@ $(document).ready(function() {
         }
     });
 
-    // Listen for changes that affect court order visibility
     $('#sexatbirth').on('change', toggleCourtOrderContainer);
     $(document).on('change', 'input[name="name_format"]', toggleCourtOrderContainer);
 
-    // Modal button handlers
+    // Modal button handlers for mother's last name conflict
     $('#modalYes').click(function() {
         $('#motherLastnameModal').hide().addClass('hidden');
+        motherNameConfirmed = true; // Mark as confirmed
         motherConfirmPending = false;
-        // Remove red border from mother_lastname if any
         $('#mother_lastname').removeClass('border-red-500');
-        // Proceed to next step
-        if (pendingTargetStep) {
-            currentStep = pendingTargetStep;
-            showStep(currentStep);
-            pendingTargetStep = null;
+
+        // After confirming, check if there are more modals in the queue
+        if (pendingModalQueue.length > 0) {
+            showNextModal();
+        } else {
+            // All modals have been handled, now proceed to the next step
+            if (pendingTargetStep) {
+                currentStep = pendingTargetStep;
+                showStep(currentStep);
+                pendingTargetStep = null;
+            }
         }
     });
 
@@ -965,22 +1074,61 @@ $(document).ready(function() {
         $('#motherLastnameModal').hide().addClass('hidden');
         motherConfirmPending = false;
         pendingTargetStep = null;
+        pendingModalQueue = []; // Clear queue
         // Keep the red border; do not proceed
     });
 
-    // Close modal if clicked outside
+    // Modal button handlers for mobile match conflict
+    $('#mobileMatchModalYes').click(function() {
+        $('#mobileMatchModal').hide().addClass('hidden');
+        mobileMatchConfirmed = true; // Mark as confirmed
+        mobileMatchPending = false;
+        $('#mobilenumber, #emergency_mobilenumber').removeClass('border-red-500');
+
+        if (pendingModalQueue.length > 0) {
+            showNextModal();
+        } else {
+            if (pendingMobileStep) {
+                currentStep = pendingMobileStep;
+                showStep(currentStep);
+                pendingMobileStep = null;
+            }
+        }
+    });
+
+    $('#mobileMatchModalNo').click(function() {
+        $('#mobileMatchModal').hide().addClass('hidden');
+        mobileMatchPending = false;
+        pendingMobileStep = null;
+        pendingModalQueue = [];
+    });
+
+    // Close modals if clicked outside
     $(document).on('click', '#motherLastnameModal', function(e) {
         if ($(e.target).is('#motherLastnameModal')) {
-            $('#modalNo').click(); // treat as No
+            $('#modalNo').click();
         }
+    });
+    $(document).on('click', '#mobileMatchModal', function(e) {
+        if ($(e.target).is('#mobileMatchModal')) {
+            $('#mobileMatchModalNo').click();
+        }
+    });
+
+    // Reset confirmation flags when the relevant fields are edited
+    $(document).on('input change', '#mother_lastname, #fathers_lastname', function() {
+        motherNameConfirmed = false;
+    });
+    $(document).on('input change', '#mobilenumber, #emergency_mobilenumber', function() {
+        mobileMatchConfirmed = false;
     });
 
     // Initial calls
     showStep(currentStep);
     updateVisibleSteps();
-    toggleCourtOrderContainer(); // ensure initial state
-    toggleFirstPersonFields(); // ensure initial state for first-person fields
-    toggleMobileSublabels(); // ensure sublabels visibility matches initial citizenship
+    toggleCourtOrderContainer();
+    toggleFirstPersonFields();
+    toggleMobileSublabels();
 
     $(document).on('citizenshipChanged', function() {
         if (currentStep === 4) {

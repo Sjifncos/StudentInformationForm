@@ -28,7 +28,7 @@
 
         <!-- Heading for Permanent Address Outside the Philippines (added ID) -->
         <div id="outside_ph_heading" class="col-span-1 md:col-span-2">
-            <h1 class="text-[18px] font-semibold text-[#8A1538] text-center">Permanent Address Outside the Philippines</h1>
+            <h1 class="text-[18px] font-semibold text-[#8A1538]">Permanent Address Outside the Philippines</h1>
         </div>
         <div class="relative w-full">
             <label for="outside_ph_addressline1" class="font-medium">
@@ -78,26 +78,10 @@
             </select>
         </div>
 
-        <div class="relative w-full">
-           <div class="relative w-full">
-                <label for="same_address" class="font-medium">
-                    Is your Permanent Address the same as your Current Address?
-                    <span class="text-red-500 ml-1">*</span>
-                </label>
-                <select id="same_address" name="same_address" required 
-                class="w-full px-4 py-3 border-2 border-gray-300 rounded-[12px] focus:outline-none 
-                focus:border-[#0E6021] focus:ring-1 focus:ring-[#0E6021] transition-colors mt-2
-                appearance-none">
-                    <option disabled selected>Please Select</option>
-                    <option value="yes">Yes</option>
-                    <option value="no">No</option>
-                </select>
-            </div>
-        </div>
 
         <!-- Address inside the Philippines (added ID for heading) -->
         <div id="permanent_ph_heading" class="col-span-1 md:col-span-2">
-            <h1 class="text-[18px] font-semibold text-[#8A1538] text-center">Permanent Address Inside the Philippines</h1>
+            <h1 class="text-[18px] font-semibold text-[#8A1538]">Permanent Address Inside the Philippines</h1>
         </div>
         
         <div class="relative w-full">
@@ -177,11 +161,29 @@
                 class="peer w-full px-4 py-3 text-base bg-white outline-none border-2 border-gray-300 rounded-[12px] focus:border-[#0E6021] focus:ring-1 focus:ring-[#0E6021] transition-colors mt-2"/>
             <p class="text-[12px] text-gray-500 mt-1">This field will be automatically filled</p>
         </div>
+
+        <div class="relative w-full">
+           <div class="relative w-full">
+                <label for="same_address" class="font-medium">
+                    Is your Permanent Address the same as your Current Address?
+                    <span class="text-red-500 ml-1">*</span>
+                </label>
+                <select id="same_address" name="same_address" required 
+                class="w-full px-4 py-3 border-2 border-gray-300 rounded-[12px] focus:outline-none 
+                focus:border-[#0E6021] focus:ring-1 focus:ring-[#0E6021] transition-colors mt-2
+                appearance-none">
+                    <option disabled selected>Please Select</option>
+                    <option value="yes">Yes</option>
+                    <option value="no">No</option>
+                </select>
+            </div>
+        </div>
+
         <!-- Current Address Inside the Philippines (hidden by default) -->
         <div id="current_address_section" class="col-span-1 md:col-span-2" style="display: none;">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4 w-full">
                 <div class="col-span-1 md:col-span-2">
-                    <h1 class="text-[18px] font-semibold text-[#8A1538] text-center">Current Address Inside the Philippines</h1>
+                    <h1 class="text-[18px] font-semibold text-[#8A1538]">Current Address Inside the Philippines</h1>
                 </div>
 
                 <!-- Room/Flr/Unit/Building -->
