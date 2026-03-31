@@ -87,7 +87,7 @@
             </select>
         </div>
         
-        <!-- PWD Types - Two-column checkbox layout (like funding sources) -->
+        <!-- PWD Types - Two-column checkbox layout -->
         <div id="pwd-types" class="col-span-1 md:col-span-2" style="display: none;">
             <p class="font-medium">
                 Please indicate the type(s) of disability <br> (select all that apply)
@@ -96,422 +96,184 @@
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-2">
                 <!-- Left column -->
                 <div class="relative w-full space-y-3">
-                    {{--
+
                     <label class="flex items-center space-x-2">
                         <input type="checkbox" name="disability_types[]" value="visual" class="h-4 w-4 disability-checkbox">
                         <span>Visual disability</span>
-
-                        <div class="relative group inline-block">
-                            <!-- Trigger: SVG icon -->
-                            <div class="cursor-pointer">
-                                <svg width="16px" height="16px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <circle cx="12" cy="12" r="10" stroke="#8A1538" stroke-width="2"/>
-                                    <path d="M10 8.48352C10.5 7.49451 11 7 12 7C13.2461 7 14 7.98901 14 8.97802C14 9.96703 13.5 10.4615 12 11.4505V13M12 16.5V17" stroke="#8A1538" stroke-width="2" stroke-linecap="round"/>
-                                </svg>
-                            </div>
-
-                            <!-- Tooltip content (RIGHT SIDE) -->
-                           <div class="absolute left-1/2 bottom-full -translate-x-1/2 mb-2 opacity-0 group-hover:opacity-100 transition duration-100 transform group-hover:translate-y-0 translate-y-2 pointer-events-none">
-                            <div class="bg-[#8A1538] w-max max-w-xs text-white rounded-lg px-4 py-4">
-                                <p class="font-bold text-md mb-1">Visual disability:</p>
-                                <p class="text-sm">
-                                    Difficulty seeing or visual impairment that significantly affects daily activities,
-                                    even with correction.
-                                </p>
-                            </div>
-                        </div>
-                        </div>
+                        <button type="button" class="tooltip-trigger cursor-pointer flex-shrink-0"
+                            data-tooltip-title="Visual disability:"
+                            data-tooltip-body="Difficulty seeing or visual impairment that significantly affects daily activities, even with correction."
+                            aria-label="More info about Visual disability">
+                            <svg width="16px" height="16px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <circle cx="12" cy="12" r="10" stroke="#8A1538" stroke-width="2"/>
+                                <path d="M10 8.48352C10.5 7.49451 11 7 12 7C13.2461 7 14 7.98901 14 8.97802C14 9.96703 13.5 10.4615 12 11.4505V13M12 16.5V17" stroke="#8A1538" stroke-width="2" stroke-linecap="round"/>
+                            </svg>
+                        </button>
                     </label>
-                    --}}
-                    <label class="flex items-center space-x-2">
-                        <input type="checkbox" name="disability_types[]" value="visual" class="h-4 w-4 disability-checkbox">
-                        <span>Visual disability</span>
 
-                        <div class="relative group inline-block">
-                            <!-- Trigger: SVG icon -->
-                            <div class="cursor-pointer">
-                                <svg width="16px" height="16px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <circle cx="12" cy="12" r="10" stroke="#8A1538" stroke-width="2"/>
-                                    <path d="M10 8.48352C10.5 7.49451 11 7 12 7C13.2461 7 14 7.98901 14 8.97802C14 9.96703 13.5 10.4615 12 11.4505V13M12 16.5V17" stroke="#8A1538" stroke-width="2" stroke-linecap="round"/>
-                                </svg>
-                            </div>
-
-                            <!-- Tooltip content (RIGHT SIDE) -->
-                            <div class="absolute left-full top-1/2 -translate-y-1/2 ml-2 opacity-0 group-hover:opacity-100 transition duration-100 transform group-hover:translate-x-0 translate-x-2 pointer-events-none">
-                                <div class="bg-[#8A1538] w-max max-w-xs text-white rounded-lg px-4 py-4">
-                                    <p class="font-bold text-md mb-1">Visual disability:</p>
-                                    <p class="text-sm">
-                                       Difficulty seeing or visual impairment that significantly affects daily activities,
-                                    even with correction.
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                    </label>
-                    {{--
                     <label class="flex items-center space-x-2">
                         <input type="checkbox" name="disability_types[]" value="hearing" class="h-4 w-4 disability-checkbox">
                         <span>Hearing disability</span>
+                        <button type="button" class="tooltip-trigger cursor-pointer flex-shrink-0"
+                            data-tooltip-title="Hearing disability:"
+                            data-tooltip-body="Partial or total difficulty hearing that affects communication or daily functioning."
+                            aria-label="More info about Hearing disability">
+                            <svg width="16px" height="16px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <circle cx="12" cy="12" r="10" stroke="#8A1538" stroke-width="2"/>
+                                <path d="M10 8.48352C10.5 7.49451 11 7 12 7C13.2461 7 14 7.98901 14 8.97802C14 9.96703 13.5 10.4615 12 11.4505V13M12 16.5V17" stroke="#8A1538" stroke-width="2" stroke-linecap="round"/>
+                            </svg>
+                        </button>
                     </label>
-                    --}}
-                    <label class="flex items-center space-x-2">
-                        <input type="checkbox" name="disability_types[]" value="hearing" class="h-4 w-4 disability-checkbox">
-                        <span>Hearing disability</span>
 
-                        <div class="relative group inline-block">
-                            <!-- Trigger: SVG icon -->
-                            <div class="cursor-pointer">
-                                <svg width="16px" height="16px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <circle cx="12" cy="12" r="10" stroke="#8A1538" stroke-width="2"/>
-                                    <path d="M10 8.48352C10.5 7.49451 11 7 12 7C13.2461 7 14 7.98901 14 8.97802C14 9.96703 13.5 10.4615 12 11.4505V13M12 16.5V17" stroke="#8A1538" stroke-width="2" stroke-linecap="round"/>
-                                </svg>
-                            </div>
-
-                            <!-- Tooltip content (RIGHT SIDE) -->
-                            <div class="absolute left-full top-1/2 -translate-y-1/2 ml-2 opacity-0 group-hover:opacity-100 transition duration-100 transform group-hover:translate-x-0 translate-x-2 pointer-events-none">
-                                <div class="bg-[#8A1538] w-max max-w-xs text-white rounded-lg px-4 py-4">
-                                    <p class="font-bold text-md mb-1">Hearing disability:</p>
-                                    <p class="text-sm">
-                                        Partial or total difficulty hearing that affects communication or daily functioning.
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                    </label>
-                    {{--
                     <label class="flex items-center space-x-2">
                         <input type="checkbox" name="disability_types[]" value="speech" class="h-4 w-4 disability-checkbox">
                         <span>Speech or language impairment</span>
+                        <button type="button" class="tooltip-trigger cursor-pointer flex-shrink-0"
+                            data-tooltip-title="Speech or language impairment:"
+                            data-tooltip-body="Difficulty speaking, understanding speech, or using language to communicate effectively."
+                            aria-label="More info about Speech or language impairment">
+                            <svg width="16px" height="16px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <circle cx="12" cy="12" r="10" stroke="#8A1538" stroke-width="2"/>
+                                <path d="M10 8.48352C10.5 7.49451 11 7 12 7C13.2461 7 14 7.98901 14 8.97802C14 9.96703 13.5 10.4615 12 11.4505V13M12 16.5V17" stroke="#8A1538" stroke-width="2" stroke-linecap="round"/>
+                            </svg>
+                        </button>
                     </label>
-                    --}}
-                    {{--
-                    <label class="flex items-center space-x-2">
-                        <input type="checkbox" name="disability_types[]" value="speech" class="h-4 w-4 disability-checkbox">
-                        <span>Speech or language impairment</span>
 
-                        <div class="relative group inline-block">
-                            <!-- Trigger: SVG icon -->
-                            <div class="cursor-pointer">
-                                <svg width="16px" height="16px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <circle cx="12" cy="12" r="10" stroke="#8A1538" stroke-width="2"/>
-                                    <path d="M10 8.48352C10.5 7.49451 11 7 12 7C13.2461 7 14 7.98901 14 8.97802C14 9.96703 13.5 10.4615 12 11.4505V13M12 16.5V17" stroke="#8A1538" stroke-width="2" stroke-linecap="round"/>
-                                </svg>
-                            </div>
-
-                            <!-- Tooltip content (RIGHT SIDE) -->
-                            <div class="absolute left-full top-1/2 -translate-y-1/2 ml-2 opacity-0 group-hover:opacity-100 transition duration-100 transform group-hover:translate-x-0 translate-x-2 pointer-events-none">
-                                <div class="bg-[#8A1538] w-max max-w-xs text-white rounded-lg px-4 py-4">
-                                    <p class="font-bold text-md mb-1">Speech or language impairment:</p>
-                                    <p class="text-sm">
-                                       Difficulty speaking, understanding speech, or using language to communicate effectively.
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                    </label>
-                    --}}
-                    <label class="flex items-center space-x-2">
-                        <input type="checkbox" name="disability_types[]" value="speech" class="h-4 w-4 disability-checkbox">
-                        <span>Speech or language impairment</span>
-
-                        <div class="relative group inline-block">
-                            <!-- Trigger: SVG icon -->
-                            <div class="cursor-pointer">
-                                <svg width="16px" height="16px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <circle cx="12" cy="12" r="10" stroke="#8A1538" stroke-width="2"/>
-                                    <path d="M10 8.48352C10.5 7.49451 11 7 12 7C13.2461 7 14 7.98901 14 8.97802C14 9.96703 13.5 10.4615 12 11.4505V13M12 16.5V17" stroke="#8A1538" stroke-width="2" stroke-linecap="round"/>
-                                </svg>
-                            </div>
-
-                            <!-- Tooltip content (RIGHT SIDE) -->
-                           <div class="absolute left-1/2 bottom-full -translate-x-1/2 mb-2 opacity-0 group-hover:opacity-100 transition duration-100 transform group-hover:translate-y-0 translate-y-2 pointer-events-none">
-                            <div class="bg-[#8A1538] w-max max-w-xs text-white rounded-lg px-4 py-4">
-                                <p class="font-bold text-md mb-1">Speech or language impairment:</p>
-                                <p class="text-sm">
-                                   Difficulty speaking, understanding speech, or using language to communicate effectively.
-                                </p>
-                            </div>
-                        </div>
-                        </div>
-                    </label>
-                    {{--
                     <label class="flex items-center space-x-2">
                         <input type="checkbox" name="disability_types[]" value="physical" class="h-4 w-4 disability-checkbox">
                         <span>Physical disability</span>
+                        <button type="button" class="tooltip-trigger cursor-pointer flex-shrink-0"
+                            data-tooltip-title="Physical disability:"
+                            data-tooltip-body="Difficulty in movement or bodily function due to muscle, nerve, or neurological conditions."
+                            aria-label="More info about Physical disability">
+                            <svg width="16px" height="16px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <circle cx="12" cy="12" r="10" stroke="#8A1538" stroke-width="2"/>
+                                <path d="M10 8.48352C10.5 7.49451 11 7 12 7C13.2461 7 14 7.98901 14 8.97802C14 9.96703 13.5 10.4615 12 11.4505V13M12 16.5V17" stroke="#8A1538" stroke-width="2" stroke-linecap="round"/>
+                            </svg>
+                        </button>
                     </label>
-                    --}}
-                    <label class="flex items-center space-x-2">
-                        <input type="checkbox" name="disability_types[]" value="physical" class="h-4 w-4 disability-checkbox">
-                        <span>Physical disability</span>
 
-                        <div class="relative group inline-block">
-                            <!-- Trigger: SVG icon -->
-                            <div class="cursor-pointer">
-                                <svg width="16px" height="16px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <circle cx="12" cy="12" r="10" stroke="#8A1538" stroke-width="2"/>
-                                    <path d="M10 8.48352C10.5 7.49451 11 7 12 7C13.2461 7 14 7.98901 14 8.97802C14 9.96703 13.5 10.4615 12 11.4505V13M12 16.5V17" stroke="#8A1538" stroke-width="2" stroke-linecap="round"/>
-                                </svg>
-                            </div>
-
-                            <!-- Tooltip content (RIGHT SIDE) -->
-                            <div class="absolute left-full top-1/2 -translate-y-1/2 ml-2 opacity-0 group-hover:opacity-100 transition duration-100 transform group-hover:translate-x-0 translate-x-2 pointer-events-none">
-                                <div class="bg-[#8A1538] w-max max-w-xs text-white rounded-lg px-4 py-4">
-                                    <p class="font-bold text-md mb-1">Physical disability:</p>
-                                    <p class="text-sm">
-                                       Difficulty in movement or bodily function due to muscle, nerve, or neurological conditions.
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                    </label>
-                    {{--
                     <label class="flex items-center space-x-2">
                         <input type="checkbox" name="disability_types[]" value="orthopedic" class="h-4 w-4 disability-checkbox">
                         <span>Orthopedic disability</span>
+                        <button type="button" class="tooltip-trigger cursor-pointer flex-shrink-0"
+                            data-tooltip-title="Orthopedic disability:"
+                            data-tooltip-body="Difficulty in movement due to conditions affecting bones, joints, limbs, or the skeletal system."
+                            aria-label="More info about Orthopedic disability">
+                            <svg width="16px" height="16px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <circle cx="12" cy="12" r="10" stroke="#8A1538" stroke-width="2"/>
+                                <path d="M10 8.48352C10.5 7.49451 11 7 12 7C13.2461 7 14 7.98901 14 8.97802C14 9.96703 13.5 10.4615 12 11.4505V13M12 16.5V17" stroke="#8A1538" stroke-width="2" stroke-linecap="round"/>
+                            </svg>
+                        </button>
                     </label>
-                    --}}
-                    <label class="flex items-center space-x-2">
-                        <input type="checkbox" name="disability_types[]" value="orthopedic" class="h-4 w-4 disability-checkbox">
-                        <span>Orthopedic disability</span>
 
-                        <div class="relative group inline-block">
-                            <!-- Trigger: SVG icon -->
-                            <div class="cursor-pointer">
-                                <svg width="16px" height="16px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <circle cx="12" cy="12" r="10" stroke="#8A1538" stroke-width="2"/>
-                                    <path d="M10 8.48352C10.5 7.49451 11 7 12 7C13.2461 7 14 7.98901 14 8.97802C14 9.96703 13.5 10.4615 12 11.4505V13M12 16.5V17" stroke="#8A1538" stroke-width="2" stroke-linecap="round"/>
-                                </svg>
-                            </div>
-
-                            <!-- Tooltip content (RIGHT SIDE) -->
-                            <div class="absolute left-full top-1/2 -translate-y-1/2 ml-2 opacity-0 group-hover:opacity-100 transition duration-100 transform group-hover:translate-x-0 translate-x-2 pointer-events-none">
-                                <div class="bg-[#8A1538] w-max max-w-xs text-white rounded-lg px-4 py-4">
-                                    <p class="font-bold text-md mb-1">Orthopedic disability:</p>
-                                    <p class="text-sm">
-                                        Difficulty in movement due to conditions affecting bones, joints, limbs, or the skeletal system.
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                    </label>
-                    {{--
                     <label class="flex items-center space-x-2">
                         <input type="checkbox" name="disability_types[]" value="learning" class="h-4 w-4 disability-checkbox">
                         <span>Learning disability</span>
+                        <button type="button" class="tooltip-trigger cursor-pointer flex-shrink-0"
+                            data-tooltip-title="Learning disability:"
+                            data-tooltip-body="Difficulty in learning specific skills such as reading, writing, or mathematics, despite average intelligence."
+                            aria-label="More info about Learning disability">
+                            <svg width="16px" height="16px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <circle cx="12" cy="12" r="10" stroke="#8A1538" stroke-width="2"/>
+                                <path d="M10 8.48352C10.5 7.49451 11 7 12 7C13.2461 7 14 7.98901 14 8.97802C14 9.96703 13.5 10.4615 12 11.4505V13M12 16.5V17" stroke="#8A1538" stroke-width="2" stroke-linecap="round"/>
+                            </svg>
+                        </button>
                     </label>
-                    --}}
-                    <label class="flex items-center space-x-2">
-                        <input type="checkbox" name="disability_types[]" value="learning" class="h-4 w-4 disability-checkbox">
-                        <span>Learning disability</span>
 
-                        <div class="relative group inline-block">
-                            <!-- Trigger: SVG icon -->
-                            <div class="cursor-pointer">
-                                <svg width="16px" height="16px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <circle cx="12" cy="12" r="10" stroke="#8A1538" stroke-width="2"/>
-                                    <path d="M10 8.48352C10.5 7.49451 11 7 12 7C13.2461 7 14 7.98901 14 8.97802C14 9.96703 13.5 10.4615 12 11.4505V13M12 16.5V17" stroke="#8A1538" stroke-width="2" stroke-linecap="round"/>
-                                </svg>
-                            </div>
-
-                            <!-- Tooltip content (RIGHT SIDE) -->
-                            <div class="absolute left-full top-1/2 -translate-y-1/2 ml-2 opacity-0 group-hover:opacity-100 transition duration-100 transform group-hover:translate-x-0 translate-x-2 pointer-events-none">
-                                <div class="bg-[#8A1538] w-max max-w-xs text-white rounded-lg px-4 py-4">
-                                    <p class="font-bold text-md mb-1">Learning disability:</p>
-                                    <p class="text-sm">
-                                        Difficulty in learning specific skills such as reading, writing, or mathematics, despite average intelligence.
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                    </label>
                 </div>
                 <!-- Right column -->
                 <div class="relative w-full space-y-3">
-                    {{--
+
                     <label class="flex items-center space-x-2">
                         <input type="checkbox" name="disability_types[]" value="intellectual" class="h-4 w-4 disability-checkbox">
                         <span>Intellectual disability</span>
+                        <button type="button" class="tooltip-trigger cursor-pointer flex-shrink-0"
+                            data-tooltip-title="Intellectual disability:"
+                            data-tooltip-body="Significant limitations in intellectual functioning and everyday adaptive skills, beginning before adulthood."
+                            aria-label="More info about Intellectual disability">
+                            <svg width="16px" height="16px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <circle cx="12" cy="12" r="10" stroke="#8A1538" stroke-width="2"/>
+                                <path d="M10 8.48352C10.5 7.49451 11 7 12 7C13.2461 7 14 7.98901 14 8.97802C14 9.96703 13.5 10.4615 12 11.4505V13M12 16.5V17" stroke="#8A1538" stroke-width="2" stroke-linecap="round"/>
+                            </svg>
+                        </button>
                     </label>
-                    --}}
-                    <label class="flex items-center space-x-2">
-                        <input type="checkbox" name="disability_types[]" value="intellectual" class="h-4 w-4 disability-checkbox">
-                        <span>Intellectual disability</span>
 
-                        <div class="relative group inline-block">
-                            <!-- Trigger: SVG icon -->
-                            <div class="cursor-pointer">
-                                <svg width="16px" height="16px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <circle cx="12" cy="12" r="10" stroke="#8A1538" stroke-width="2"/>
-                                    <path d="M10 8.48352C10.5 7.49451 11 7 12 7C13.2461 7 14 7.98901 14 8.97802C14 9.96703 13.5 10.4615 12 11.4505V13M12 16.5V17" stroke="#8A1538" stroke-width="2" stroke-linecap="round"/>
-                                </svg>
-                            </div>
-
-                            <!-- Tooltip content (RIGHT SIDE) -->
-                            <div class="absolute left-full top-1/2 -translate-y-1/2 ml-2 opacity-0 group-hover:opacity-100 transition duration-100 transform group-hover:translate-x-0 translate-x-2 pointer-events-none">
-                                <div class="bg-[#8A1538] w-max max-w-xs text-white rounded-lg px-4 py-4">
-                                    <p class="font-bold text-md mb-1">Intellectual disability:</p>
-                                    <p class="text-sm">
-                                        Significant limitations in intellectual functioning and everyday adaptive skills, beginning before adulthood.
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                    </label>
-                    {{--
                     <label class="flex items-center space-x-2">
                         <input type="checkbox" name="disability_types[]" value="autism" class="h-4 w-4 disability-checkbox">
                         <span>Autism spectrum disorder</span>
+                        <button type="button" class="tooltip-trigger cursor-pointer flex-shrink-0"
+                            data-tooltip-title="Autism spectrum disorder:"
+                            data-tooltip-body="A developmental condition affecting communication, social interaction, and behavior, with varying levels of support needs."
+                            aria-label="More info about Autism spectrum disorder">
+                            <svg width="16px" height="16px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <circle cx="12" cy="12" r="10" stroke="#8A1538" stroke-width="2"/>
+                                <path d="M10 8.48352C10.5 7.49451 11 7 12 7C13.2461 7 14 7.98901 14 8.97802C14 9.96703 13.5 10.4615 12 11.4505V13M12 16.5V17" stroke="#8A1538" stroke-width="2" stroke-linecap="round"/>
+                            </svg>
+                        </button>
                     </label>
-                    --}}
-                    <label class="flex items-center space-x-2">
-                        <input type="checkbox" name="disability_types[]" value="autism" class="h-4 w-4 disability-checkbox">
-                        <span>Autism spectrum disorder</span>
 
-                        <div class="relative group inline-block">
-                            <!-- Trigger: SVG icon -->
-                            <div class="cursor-pointer">
-                                <svg width="16px" height="16px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <circle cx="12" cy="12" r="10" stroke="#8A1538" stroke-width="2"/>
-                                    <path d="M10 8.48352C10.5 7.49451 11 7 12 7C13.2461 7 14 7.98901 14 8.97802C14 9.96703 13.5 10.4615 12 11.4505V13M12 16.5V17" stroke="#8A1538" stroke-width="2" stroke-linecap="round"/>
-                                </svg>
-                            </div>
-
-                            <!-- Tooltip content (RIGHT SIDE) -->
-                            <div class="absolute left-full top-1/2 -translate-y-1/2 ml-2 opacity-0 group-hover:opacity-100 transition duration-100 transform group-hover:translate-x-0 translate-x-2 pointer-events-none">
-                                <div class="bg-[#8A1538] w-max max-w-xs text-white rounded-lg px-4 py-4">
-                                    <p class="font-bold text-md mb-1">Autism spectrum disorder:</p>
-                                    <p class="text-sm">
-                                        A developmental condition affecting communication, social interaction, and behavior, with varying levels of support needs.
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                    </label>
-                    {{--
                     <label class="flex items-center space-x-2">
                         <input type="checkbox" name="disability_types[]" value="psychosocial" class="h-4 w-4 disability-checkbox">
                         <span>Psychosocial disability</span>
+                        <button type="button" class="tooltip-trigger cursor-pointer flex-shrink-0"
+                            data-tooltip-title="Psychosocial disability:"
+                            data-tooltip-body="Conditions that affect mood, thinking, behavior, or social interaction and result in significant functional limitations."
+                            aria-label="More info about Psychosocial disability">
+                            <svg width="16px" height="16px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <circle cx="12" cy="12" r="10" stroke="#8A1538" stroke-width="2"/>
+                                <path d="M10 8.48352C10.5 7.49451 11 7 12 7C13.2461 7 14 7.98901 14 8.97802C14 9.96703 13.5 10.4615 12 11.4505V13M12 16.5V17" stroke="#8A1538" stroke-width="2" stroke-linecap="round"/>
+                            </svg>
+                        </button>
                     </label>
-                    --}}
-                    <label class="flex items-center space-x-2">
-                        <input type="checkbox" name="disability_types[]" value="psychosocial" class="h-4 w-4 disability-checkbox">
-                        <span>Psychosocial disability</span>
 
-                        <div class="relative group inline-block">
-                            <!-- Trigger: SVG icon -->
-                            <div class="cursor-pointer">
-                                <svg width="16px" height="16px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <circle cx="12" cy="12" r="10" stroke="#8A1538" stroke-width="2"/>
-                                    <path d="M10 8.48352C10.5 7.49451 11 7 12 7C13.2461 7 14 7.98901 14 8.97802C14 9.96703 13.5 10.4615 12 11.4505V13M12 16.5V17" stroke="#8A1538" stroke-width="2" stroke-linecap="round"/>
-                                </svg>
-                            </div>
-
-                            <!-- Tooltip content (RIGHT SIDE) -->
-                            <div class="absolute left-full top-1/2 -translate-y-1/2 ml-2 opacity-0 group-hover:opacity-100 transition duration-100 transform group-hover:translate-x-0 translate-x-2 pointer-events-none">
-                                <div class="bg-[#8A1538] w-max max-w-xs text-white rounded-lg px-4 py-4">
-                                    <p class="font-bold text-md mb-1">Psychosocial disability:</p>
-                                    <p class="text-sm">
-                                        Conditions that affect mood, thinking, behavior, or social interaction and result in significant functional limitations.
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                    </label>
-                    {{--
                     <label class="flex items-center space-x-2">
                         <input type="checkbox" name="disability_types[]" value="mental" class="h-4 w-4 disability-checkbox">
                         <span>Mental disability</span>
+                        <button type="button" class="tooltip-trigger cursor-pointer flex-shrink-0"
+                            data-tooltip-title="Mental disability:"
+                            data-tooltip-body="Conditions that substantially affect cognitive or emotional functioning and daily living, as recognized under Philippine law."
+                            aria-label="More info about Mental disability">
+                            <svg width="16px" height="16px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <circle cx="12" cy="12" r="10" stroke="#8A1538" stroke-width="2"/>
+                                <path d="M10 8.48352C10.5 7.49451 11 7 12 7C13.2461 7 14 7.98901 14 8.97802C14 9.96703 13.5 10.4615 12 11.4505V13M12 16.5V17" stroke="#8A1538" stroke-width="2" stroke-linecap="round"/>
+                            </svg>
+                        </button>
                     </label>
-                    --}}
-                    <label class="flex items-center space-x-2">
-                        <input type="checkbox" name="disability_types[]" value="mental" class="h-4 w-4 disability-checkbox">
-                        <span>Mental disability</span>
 
-                        <div class="relative group inline-block">
-                            <!-- Trigger: SVG icon -->
-                            <div class="cursor-pointer">
-                                <svg width="16px" height="16px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <circle cx="12" cy="12" r="10" stroke="#8A1538" stroke-width="2"/>
-                                    <path d="M10 8.48352C10.5 7.49451 11 7 12 7C13.2461 7 14 7.98901 14 8.97802C14 9.96703 13.5 10.4615 12 11.4505V13M12 16.5V17" stroke="#8A1538" stroke-width="2" stroke-linecap="round"/>
-                                </svg>
-                            </div>
-
-                            <!-- Tooltip content (RIGHT SIDE) -->
-                            <div class="absolute left-full top-1/2 -translate-y-1/2 ml-2 opacity-0 group-hover:opacity-100 transition duration-100 transform group-hover:translate-x-0 translate-x-2 pointer-events-none">
-                                <div class="bg-[#8A1538] w-max max-w-xs text-white rounded-lg px-4 py-4">
-                                    <p class="font-bold text-md mb-1">Mental disability:</p>
-                                    <p class="text-sm">
-                                        Conditions that substantially affect cognitive or emotional functioning and daily living, as recognized under Philippine law.
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                    </label>
-                    {{--
                     <label class="flex items-center space-x-2">
                         <input type="checkbox" name="disability_types[]" value="cancer" class="h-4 w-4 disability-checkbox">
                         <span>Cancer (PWD-recognized)</span>
+                        <button type="button" class="tooltip-trigger cursor-pointer flex-shrink-0"
+                            data-tooltip-title="Cancer (PWD-recognized):"
+                            data-tooltip-body="Cancer that results in significant functional limitations or long-term effects impacting daily activities."
+                            aria-label="More info about Cancer (PWD-recognized)">
+                            <svg width="16px" height="16px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <circle cx="12" cy="12" r="10" stroke="#8A1538" stroke-width="2"/>
+                                <path d="M10 8.48352C10.5 7.49451 11 7 12 7C13.2461 7 14 7.98901 14 8.97802C14 9.96703 13.5 10.4615 12 11.4505V13M12 16.5V17" stroke="#8A1538" stroke-width="2" stroke-linecap="round"/>
+                            </svg>
+                        </button>
                     </label>
-                    --}}
-                    <label class="flex items-center space-x-2">
-                        <input type="checkbox" name="disability_types[]" value="cancer" class="h-4 w-4 disability-checkbox">
-                        <span>Cancer (PWD-recognized)</span>
 
-                        <div class="relative group inline-block">
-                            <!-- Trigger: SVG icon -->
-                            <div class="cursor-pointer">
-                                <svg width="16px" height="16px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <circle cx="12" cy="12" r="10" stroke="#8A1538" stroke-width="2"/>
-                                    <path d="M10 8.48352C10.5 7.49451 11 7 12 7C13.2461 7 14 7.98901 14 8.97802C14 9.96703 13.5 10.4615 12 11.4505V13M12 16.5V17" stroke="#8A1538" stroke-width="2" stroke-linecap="round"/>
-                                </svg>
-                            </div>
-
-                            <!-- Tooltip content (RIGHT SIDE) -->
-                            <div class="absolute left-full top-1/2 -translate-y-1/2 ml-2 opacity-0 group-hover:opacity-100 transition duration-100 transform group-hover:translate-x-0 translate-x-2 pointer-events-none">
-                                <div class="bg-[#8A1538] w-max max-w-xs text-white rounded-lg px-4 py-4">
-                                    <p class="font-bold text-md mb-1">Cancer (PWD-recognized):</p>
-                                    <p class="text-sm">
-                                        Cancer that results in significant functional limitations or long-term effects impacting daily activities.
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                    </label>
-                    {{--
                     <label class="flex items-center space-x-2">
                         <input type="checkbox" name="disability_types[]" value="rare_disease" class="h-4 w-4 disability-checkbox">
                         <span>Rare disease</span>
+                        <button type="button" class="tooltip-trigger cursor-pointer flex-shrink-0"
+                            data-tooltip-title="Rare disease:"
+                            data-tooltip-body="A medically recognized rare condition that results in significant functional limitations."
+                            aria-label="More info about Rare disease">
+                            <svg width="16px" height="16px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <circle cx="12" cy="12" r="10" stroke="#8A1538" stroke-width="2"/>
+                                <path d="M10 8.48352C10.5 7.49451 11 7 12 7C13.2461 7 14 7.98901 14 8.97802C14 9.96703 13.5 10.4615 12 11.4505V13M12 16.5V17" stroke="#8A1538" stroke-width="2" stroke-linecap="round"/>
+                            </svg>
+                        </button>
                     </label>
-                    --}}
-                      <label class="flex items-center space-x-2">
-                        <input type="checkbox" name="disability_types[]" value="rare_disease" class="h-4 w-4 disability-checkbox">
-                        <span>Rare disease</span>
 
-                        <div class="relative group inline-block">
-                            <!-- Trigger: SVG icon -->
-                            <div class="cursor-pointer">
-                                <svg width="16px" height="16px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <circle cx="12" cy="12" r="10" stroke="#8A1538" stroke-width="2"/>
-                                    <path d="M10 8.48352C10.5 7.49451 11 7 12 7C13.2461 7 14 7.98901 14 8.97802C14 9.96703 13.5 10.4615 12 11.4505V13M12 16.5V17" stroke="#8A1538" stroke-width="2" stroke-linecap="round"/>
-                                </svg>
-                            </div>
-
-                            <!-- Tooltip content (RIGHT SIDE) -->
-                            <div class="absolute left-full top-1/2 -translate-y-1/2 ml-2 opacity-0 group-hover:opacity-100 transition duration-100 transform group-hover:translate-x-0 translate-x-2 pointer-events-none">
-                                <div class="bg-[#8A1538] w-max max-w-xs text-white rounded-lg px-4 py-4">
-                                    <p class="font-bold text-md mb-1">Rare disease:</p>
-                                    <p class="text-sm">
-                                        A medically recognized rare condition that results in significant functional limitations.
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                    </label>
                 </div>
             </div>
         </div>
         
-        <!-- Support Needs - Fixed with proper name attributes and wrapper -->
+        <!-- Support Needs -->
         <div class="support-needs-container relative w-full">
             <div class="max-w-md space-y-3">
                 <p class="font-medium">
@@ -564,7 +326,7 @@
         <div class="relative w-full">
             <div class="relative w-full">
                 <label for="ipra" class="font-medium">
-                    Do you identify as a member of an Indigenous Peoples (IP) community, as defined under the Indigenous Peoples’ 
+                    Do you identify as a member of an Indigenous Peoples (IP) community, as defined under the Indigenous Peoples' 
                     Rights Act 
                     <span class="font-semibold text-[#8A1538]">
                             <a target="_blank" href="https://www.officialgazette.gov.ph/1997/10/29/republic-act-no-8371/"
@@ -600,7 +362,7 @@
                             <option value="Agta">Agta</option>
                             <option value="Ati">Ati</option>
                             <option value="Bagobo">Bagobo</option>
-                            <option value="Blaan">B’laan</option>
+                            <option value="Blaan">B'laan</option>
                             <option value="Bontoc">Bontoc</option>
                             <option value="Higaonon">Higaonon</option>
                             <option value="Ibaloi">Ibaloi</option>
@@ -614,7 +376,7 @@
                             <option value="Maranao">Maranao</option>
                             <option value="Sama-Bajau">Sama-Bajau</option>
                             <option value="Subanen">Subanen</option>
-                            <option value="Tboli">T’boli</option>
+                            <option value="Tboli">T'boli</option>
                             <option value="Tausug">Tausug</option>
                             <option value="Tumandok">Tumandok</option>
                             <option value="Yakan">Yakan</option>
@@ -622,7 +384,7 @@
                         </select>
                     </div>
 
-                    <!-- IPRA Specify Field - Hidden by default, shows only when "Other" is selected -->
+                    <!-- IPRA Specify Field -->
                     <div id="ipra-specify-wrapper" class="relative w-full mt-6" style="display: none;">
                         <div class="relative w-full">
                             <label for="ipra_specify" class="font-medium">
@@ -638,61 +400,170 @@
     </div>
 </div>
 
+{{-- Shared tooltip popup (single instance, moved by JS) --}}
+<div id="disability-tooltip-popup"
+     style="display:none; position:fixed; z-index:9999; max-width:280px; pointer-events:none;"
+     role="tooltip">
+    <div class="bg-[#8A1538] text-white rounded-lg px-4 py-4 shadow-lg">
+        <p id="disability-tooltip-title" class="font-bold text-sm mb-1"></p>
+        <p id="disability-tooltip-body" class="text-sm"></p>
+    </div>
+</div>
+
 <script>
 document.addEventListener('DOMContentLoaded', function () {
-    // IPRA Fields Toggle
-    const ipraSelect = document.getElementById('ipra');
-    const ipraFields = document.getElementById('ipra-fields');
-    const indigenousGroup = document.getElementById('indigenous_group');
+
+    /* ─────────────────────────────────────────────
+       TOOLTIP SYSTEM (mobile + desktop)
+    ───────────────────────────────────────────── */
+    const tooltipEl    = document.getElementById('disability-tooltip-popup');
+    const tooltipTitle = document.getElementById('disability-tooltip-title');
+    const tooltipBody  = document.getElementById('disability-tooltip-body');
+    const MARGIN       = 8; // px gap from trigger
+    let activeBtn      = null;
+    let justToggled    = false;
+
+    function positionTooltip(btn) {
+        tooltipEl.style.display = 'block';
+        tooltipEl.style.visibility = 'hidden'; // render off-screen first to measure
+
+        const btnRect     = btn.getBoundingClientRect();
+        const tipW        = tooltipEl.offsetWidth;
+        const tipH        = tooltipEl.offsetHeight;
+        const vw          = window.innerWidth;
+        const vh          = window.innerHeight;
+
+        // Try right of icon first
+        let left = btnRect.right + MARGIN;
+        let top  = btnRect.top + (btnRect.height / 2) - (tipH / 2);
+
+        // If overflows right, try left of icon
+        if (left + tipW > vw - MARGIN) {
+            left = btnRect.left - tipW - MARGIN;
+        }
+
+        // If still overflows left (very narrow screen), center below icon
+        if (left < MARGIN) {
+            left = Math.max(MARGIN, (vw / 2) - (tipW / 2));
+            top  = btnRect.bottom + MARGIN;
+        }
+
+        // Clamp vertically
+        top = Math.max(MARGIN, Math.min(top, vh - tipH - MARGIN));
+
+        tooltipEl.style.left       = left + 'px';
+        tooltipEl.style.top        = top + 'px';
+        tooltipEl.style.visibility = 'visible';
+    }
+
+    function showTooltip(btn) {
+        tooltipTitle.textContent = btn.dataset.tooltipTitle || '';
+        tooltipBody.textContent  = btn.dataset.tooltipBody  || '';
+        activeBtn = btn;
+        positionTooltip(btn);
+    }
+
+    function hideTooltip() {
+        tooltipEl.style.display = 'none';
+        activeBtn = null;
+    }
+
+    // Attach to every trigger button
+    document.querySelectorAll('.tooltip-trigger').forEach(function (btn) {
+
+        // Desktop: hover
+        btn.addEventListener('mouseenter', function () {
+            showTooltip(btn);
+        });
+        btn.addEventListener('mouseleave', function () {
+            hideTooltip();
+        });
+
+        // Mobile / touch: tap to toggle
+        btn.addEventListener('touchend', function (e) {
+            e.preventDefault(); // prevent ghost click
+            justToggled = true;
+            setTimeout(function () { justToggled = false; }, 0);
+
+            if (activeBtn === btn) {
+                hideTooltip();
+            } else {
+                showTooltip(btn);
+            }
+        });
+    });
+
+    // Tap anywhere else closes the tooltip (mobile)
+    document.addEventListener('touchend', function () {
+        if (justToggled) return;
+        hideTooltip();
+    });
+
+    // Click anywhere else closes the tooltip (desktop, just in case)
+    document.addEventListener('click', function (e) {
+        if (activeBtn && !activeBtn.contains(e.target)) {
+            hideTooltip();
+        }
+    });
+
+    // Reposition on scroll/resize while open
+    window.addEventListener('scroll', function () {
+        if (activeBtn) positionTooltip(activeBtn);
+    }, { passive: true });
+
+    window.addEventListener('resize', function () {
+        if (activeBtn) positionTooltip(activeBtn);
+    });
+
+
+    /* ─────────────────────────────────────────────
+       IPRA FIELDS TOGGLE
+    ───────────────────────────────────────────── */
+    const ipraSelect        = document.getElementById('ipra');
+    const ipraFields        = document.getElementById('ipra-fields');
+    const indigenousGroup   = document.getElementById('indigenous_group');
     const ipraSpecifyWrapper = document.getElementById('ipra-specify-wrapper');
-    const ipraSpecify = document.getElementById('ipra_specify');
-    
-    // Initially hide IPRA fields
-    ipraFields.style.display = 'none';
+    const ipraSpecify       = document.getElementById('ipra_specify');
+
+    ipraFields.style.display        = 'none';
     ipraSpecifyWrapper.style.display = 'none';
 
-    // Handle IPRA select change
     ipraSelect.addEventListener('change', function () {
         if (this.value === 'yes') {
             ipraFields.style.display = 'block';
             indigenousGroup.required = true;
-            
-            // Reset the indigenous group selection
-            indigenousGroup.value = '';
+            indigenousGroup.value    = '';
             ipraSpecifyWrapper.style.display = 'none';
             ipraSpecify.required = false;
-            ipraSpecify.value = '';
+            ipraSpecify.value    = '';
         } else {
             ipraFields.style.display = 'none';
             indigenousGroup.required = false;
-            ipraSpecify.required = false;
-            
-            // Clear values when hidden
-            indigenousGroup.value = '';
-            ipraSpecify.value = '';
+            ipraSpecify.required     = false;
+            indigenousGroup.value    = '';
+            ipraSpecify.value        = '';
         }
     });
 
-    // Handle Indigenous Group change
-    indigenousGroup.addEventListener('change', function() {
+    indigenousGroup.addEventListener('change', function () {
         if (this.value === 'other') {
-            // Show the specify wrapper and make it required
             ipraSpecifyWrapper.style.display = 'block';
             ipraSpecify.required = true;
         } else {
-            // Hide the specify wrapper and remove required
             ipraSpecifyWrapper.style.display = 'none';
             ipraSpecify.required = false;
-            ipraSpecify.value = ''; // Clear the value when hidden
+            ipraSpecify.value    = '';
         }
     });
 
-    // PWD Fields Toggle
-    const pwdSelect = document.getElementById('pwd');
-    const disabilityTypes = document.getElementById('pwd-types');
+
+    /* ─────────────────────────────────────────────
+       PWD FIELDS TOGGLE
+    ───────────────────────────────────────────── */
+    const pwdSelect          = document.getElementById('pwd');
+    const disabilityTypes    = document.getElementById('pwd-types');
     const disabilityCheckboxes = document.querySelectorAll('.disability-checkbox');
 
-    // Initially hide disability types
     disabilityTypes.style.display = 'none';
 
     pwdSelect.addEventListener('change', function () {
@@ -700,83 +571,52 @@ document.addEventListener('DOMContentLoaded', function () {
             disabilityTypes.style.display = 'block';
         } else {
             disabilityTypes.style.display = 'none';
-            // Uncheck all checkboxes when hidden
             disabilityCheckboxes.forEach(cb => cb.checked = false);
         }
     });
 
-    // Support Needs Logic
-    const otherCheckbox = document.getElementById('support-other');
-    const noneCheckbox = document.getElementById('support-none');
-    const specifyWrapper = document.getElementById('support-specify-wrapper');
-    const specifyInput = document.getElementById('support-specify');
+
+    /* ─────────────────────────────────────────────
+       SUPPORT NEEDS LOGIC
+    ───────────────────────────────────────────── */
+    const otherCheckbox    = document.getElementById('support-other');
+    const noneCheckbox     = document.getElementById('support-none');
+    const specifyWrapper   = document.getElementById('support-specify-wrapper');
+    const specifyInput     = document.getElementById('support-specify');
     const supportCheckboxes = document.querySelectorAll('.support-checkbox');
 
-    // Handle "Other" checkbox
     otherCheckbox.addEventListener('change', function () {
         if (this.checked) {
-            // Uncheck "None" if "Other" is checked
-            if (noneCheckbox.checked) {
-                noneCheckbox.checked = false;
-            }
+            if (noneCheckbox.checked) noneCheckbox.checked = false;
             specifyWrapper.classList.remove('hidden');
             specifyInput.required = true;
         } else {
-            // Check if any other checkbox is checked to determine if we should hide
-            const anyOtherChecked = Array.from(supportCheckboxes).some(cb => 
-                cb !== otherCheckbox && cb.checked && cb.value !== 'none'
-            );
-            
-            if (!anyOtherChecked && !noneCheckbox.checked) {
-                specifyWrapper.classList.add('hidden');
-                specifyInput.required = false;
-                specifyInput.value = '';
-            }
-        }
-    });
-
-    // Handle "None" checkbox
-    noneCheckbox.addEventListener('change', function () {
-        if (this.checked) {
-            // If "None" is checked, uncheck all other support checkboxes
-            supportCheckboxes.forEach(cb => {
-                if (cb !== noneCheckbox) {
-                    cb.checked = false;
-                }
-            });
-            // Hide and clear the other specification field
             specifyWrapper.classList.add('hidden');
             specifyInput.required = false;
-            specifyInput.value = '';
+            specifyInput.value    = '';
         }
     });
 
-    // Handle other checkboxes to manage specify field visibility
+    noneCheckbox.addEventListener('change', function () {
+        if (this.checked) {
+            supportCheckboxes.forEach(cb => {
+                if (cb !== noneCheckbox) cb.checked = false;
+            });
+            specifyWrapper.classList.add('hidden');
+            specifyInput.required = false;
+            specifyInput.value    = '';
+        }
+    });
+
     supportCheckboxes.forEach(cb => {
         if (cb !== otherCheckbox && cb !== noneCheckbox) {
-            cb.addEventListener('change', function() {
-                if (this.checked) {
-                    // If any non-none, non-other checkbox is checked, uncheck none
-                    if (noneCheckbox.checked) {
-                        noneCheckbox.checked = false;
-                    }
-                }
-                
-                // Check if any non-none checkbox is checked to determine if we should show/hide other field
-                const anyNonNoneChecked = Array.from(supportCheckboxes).some(cb => 
-                    cb.checked && cb.value !== 'none'
-                );
-                
-                if (!anyNonNoneChecked) {
-                    // If no non-none checkboxes are checked, hide other field if other is not checked
-                    if (!otherCheckbox.checked) {
-                        specifyWrapper.classList.add('hidden');
-                        specifyInput.required = false;
-                        specifyInput.value = '';
-                    }
+            cb.addEventListener('change', function () {
+                if (this.checked && noneCheckbox.checked) {
+                    noneCheckbox.checked = false;
                 }
             });
         }
     });
+
 });
 </script>

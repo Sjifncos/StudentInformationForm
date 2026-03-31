@@ -53,7 +53,7 @@
                 Full Name
                 <span class="text-red-500 ml-1">*</span>
             </label>
-            <input required name="emergenency_fullname" type="text" 
+            <input required name="emergency_fullname" type="text" 
                 class="peer w-full px-4 py-3 text-base bg-white outline-none border-2 border-gray-300 rounded-[12px] focus:border-[#0E6021] focus:ring-1 focus:ring-[#0E6021] transition-colors mt-2"/>
         </div>
 
@@ -186,23 +186,6 @@
                         <span class="text-red-500 ml-1">*</span>
                     </label>
                     <input id="guardian_lastname" name="guardian_lastname" type="text" 
-                        class="peer w-full px-4 py-3 text-base bg-white outline-none border-2 border-gray-300 rounded-[12px] focus:border-[#0E6021] focus:ring-1 focus:ring-[#0E6021] transition-colors mt-2"/>
-                </div>
-
-                <!-- Guardian's Phone Number -->
-                <div class="md:col-span-1 flex flex-col w-full">
-                    <label for="guardian_phonenumber" class="font-medium">Mobile Number</label>
-                    <input id="guardian_phonenumber" name="guardian_phonenumber" type="text"
-                        placeholder="0000 000 0000" 
-                        class="peer w-full px-4 py-3 text-base bg-white outline-none border-2 border-gray-300 rounded-[12px] focus:border-[#0E6021] focus:ring-1 focus:ring-[#0E6021] transition-colors mt-2"/>
-                        <p class="text-[12px] text-gray-500 mt-1">ex. 0912 345 6789</p>
-                </div>
-
-                <!-- Guardian's Email -->
-                <div class="md:col-span-1 flex flex-col w-full">
-                    <label for="guardian_email" class="font-medium">E-mail</label>
-                    <input id="guardian_email" name="guardian_email" type="text" 
-                        placeholder="ex: myname@example.com"
                         class="peer w-full px-4 py-3 text-base bg-white outline-none border-2 border-gray-300 rounded-[12px] focus:border-[#0E6021] focus:ring-1 focus:ring-[#0E6021] transition-colors mt-2"/>
                 </div>
             </div>

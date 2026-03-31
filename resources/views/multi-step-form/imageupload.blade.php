@@ -197,15 +197,7 @@
             }
         });
 
-        // Prevent form submission if dimensions are invalid
-        const form = imageInput.closest('form');
-        if (form) {
-            form.addEventListener('submit', function(e) {
-                if (!isValidFile) {
-                    e.preventDefault();
-                    dimensionError.classList.remove('hidden');
-                }
-            });
-        }
+        // Expose validity state so app.js validation can check it
+        window.imageUploadValid = function() { return isValidFile; };
     })();
 </script>

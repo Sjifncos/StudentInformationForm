@@ -36,9 +36,7 @@
                     </div>
                     <button type="button"
                         class="remove-entry text-red-600 hover:text-red-800 mt-2 text-sm hidden flex items-center gap-1">
-                        
                         <span>Remove</span>
-                        
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
                             xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                             <path fill-rule="evenodd" clip-rule="evenodd"
@@ -175,10 +173,16 @@
 
 <script>
     (function() {
-        // ========== Educational Entries Management ==========
-        const entriesContainer = document.getElementById('educational-entries');
-        const addEntryBtn = document.getElementById('add-educational-entry');
+        // Helper: restrict year input to digits only and max 4 digits
+        function restrictYearInput(input) {
+            input.addEventListener('input', function(e) {
+                let value = this.value.replace(/\D/g, '');
+                if (value.length > 4) value = value.slice(0, 4);
+                this.value = value;
+            });
+        }
 
+        // Create a new educational entry (cloned from template)
         function createEducationalEntry() {
             const template = document.querySelector('.educational-entry').cloneNode(true);
             // Clear input values
@@ -187,6 +191,7 @@
             const removeBtn = template.querySelector('.remove-entry');
             removeBtn.classList.remove('hidden');
             removeBtn.addEventListener('click', function() {
+                const entriesContainer = document.getElementById('educational-entries');
                 if (entriesContainer.children.length > 1) {
                     template.remove();
                 } else {
@@ -197,12 +202,17 @@
                     }
                 }
             });
+            // Apply digit restriction to the year input of this new entry
+            const yearInput = template.querySelector('input[name="year_graduateds[]"]');
+            if (yearInput) restrictYearInput(yearInput);
             return template;
         }
 
+        const entriesContainer = document.getElementById('educational-entries');
+        const addEntryBtn = document.getElementById('add-educational-entry');
+
         if (addEntryBtn) {
             addEntryBtn.addEventListener('click', function() {
-                // Check if the last entry is complete before adding a new one
                 const entries = entriesContainer.querySelectorAll('.educational-entry');
                 const lastEntry = entries[entries.length - 1];
                 const inputs = lastEntry.querySelectorAll('input');
@@ -218,6 +228,23 @@
                     }
                     return;
                 }
+
+                // --- NEW: Validate year is not higher than current year ---
+                const yearInput = lastEntry.querySelector('input[name="year_graduateds[]"]');
+                if (yearInput) {
+                    const yearValue = parseInt(yearInput.value.trim(), 10);
+                    const currentYear = new Date().getFullYear();
+                    if (!isNaN(yearValue) && yearValue > currentYear) {
+                        if (typeof window.showToast === 'function') {
+                            window.showToast('Year Graduated must not be higher than the Current Year', 'error');
+                        } else {
+                            alert('Year Graduated must not be higher than the Current Year');
+                        }
+                        return;
+                    }
+                }
+                // -----------------------------------------------------------
+
                 const newEntry = createEducationalEntry();
                 entriesContainer.appendChild(newEntry);
             });
@@ -235,12 +262,14 @@
                 }
             });
         }
-
-        // Call initially and whenever entries change
         updateRemoveButtons();
-        // Observe changes to entries (optional, but we can just call after add/remove)
+
+        // Observe changes to entries to update remove buttons
         const observer = new MutationObserver(updateRemoveButtons);
         observer.observe(entriesContainer, { childList: true, subtree: true });
+
+        // Apply digit restriction to existing year inputs
+        document.querySelectorAll('input[name="year_graduateds[]"]').forEach(restrictYearInput);
 
         // ========== Income type change ==========
         const typeOfIncome = document.getElementById('typeofincome');
@@ -289,26 +318,4 @@
             });
         }
     })();
-    // Restrict year input to digits only
-function restrictYearInput(input) {
-    input.addEventListener('input', function(e) {
-        let value = this.value.replace(/\D/g, '');
-        if (value.length > 4) value = value.slice(0, 4);
-        this.value = value;
-    });
-}
-
-// Apply to existing year inputs
-document.querySelectorAll('input[name="year_graduateds[]"]').forEach(restrictYearInput);
-
-// Override createEducationalEntry to also restrict the new year input
-const originalCreate = window.createEducationalEntry; // assume it's globally available
-if (originalCreate) {
-    window.createEducationalEntry = function() {
-        const newEntry = originalCreate();
-        const yearInput = newEntry.querySelector('input[name="year_graduateds[]"]');
-        if (yearInput) restrictYearInput(yearInput);
-        return newEntry;
-    };
-}
 </script>

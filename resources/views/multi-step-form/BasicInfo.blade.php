@@ -4,7 +4,7 @@
             Basic Information
         </h1>
         <div class="col-span-1 md:col-span-2">
-            <label for="degreeprogram" class="font-medium">
+            <label for="degreeprogram" name="degreeprogram" class="font-medium">
                 Degree Program <span class="text-red-500">*</span>
             </label>
             <select id="degreeprogram" name="degreeprogram" required

@@ -22,8 +22,7 @@
             @include('multi-step-form.Education&Employment')            
             @include('multi-step-form.OtherInfo')
             @include('multi-step-form.imageupload')        
-            @include('multi-step-form.Undertakings')          
-
+            @include('multi-step-form.Undertakings')           
 
             <!-- Navigation Buttons -->
             <div class="col-span-1 md:col-span-2">

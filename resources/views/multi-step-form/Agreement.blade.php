@@ -28,7 +28,6 @@
 
     <div class="mb-12 flex items-start gap-4">
         <input
-        
             type="checkbox"
             id="agreement"
             name="agreement"

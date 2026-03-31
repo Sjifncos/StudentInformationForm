@@ -17,65 +17,86 @@
         <div class="bg-white rounded-2xl shadow-lg w-full max-w-2xl lg:max-w-5xl xl:max-w-6xl overflow-hidden mb-8">
 
         {{-- Header --}}
-        <div class="bg-[#8A1538] px-6 py-5">
-            <p class="text-white font-semibold text-[18px] leading-snug">
+        <div class="bg-[#8A1538] px-4 sm:px-6 py-4 sm:py-5">
+            <p class="text-white font-semibold text-sm sm:text-base md:text-lg leading-snug">
                 Before Proceeding to the Student Information Form, Please prepare the following Documents:
             </p>
         </div>
 
-        {{-- Document List --}}
-        <div class="px-6 pt-5 pb-4">
-            <ul class="space-y-1">
+       {{-- Document List --}}
+        <div class="px-4 sm:px-6 pt-4 sm:pt-5 pb-3 sm:pb-4">
+            <ul class="space-y-2">
 
-                <li class="flex items-start gap-3 px-2 py-2 rounded-lg hover:bg-red-50">
-                    <span class="mt-[6px] w-2 h-2 rounded-full bg-gray-400 flex-shrink-0"></span>
-                    <span class="text-black-800 text-sm">2×2 Picture <span class="text-[#8A1538] font-semibold">(Required)</span></span>
+                <li class="flex items-start gap-2 sm:gap-3 px-2 py-2 rounded-lg hover:bg-red-50">
+                    <span class="mt-1.5 w-2.5 h-2.5 rounded-full bg-gray-400 flex-shrink-0"></span>
+                    <span class="text-gray-800 text-sm sm:text-base leading-snug">
+                        Digital 2×2 Picture <span class="text-[#8A1538] font-semibold">(Required)</span>
+                    </span>
                 </li>
 
-                <li class="flex items-start gap-3 px-2 py-2 rounded-lg hover:bg-red-50">
-                    <span class="mt-[6px] w-2 h-2 rounded-full bg-gray-400 flex-shrink-0"></span>
-                    <span class="text-black-800 text-sm">Medical Certificate <span class="text-[#8A1538] font-semibold">(Required)</span></span>
+                <li class="flex items-start gap-2 sm:gap-3 px-2 py-2 rounded-lg hover:bg-red-50">
+                    <span class="mt-1.5 w-2.5 h-2.5 rounded-full bg-gray-400 flex-shrink-0"></span>
+                    <span class="text-gray-800 text-sm sm:text-base leading-snug">
+                        Medical Certificate <span class="text-[#8A1538] font-semibold">(Required)</span>
+                    </span>
                 </li>
 
-                <li class="flex items-start gap-3 px-2 py-2 rounded-lg hover:bg-red-50">
-                    <span class="mt-[6px] w-2 h-2 rounded-full bg-gray-400 flex-shrink-0"></span>
-                    <span class="text-black-800 text-sm">Notice Of Admission <span class="text-[#8A1538] font-semibold">(Required)</span></span>
+                <li class="flex items-start gap-2 sm:gap-3 px-2 py-2 rounded-lg hover:bg-red-50">
+                    <span class="mt-1.5 w-2.5 h-2.5 rounded-full bg-gray-400 flex-shrink-0"></span>
+                    <span class="text-gray-800 text-sm sm:text-base leading-snug">
+                        Notice Of Admission <span class="text-[#8A1538] font-semibold">(Required)</span>
+                    </span>
                 </li>
 
-                <li class="flex items-start gap-3 px-2 py-2 rounded-lg hover:bg-red-50">
-                    <span class="mt-[6px] w-2 h-2 rounded-full bg-gray-400 flex-shrink-0"></span>
-                    <span class="text-black-800 text-sm">Transcript Of Records (TOR) With Remarks "Copy For UP Cebu" <span class="text-[#8A1538] font-semibold">(Required)</span></span>
+                <li class="flex items-start gap-2 sm:gap-3 px-2 py-2 rounded-lg hover:bg-red-50">
+                    <span class="mt-1.5 w-2.5 h-2.5 rounded-full bg-gray-400 flex-shrink-0"></span>
+                    <span class="text-gray-800 text-sm sm:text-base leading-snug break-words">
+                        Transcript Of Records (TOR) With Remarks <span class="italic">"Copy For UP Cebu"</span>
+                        <span class="text-[#8A1538] font-semibold">(Required)</span>
+                    </span>
                 </li>
 
-                <li class="flex items-start gap-3 px-2 py-2 rounded-lg hover:bg-red-50">
-                    <span class="mt-[6px] w-2 h-2 rounded-full bg-gray-400 flex-shrink-0"></span>
-                    <span class="text-black-800 text-sm">PSA Birth Certificate <span class="text-[#8A1538] font-semibold">(Required)</span></span>
+                <li class="flex items-start gap-2 sm:gap-3 px-2 py-2 rounded-lg hover:bg-red-50">
+                    <span class="mt-1.5 w-2.5 h-2.5 rounded-full bg-gray-400 flex-shrink-0"></span>
+                    <span class="text-gray-800 text-sm sm:text-base leading-snug">
+                        PSA Birth Certificate <span class="text-[#8A1538] font-semibold">(Required)</span>
+                    </span>
                 </li>
 
-                <li class="flex items-start gap-3 px-2 py-2 rounded-lg hover:bg-red-50">
-                    <span class="mt-[6px] w-2 h-2 rounded-full bg-gray-400 flex-shrink-0"></span>
-                    <span class="text-black-800 text-sm">Local Civil Registrar (LCR) Birth Certificate <span class="text-[#8A1538] font-semibold">(If PSA Copy Is Not Legible)</span></span>
+                <li class="flex items-start gap-2 sm:gap-3 px-2 py-2 rounded-lg hover:bg-red-50">
+                    <span class="mt-1.5 w-2.5 h-2.5 rounded-full bg-gray-400 flex-shrink-0"></span>
+                    <span class="text-gray-800 text-sm sm:text-base leading-snug break-words">
+                        Local Civil Registrar (LCR) Birth Certificate 
+                        <span class="text-[#8A1538] font-semibold">(If PSA Copy Is Not Legible)</span>
+                    </span>
                 </li>
 
-                
-                <li class="flex items-start gap-3 px-2 py-2 rounded-lg hover:bg-red-50">
-                    <span class="mt-[6px] w-2 h-2 rounded-full bg-gray-400 flex-shrink-0"></span>
-                    <span class="text-black-800 text-sm">Honorable Dismissal <span class="text-[#8A1538] font-semibold">(If Applicable)</span></span>
+                <li class="flex items-start gap-2 sm:gap-3 px-2 py-2 rounded-lg hover:bg-red-50">
+                    <span class="mt-1.5 w-2.5 h-2.5 rounded-full bg-gray-400 flex-shrink-0"></span>
+                    <span class="text-gray-800 text-sm sm:text-base leading-snug">
+                        Honorable Dismissal <span class="text-[#8A1538] font-semibold">(If Applicable)</span>
+                    </span>
                 </li>
 
-                <li class="flex items-start gap-3 px-2 py-2 rounded-lg hover:bg-red-50">
-                    <span class="mt-[6px] w-2 h-2 rounded-full bg-gray-400 flex-shrink-0"></span>
-                    <span class="text-black-800 text-sm">Photo Copy Of PWD Card <span class="text-[#8A1538] font-semibold">(If Applicable)</span></span>
+                <li class="flex items-start gap-2 sm:gap-3 px-2 py-2 rounded-lg hover:bg-red-50">
+                    <span class="mt-1.5 w-2.5 h-2.5 rounded-full bg-gray-400 flex-shrink-0"></span>
+                    <span class="text-gray-800 text-sm sm:text-base leading-snug">
+                        Photo Copy Of PWD Card <span class="text-[#8A1538] font-semibold">(If Applicable)</span>
+                    </span>
                 </li>
 
-                <li class="flex items-start gap-3 px-2 py-2 rounded-lg hover:bg-red-50">
-                    <span class="mt-[6px] w-2 h-2 rounded-full bg-gray-400 flex-shrink-0"></span>
-                    <span class="text-black-800 text-sm">Photocopy Of Marriage Certificate <span class="text-[#8A1538] font-semibold">(If Married)</span></span>
+                <li class="flex items-start gap-2 sm:gap-3 px-2 py-2 rounded-lg hover:bg-red-50">
+                    <span class="mt-1.5 w-2.5 h-2.5 rounded-full bg-gray-400 flex-shrink-0"></span>
+                    <span class="text-gray-800 text-sm sm:text-base leading-snug">
+                        Photocopy Of Marriage Certificate <span class="text-[#8A1538] font-semibold">(If Married)</span>
+                    </span>
                 </li>
 
-                <li class="flex items-start gap-3 px-2 py-2 rounded-lg hover:bg-red-50">
-                    <span class="mt-[6px] w-2 h-2 rounded-full bg-gray-400 flex-shrink-0"></span>
-                    <span class="text-black-800 text-sm">Court Order For Change Of Name <span class="text-[#8A1538] font-semibold">(If Applicable)</span></span>
+                <li class="flex items-start gap-2 sm:gap-3 px-2 py-2 rounded-lg hover:bg-red-50">
+                    <span class="mt-1.5 w-2.5 h-2.5 rounded-full bg-gray-400 flex-shrink-0"></span>
+                    <span class="text-gray-800 text-sm sm:text-base leading-snug">
+                        Court Order For Change Of Name <span class="text-[#8A1538] font-semibold">(If Applicable)</span>
+                    </span>
                 </li>
 
             </ul>
