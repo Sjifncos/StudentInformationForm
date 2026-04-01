@@ -1,4 +1,5 @@
 import './bootstrap';
+
 // ---------- Global Toast Notification System ----------
 const activeToastMessages = new Set();
 
@@ -71,6 +72,9 @@ $(document).ready(function() {
     let motherNameConfirmed = false;
     let mobileMatchConfirmed = false;
     let pendingModalQueue = []; // Queue for sequential modals
+
+    // ---------- Session ID for JSON storage ----------
+    let sessionId = localStorage.getItem('form_session_id') || null;
 
     // ---------- Helper Functions ----------
     function resetStep5ConfirmationFlags() {
@@ -341,9 +345,7 @@ $(document).ready(function() {
 
             // --- IMPROVED LABEL EXTRACTION ---
             let label = fieldName;
-            // Try to find a label inside a nearby container
             let $label = $field.closest('.mb-4, .relative, .flex-col, .col-span-1, .md\\:col-span-1, .md\\:col-span-2').find('label').first();
-            // If that fails, try a label with matching 'for' attribute
             if (!$label.length && $field.attr('id')) {
                 $label = $(`label[for="${$field.attr('id')}"]`);
             }
@@ -826,13 +828,11 @@ $(document).ready(function() {
             const mothersLastname = $('#mother_lastname').val()?.trim() || '';
             const fathersLastname = $('#fathers_lastname').val()?.trim() || '';
             if (mothersLastname && fathersLastname && mothersLastname.toLowerCase() === fathersLastname.toLowerCase()) {
-                // Only add error if user has not confirmed it
                 if (!motherNameConfirmed) {
                     errors.push("Mother's maiden name should be different from father's last name. Are you sure?");
                     $('#mother_lastname').addClass('border-red-500');
                 }
             } else {
-                // If they become different, clear the flag
                 motherNameConfirmed = false;
             }
 
@@ -907,14 +907,13 @@ $(document).ready(function() {
         }
     });
 
-    // ---------- Next Button Handler (with sequential modal handling) ----------
+    // ---------- Next Button Handler (with AJAX saving) ----------
     $('#nextBtn').click(function() {
         if (motherConfirmPending || mobileMatchPending) return;
 
         const currentIndex = visibleSteps.indexOf(currentStep);
         const errors = validateStep(currentStep);
 
-        // Define error strings
         const motherNameError = "Mother's maiden name should be different from father's last name. Are you sure?";
         const mobileMatchError = "Mobile number and emergency contact mobile number must be different.";
 
@@ -931,30 +930,84 @@ $(document).ready(function() {
             }
         });
 
-        // Show non-modal errors as toasts
         if (otherErrors.length > 0) {
             otherErrors.forEach(error => showToast(error, 'error'));
+            return;
         }
 
-        // If there are modal errors, set up the queue and show the first modal
         if (modalErrors.length > 0) {
-            pendingModalQueue = modalErrors; // e.g., ['mother', 'mobile']
-            // Store target step for after modals are confirmed
+            pendingModalQueue = modalErrors;
             if (currentIndex < totalSteps - 1) {
                 pendingTargetStep = visibleSteps[currentIndex + 1];
             } else {
                 pendingTargetStep = null;
             }
             showNextModal();
-            return; // Stop navigation until modals are handled
+            return;
         }
 
-        // No errors of any kind
         if (errors.length === 0) {
-            if (currentIndex < totalSteps - 1) {
-                currentStep = visibleSteps[currentIndex + 1];
-                showStep(currentStep);
-            }
+            // Save current step via AJAX
+            const formData = new FormData();
+            formData.append('step', currentStep);
+            if (sessionId) formData.append('session_id', sessionId);
+
+            const $step = $(`.step[data-step="${currentStep}"]`);
+
+            // Gather all form fields (excluding file inputs for now)
+            $step.find('input:not([type="file"]), select, textarea').each(function() {
+                const $field = $(this);
+                const name = $field.attr('name');
+                if (!name) return;
+                if ($field.attr('type') === 'checkbox') {
+                    if ($field.is(':checked')) {
+                        formData.append(name, $field.val());
+                    }
+                } else if ($field.attr('type') === 'radio') {
+                    if ($field.is(':checked')) {
+                        formData.append(name, $field.val());
+                    }
+                } else {
+                    formData.append(name, $field.val());
+                }
+            });
+
+            // Handle file inputs
+            $step.find('input[type="file"]').each(function() {
+                const $fileInput = $(this);
+                const name = $fileInput.attr('name');
+                const files = $fileInput[0].files;
+                for (let i = 0; i < files.length; i++) {
+                    formData.append(name, files[i]);
+                }
+            });
+
+            $.ajax({
+                url: '/save-step',
+                type: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false,
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                success: function(response) {
+                    if (response.session_id && !sessionId) {
+                        sessionId = response.session_id;
+                        localStorage.setItem('form_session_id', sessionId);
+                    }
+                    showToast('Step saved', 'success');
+                    // Move to next step
+                    if (currentIndex < totalSteps - 1) {
+                        currentStep = visibleSteps[currentIndex + 1];
+                        showStep(currentStep);
+                    }
+                },
+                error: function(xhr) {
+                    showToast('Error saving step. Please try again.', 'error');
+                    console.error(xhr.responseText);
+                }
+            });
         }
     });
 
@@ -969,7 +1022,6 @@ $(document).ready(function() {
             mobileMatchPending = false;
             pendingMobileStep = null;
         }
-        // Reset flags when going back
         resetStep5ConfirmationFlags();
 
         const currentIndex = visibleSteps.indexOf(currentStep);
@@ -1004,7 +1056,6 @@ $(document).ready(function() {
                 return;
             }
         }
-        // Reset flags if stepping to step 5
         if (targetStep === 5) {
             resetStep5ConfirmationFlags();
         }
@@ -1059,15 +1110,13 @@ $(document).ready(function() {
     // Modal button handlers for mother's last name conflict
     $('#modalYes').click(function() {
         $('#motherLastnameModal').hide().addClass('hidden');
-        motherNameConfirmed = true; // Mark as confirmed
+        motherNameConfirmed = true;
         motherConfirmPending = false;
         $('#mother_lastname').removeClass('border-red-500');
 
-        // After confirming, check if there are more modals in the queue
         if (pendingModalQueue.length > 0) {
             showNextModal();
         } else {
-            // All modals have been handled, now proceed to the next step
             if (pendingTargetStep) {
                 currentStep = pendingTargetStep;
                 showStep(currentStep);
@@ -1080,14 +1129,12 @@ $(document).ready(function() {
         $('#motherLastnameModal').hide().addClass('hidden');
         motherConfirmPending = false;
         pendingTargetStep = null;
-        pendingModalQueue = []; // Clear queue
-        // Keep the red border; do not proceed
+        pendingModalQueue = [];
     });
 
-    // Modal button handlers for mobile match conflict
     $('#mobileMatchModalYes').click(function() {
         $('#mobileMatchModal').hide().addClass('hidden');
-        mobileMatchConfirmed = true; // Mark as confirmed
+        mobileMatchConfirmed = true;
         mobileMatchPending = false;
         $('#mobilenumber, #emergency_mobilenumber').removeClass('border-red-500');
 
@@ -1109,7 +1156,6 @@ $(document).ready(function() {
         pendingModalQueue = [];
     });
 
-    // Close modals if clicked outside
     $(document).on('click', '#motherLastnameModal', function(e) {
         if ($(e.target).is('#motherLastnameModal')) {
             $('#modalNo').click();
@@ -1121,7 +1167,6 @@ $(document).ready(function() {
         }
     });
 
-    // Reset confirmation flags when the relevant fields are edited
     $(document).on('input change', '#mother_lastname, #fathers_lastname', function() {
         motherNameConfirmed = false;
     });
@@ -1130,23 +1175,19 @@ $(document).ready(function() {
     });
 
     // ===== NEW: Helper functions for copying Permanent Address to Current Address =====
-    // Base URL for PSGC API (same as used earlier)
     const BASE_URL = "https://psgc.cloud/api";
 
-    // Helper to reset a dropdown select
     function resetDropdown(select, placeholder = "Please Select") {
         if (!select) return;
         select.innerHTML = `<option value="" disabled selected>${placeholder}</option>`;
     }
 
-    // Helper to fetch data from a URL (assumes JSON response)
     async function fetchData(url) {
         const response = await fetch(url);
         if (!response.ok) throw new Error("Failed to fetch");
         return await response.json();
     }
 
-    // Helper to populate a dropdown with options
     function populateDropdown(select, data) {
         if (!select) return;
         data.forEach(item => {
@@ -1162,7 +1203,6 @@ $(document).ready(function() {
         const sameAddress = $('#same_address').val();
         if (citizenship !== 'yes' || sameAddress !== 'yes') return;
 
-        // 1. Copy simple text fields
         const mapping = {
             room_flr_unit_bldg: 'current_room_flr_unit_bldg',
             house_lot_blk: 'current_house_lot_blk',
@@ -1174,13 +1214,11 @@ $(document).ready(function() {
             $(`#${dest}`).val(val);
         }
 
-        // 2. Handle hierarchical selects (region → province → city → barangay)
         const regionCode = $('#region').val();
         const provinceCode = $('#province').val();
         const cityCode = $('#city').val();
         const barangayCode = $('#barangay').val();
 
-        // Reset current address selects (except region)
         function resetCurrentSelects(level = 'all') {
             if (level === 'all' || level === 'province') resetDropdown($('#current_province')[0]);
             if (level === 'all' || level === 'city') resetDropdown($('#current_city')[0]);
@@ -1188,7 +1226,6 @@ $(document).ready(function() {
             $('#current_PSGC').val('');
         }
 
-        // Helper to load provinces for a region and set the province value
         async function setCurrentProvince(regionCode, provinceCode) {
             const url = `${BASE_URL}/regions/${regionCode}/provinces`;
             const provinces = await fetchData(url);
@@ -1200,7 +1237,6 @@ $(document).ready(function() {
             }
         }
 
-        // Helper to load cities for a province and set the city value
         async function setCurrentCity(provinceCode, cityCode) {
             const url = `${BASE_URL}/provinces/${provinceCode}/cities-municipalities`;
             const cities = await fetchData(url);
@@ -1212,7 +1248,6 @@ $(document).ready(function() {
             }
         }
 
-        // Helper to load barangays for a city and set the barangay value
         async function setCurrentBarangay(cityCode, barangayCode) {
             const url = `${BASE_URL}/cities-municipalities/${cityCode}/barangays`;
             const barangays = await fetchData(url);
@@ -1225,10 +1260,9 @@ $(document).ready(function() {
             }
         }
 
-        // Set region (the select already has options from loadCurrentRegions)
         if (regionCode) {
             $('#current_region').val(regionCode);
-            resetCurrentSelects('province'); // clear child selects
+            resetCurrentSelects('province');
             if (provinceCode) {
                 await setCurrentProvince(regionCode, provinceCode);
                 resetCurrentSelects('city');
@@ -1241,12 +1275,10 @@ $(document).ready(function() {
                 }
             }
         } else {
-            // No region selected – clear everything
             resetCurrentSelects('all');
         }
     }
 
-    // ===== MODIFIED: Toggle current address section based on citizenship and same_address =====
     function toggleCurrentAddress() {
         const currentAddressSection = document.getElementById('current_address_section');
         if (!currentAddressSection) return;
@@ -1255,23 +1287,18 @@ $(document).ready(function() {
         const isSame = $('#same_address').val() === 'yes';
 
         if (isCitizen) {
-            // Always show the section
             currentAddressSection.style.display = '';
             if (isSame) {
-                // Disable fields and copy permanent values
                 currentAddressSection.querySelectorAll('input, select').forEach(field => {
                     field.disabled = true;
                 });
-                copyPermanentToCurrent(); // async copy
+                copyPermanentToCurrent();
             } else {
-                // Enable fields
                 currentAddressSection.querySelectorAll('input, select').forEach(field => {
                     field.disabled = false;
                 });
-                // Optionally clear fields? We'll leave them as is.
             }
         } else {
-            // Non-citizen: always show and enable
             currentAddressSection.style.display = '';
             currentAddressSection.querySelectorAll('input, select').forEach(field => {
                 field.disabled = false;
@@ -1279,18 +1306,15 @@ $(document).ready(function() {
         }
     }
 
-    // ===== NEW: Keep current address in sync when permanent address changes =====
     function syncPermanentToCurrentOnChange() {
         if ($('#citizenship').val() === 'yes' && $('#same_address').val() === 'yes') {
             copyPermanentToCurrent();
         }
     }
 
-    // Attach event listeners for permanent address changes
     $('#room_flr_unit_bldg, #house_lot_blk, #street, #subdivision_line2').on('input', syncPermanentToCurrentOnChange);
     $('#region, #province, #city, #barangay').on('change', syncPermanentToCurrentOnChange);
 
-    // 1. Populate countries
     async function populateCountries(selectId) {
         const select = document.getElementById(selectId);
         if (!select) return;
@@ -1311,7 +1335,6 @@ $(document).ready(function() {
     populateCountries('citizenship_country');
     populateCountries('foreign_country');
 
-    // 2. PSGC cascading for permanent address
     const regionSelect = document.getElementById('region');
     const provinceSelect = document.getElementById('province');
     const citySelect = document.getElementById('city');
@@ -1356,7 +1379,6 @@ $(document).ready(function() {
 
     loadRegions();
 
-    // 3. PSGC cascading for current address
     const currentRegionSelect = document.getElementById('current_region');
     const currentProvinceSelect = document.getElementById('current_province');
     const currentCitySelect = document.getElementById('current_city');
@@ -1401,12 +1423,10 @@ $(document).ready(function() {
 
     loadCurrentRegions();
 
-    // 4. Toggle foreign fields and permanent address fields based on citizenship
     const citizenshipSelect = document.getElementById('citizenship');
     const sameAddressSelect = document.getElementById('same_address');
     const currentAddressSection = document.getElementById('current_address_section');
 
-    // List of foreign address fields (outside PH)
     const foreignFieldIds = [
         'citizenship_country',
         'outside_ph_addressline1',
@@ -1417,7 +1437,6 @@ $(document).ready(function() {
         'foreign_country'
     ];
 
-    // List of permanent address inside PH fields
     const permanentPHFieldIds = [
         'room_flr_unit_bldg',
         'house_lot_blk',
@@ -1433,7 +1452,6 @@ $(document).ready(function() {
     function toggleForeignFields() {
         const showForeign = citizenshipSelect?.value === 'no';
 
-        // Handle foreign fields (outside PH)
         foreignFieldIds.forEach(id => {
             const element = document.getElementById(id);
             if (!element) return;
@@ -1444,11 +1462,9 @@ $(document).ready(function() {
             }
         });
 
-        // Foreign heading
         const heading = document.getElementById('outside_ph_heading');
         if (heading) heading.style.display = showForeign ? '' : 'none';
 
-        // Handle permanent address inside PH fields
         const permanentPHHeading = document.getElementById('permanent_ph_heading');
         if (permanentPHHeading) {
             permanentPHHeading.style.display = showForeign ? 'none' : '';
@@ -1464,18 +1480,15 @@ $(document).ready(function() {
             }
         });
 
-        // Handle "same address" field and current address section
         const sameAddressContainer = sameAddressSelect?.closest('.relative.w-full');
 
         if (citizenshipSelect?.value === 'yes') {
-            // Citizen: show sameAddress field, current address section handled by toggleCurrentAddress
             if (sameAddressContainer) {
                 sameAddressContainer.style.display = '';
                 sameAddressSelect.disabled = false;
             }
             toggleCurrentAddress();
         } else {
-            // Non-citizen: hide sameAddress field, show current address section enabled
             if (sameAddressContainer) {
                 sameAddressContainer.style.display = 'none';
                 sameAddressSelect.disabled = true;
@@ -1489,42 +1502,8 @@ $(document).ready(function() {
         }
     }
 
-    // 5. Function to show/hide current address section and copy values when needed
-    function toggleCurrentAddress() {
-        if (!currentAddressSection) return;
-
-        const isCitizen = citizenshipSelect?.value === 'yes';
-        const isSame = sameAddressSelect?.value === 'yes';
-
-        if (isCitizen) {
-            // Always show the section
-            currentAddressSection.style.display = '';
-            if (isSame) {
-                // Disable fields and copy permanent values
-                currentAddressSection.querySelectorAll('input, select').forEach(field => {
-                    field.disabled = true;
-                });
-                copyPermanentToCurrent(); // async copy
-            } else {
-                // Enable fields
-                currentAddressSection.querySelectorAll('input, select').forEach(field => {
-                    field.disabled = false;
-                });
-                // Optionally clear fields? We'll leave them as is.
-            }
-        } else {
-            // Non-citizen: already handled by toggleForeignFields, but ensure enabled
-            currentAddressSection.style.display = '';
-            currentAddressSection.querySelectorAll('input, select').forEach(field => {
-                field.disabled = false;
-            });
-        }
-    }
-
-    // 6. Attach event listeners
     citizenshipSelect?.addEventListener('change', function() {
         toggleForeignFields();
-        // Also trigger sync if needed
         if (this.value === 'yes' && sameAddressSelect?.value === 'yes') {
             copyPermanentToCurrent();
         }
@@ -1536,25 +1515,69 @@ $(document).ready(function() {
         }
     });
 
-    // 7. Initial calls
     toggleForeignFields();
     toggleCurrentAddress();
 
-    // 8. Sync when permanent address fields change
     const permanentTextFields = ['room_flr_unit_bldg', 'house_lot_blk', 'street', 'subdivision_line2'];
     permanentTextFields.forEach(id => {
         $(`#${id}`).on('input', syncPermanentToCurrentOnChange);
     });
     $('#region, #province, #city, #barangay').on('change', syncPermanentToCurrentOnChange);
 
-    // Initial copy if same_address = yes on page load
     if (citizenshipSelect?.value === 'yes' && sameAddressSelect?.value === 'yes') {
         copyPermanentToCurrent();
     }
 
-    // ---------- End of new address handling ----------
+    // ---------- Final Submit Handler (AJAX) ----------
+    $('#submitBtn').click(function(e) {
+        e.preventDefault();
 
-    // Initial calls from original app.js
+        // Validate all steps
+        let allValid = true;
+        let firstInvalidStep = null;
+        for (let i = 0; i < visibleSteps.length; i++) {
+            const step = visibleSteps[i];
+            const errors = validateStep(step);
+            if (errors.length > 0) {
+                allValid = false;
+                firstInvalidStep = step;
+                showToast(errors[0], 'error');
+                break;
+            }
+        }
+
+        if (!allValid) {
+            currentStep = firstInvalidStep;
+            showStep(currentStep);
+            return;
+        }
+
+        // All steps valid – submit final
+        $.ajax({
+            url: '/final-submit',
+            type: 'POST',
+            data: {
+                session_id: sessionId,
+                _token: $('meta[name="csrf-token"]').attr('content')
+            },
+            success: function(response) {
+                if (response.success) {
+                    showToast('Form submitted successfully!', 'success');
+                    localStorage.removeItem('form_session_id');
+                    setTimeout(() => {
+                        window.location.href = '/thankyoupage';
+                    }, 2000);
+                } else {
+                    showToast('Submission failed: ' + response.message, 'error');
+                }
+            },
+            error: function(xhr) {
+                showToast('Error submitting form. Please check your connection.', 'error');
+            }
+        });
+    });
+
+    // Initial calls
     showStep(currentStep);
     updateVisibleSteps();
     toggleCourtOrderContainer();
