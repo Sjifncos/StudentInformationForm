@@ -26,22 +26,22 @@
         </p>
     </div>
 
-    <div class="mb-12 flex items-start gap-4">
-        <input
-            type="checkbox"
-            id="agreement"
-            name="agreement"
-            class="mt-1 w-5 h-5 accent-[#0E6021] rounded cursor-pointer"
-            required>
-        <label for="agreement" class="text-black-700 text-sm sm:text-base cursor-pointer">
-            I agree to the
-            <a target="_blank"
-               href="https://our.upcebu.edu.ph/information/privacy-notice-for-students/"
-               class="font-medium text-[#8A1538] hover:text-[#8A1538] underline">
-                UP Privacy Notice for Students
-            </a>
-            {{-- <span class="text-red-600">*</span> --}}
-        </label>
+        <div class="mb-12 flex items-start gap-2 sm:gap-4">
+            <input
+                type="checkbox"
+                id="agreement"
+                name="agreement"
+                class="mt-0.5 w-4 h-4 sm:w-5 sm:h-5 accent-[#0E6021] rounded cursor-pointer shrink-0"
+                required>
+            <label for="agreement" class="text-black-700 text-xs sm:text-sm md:text-base cursor-pointer leading-snug sm:leading-normal">
+                I agree to the
+                <a target="_blank"
+                href="https://our.upcebu.edu.ph/information/privacy-notice-for-students/"
+                class="font-medium text-[#8A1538] hover:text-[#8A1538] underline break-words">
+                    UP Privacy Notice for Students
+                </a>
+                <span class="text-red-600">*</span>
+            </label>
+        </div>
     </div>
-</div>
 </div>

@@ -248,10 +248,8 @@ $(document).ready(function() {
             pendingMobileStep = null;
         }
 
-        // Reset confirmation flags if we are leaving step 5
-        if (step !== 5) {
-            resetStep5ConfirmationFlags();
-        }
+        // FIX: Do NOT reset confirmation flags when leaving step 5
+        // This allows confirmed conflicts to persist across steps
 
         $('.step').addClass('hidden');
         $(`.step[data-step="${step}"]`).removeClass('hidden');
@@ -1022,7 +1020,7 @@ $(document).ready(function() {
             mobileMatchPending = false;
             pendingMobileStep = null;
         }
-        resetStep5ConfirmationFlags();
+        // FIX: Do NOT reset confirmation flags here
 
         const currentIndex = visibleSteps.indexOf(currentStep);
         if (currentIndex > 0) {
@@ -1056,9 +1054,7 @@ $(document).ready(function() {
                 return;
             }
         }
-        if (targetStep === 5) {
-            resetStep5ConfirmationFlags();
-        }
+        // FIX: Do NOT reset confirmation flags when clicking on step labels
         currentStep = targetStep;
         showStep(currentStep);
     });

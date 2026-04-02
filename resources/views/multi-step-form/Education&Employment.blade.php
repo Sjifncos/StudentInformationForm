@@ -122,43 +122,44 @@
                 <span class="text-red-500">*</span>
             </p>
         </div>
-        
+
         <div class="relative w-full space-y-3">
-            <label class="flex items-center space-x-2">
-                <input type="checkbox" class="funding-checkbox h-4 w-4 scale-120">
+            <label class="flex items-start space-x-3">
+                <input type="checkbox" name="funding_sources[]" value="personal_income" class="funding-checkbox h-4 w-4 mt-0.5 shrink-0">
                 <span>Personal income from employment or self-employment</span>
             </label>
-            <label class="flex items-center space-x-2">
-                <input type="checkbox" name="funding_sources[]" value="savings" class="funding-checkbox h-4 w-4">
+            <label class="flex items-start space-x-3">
+                <input type="checkbox" name="funding_sources[]" value="savings" class="funding-checkbox h-4 w-4 mt-0.5 shrink-0">
                 <span>Savings / personal funds</span>
             </label>
-            <label class="flex items-center space-x-2">
-                <input type="checkbox" name="funding_sources[]" value="family_support" class="funding-checkbox h-4 w-4">
+            <label class="flex items-start space-x-3">
+                <input type="checkbox" name="funding_sources[]" value="family_support" class="funding-checkbox h-4 w-4 mt-0.5 shrink-0">
                 <span>Family support</span>
             </label>
         </div>
-        
+
         <div class="relative w-full space-y-3">
-            <label class="flex items-center space-x-2">
-                <input type="checkbox" name="funding_sources[]" value="employer_sponsorship" class="funding-checkbox h-4 w-4">
+            <label class="flex items-start space-x-3">
+                <input type="checkbox" name="funding_sources[]" value="employer_sponsorship" class="funding-checkbox h-4 w-4 mt-0.5 shrink-0">
                 <span>Employer sponsorship / study leave with pay</span>
             </label>
-            <label class="flex items-center space-x-2">
-                <input type="checkbox" name="funding_sources[]" value="educational_loan" class="funding-checkbox h-4 w-4">
+            <label class="flex items-start space-x-3">
+                <input type="checkbox" name="funding_sources[]" value="educational_loan" class="funding-checkbox h-4 w-4 mt-0.5 shrink-0">
                 <span>Educational loan</span>
             </label>
-            <label class="flex items-center space-x-2">
-                <input type="checkbox" name="funding_sources[]" value="passive_income" class="funding-checkbox h-4 w-4">
+            <label class="flex items-start space-x-3">
+                <input type="checkbox" name="funding_sources[]" value="passive_income" class="funding-checkbox h-4 w-4 mt-0.5 shrink-0">
                 <span>Passive income</span>
             </label>
         </div>
+
         <div class="relative w-full space-y-3 -mt-4">
-            <label class="flex items-center space-x-2">
-                <input type="checkbox" id="funding-other" name="funding_sources[]" value="other" class="funding-checkbox h-4 w-4">
+            <label class="flex items-start space-x-3">
+                <input type="checkbox" id="funding-other" name="funding_sources[]" value="other" class="funding-checkbox h-4 w-4 mt-0.5 shrink-0">
                 <span>Other (Please Specify)</span>
             </label>
         </div>
-        
+
         <div id="funding-other-wrapper" class="col-span-1 md:col-span-2 hidden">
             <div class="relative w-full">
                 <label for="funding-other-input" class="font-medium">

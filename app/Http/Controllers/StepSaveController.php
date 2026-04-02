@@ -3,11 +3,17 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 class StepSaveController extends Controller
 {
+    /**
+     * Cache for location names to avoid repeated API calls.
+     */
+    private static $locationNameCache = [];
+
     /**
      * Save a single step data (including files) to JSON.
      */
@@ -83,9 +89,33 @@ class StepSaveController extends Controller
             $uploadedFiles['marriage_container'] = $path;
         }
 
+        // --- Prepare request data (excluding files and meta) ---
+        $requestData = $request->except([
+            'step', 'session_id', '_token',
+            'image', 'medical_certificate', 'notice_of_admission',
+            'honorable_dismissal', 'tor_remarks', 'birth_certificate',
+            'marriage_certificate', 'pwd_card_container', 'marriage_container'
+        ]);
+
+        // --- Convert PSGC codes to location names ---
+        $locationFields = [
+            'region', 'province', 'city', 'barangay',
+            'current_region', 'current_province', 'current_city', 'current_barangay'
+        ];
+
+        foreach ($locationFields as $field) {
+            if (isset($requestData[$field]) && !empty($requestData[$field])) {
+                $code = $requestData[$field];
+                $name = $this->getLocationName($code, $this->getLocationType($field));
+                if ($name) {
+                    $requestData[$field] = $name; // Replace code with name
+                }
+            }
+        }
+
         // --- Build step data ---
         $stepData = [
-            'data' => $request->except(['step', 'session_id', '_token', 'image', 'medical_certificate', 'notice_of_admission', 'honorable_dismissal', 'tor_remarks', 'birth_certificate', 'marriage_certificate', 'pwd_card_container', 'marriage_container']),
+            'data' => $requestData,
             'files' => $uploadedFiles,
             'saved_at' => now()->toISOString(),
         ];
@@ -104,6 +134,75 @@ class StepSaveController extends Controller
             'session_id' => $sessionId,
             'message' => "Step {$step} saved successfully.",
         ]);
+    }
+
+    /**
+     * Get the location name from PSGC API given a code and type.
+     * Uses a static cache to avoid repeated requests for the same code.
+     *
+     * @param string $code
+     * @param string $type (region, province, city, barangay)
+     * @return string|null
+     */
+    private function getLocationName($code, $type)
+    {
+        // Check cache
+        $cacheKey = "{$type}:{$code}";
+        if (array_key_exists($cacheKey, self::$locationNameCache)) {
+            return self::$locationNameCache[$cacheKey];
+        }
+
+        // Determine the correct API endpoint
+        $baseUrl = 'https://psgc.cloud/api';
+        $endpoint = null;
+
+        switch ($type) {
+            case 'region':
+                $endpoint = "{$baseUrl}/regions/{$code}";
+                break;
+            case 'province':
+                $endpoint = "{$baseUrl}/provinces/{$code}";
+                break;
+            case 'city':
+                $endpoint = "{$baseUrl}/cities-municipalities/{$code}";
+                break;
+            case 'barangay':
+                $endpoint = "{$baseUrl}/barangays/{$code}";
+                break;
+            default:
+                return null;
+        }
+
+        try {
+            $response = Http::timeout(5)->get($endpoint);
+            if ($response->successful()) {
+                $data = $response->json();
+                $name = $data['name'] ?? null;
+                // Cache the result (even if null)
+                self::$locationNameCache[$cacheKey] = $name;
+                return $name;
+            }
+        } catch (\Exception $e) {
+            // Log error if needed
+        }
+
+        self::$locationNameCache[$cacheKey] = null;
+        return null;
+    }
+
+    /**
+     * Map the field name to the corresponding location type.
+     *
+     * @param string $field
+     * @return string
+     */
+    private function getLocationType($field)
+    {
+        if (str_contains($field, 'region')) return 'region';
+        if (str_contains($field, 'province')) return 'province';
+        if (str_contains($field, 'city')) return 'city';
+        if (str_contains($field, 'barangay')) return 'barangay';
+        return 'unknown';
     }
 
     /**
