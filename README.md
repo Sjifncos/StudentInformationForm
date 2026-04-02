@@ -79,3 +79,59 @@
 ```bash
 git clone https://github.com/your-username/up-cebu-student-info.git
 cd up-cebu-student-info
+```
+<div style="text-align: center;">
+  <p style="text-align: justify; display: inline-block; max-width: 800px; margin: 0 auto;">
+    <strong>2.  Install dependencies</strong>
+  </p>
+</div>
+
+```bash
+composer install
+npm install
+npm run dev
+```
+<div style="text-align: center;">
+  <p style="text-align: justify; display: inline-block; max-width: 800px; margin: 0 auto;">
+    <strong>3.  Setup environment</strong>
+  </p>
+</div>
+
+```bash
+cp .env.example .env
+php artisan key:generate
+```
+<div style="text-align: center;">
+  <p style="text-align: justify; display: inline-block; max-width: 800px; margin: 0 auto;">
+    <strong>4.  Configure .env</strong>
+  </p>
+</div>
+
+```env
+DB_DATABASE=your_database
+DB_USERNAME=your_username
+DB_PASSWORD=your_password
+```
+<div style="text-align: center;">
+  <p style="text-align: justify; display: inline-block; max-width: 800px; margin: 0 auto;">
+    <strong>5.  Run migrations</strong>
+  </p>
+</div>
+
+```bash
+php artisan migrate
+```
+<div style="text-align: center;">
+  <p style="text-align: justify; display: inline-block; max-width: 800px; margin: 0 auto;">
+    <strong>6.  Run the server</strong>
+  </p>
+</div>
+
+```bash
+php artisan serve
+```
+
+
+
+
+
