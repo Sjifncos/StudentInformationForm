@@ -1,14 +1,4 @@
-<!-- README.md for GitHub -->
-<!-- Custom style: paragraphs centered & justified, h2 left-aligned -->
-<div style="text-align: center;">
-  <p style="text-align: justify; display: inline-block; max-width: 800px; margin: 0 auto;">
-    <a href="https://laravel.com" target="_blank">
-      <img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo">
-    </a>
-  </p>
-</div>
 
-<div style="text-align: center;">
   <p style="text-align: justify; display: inline-block; max-width: 800px; margin: 0 auto;">
     <a href="https://github.com/laravel/framework/actions">
       <img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status">
@@ -23,7 +13,6 @@
       <img src="https://img.shields.io/packagist/l/laravel/framework" alt="License">
     </a>
   </p>
-</div>
 
 <h1 align="center"><span style="color:#7b1228;">University of the Philippines Cebu</span></h1>
 <h3 align="center"><span style="color:#7b1228;">Student Information System</span></h3>
