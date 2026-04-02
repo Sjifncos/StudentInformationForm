@@ -8,7 +8,7 @@
 </p>
 
 <h1 align="center"><span style="color:#7b1228;">University of the Philippines Cebu</span></h1>
-<h3 align="center"><span style="color:#7b1228;">Student Information System</span></h3>
+<h3 align="center"><span style="color:#7b1228;">Student Information Form</span></h3>
 
 ---
 
