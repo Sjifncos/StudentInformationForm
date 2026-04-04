@@ -36,11 +36,11 @@
 
 <div style="text-align: center;">
   <p style="text-align: justify; display: inline-block; max-width: 800px; margin: 0 auto;">
-    📝 <strong>Multi-step Registration Form</strong> — Guided form flow covering personal info, address, academic background, and document uploads <br>
-    🗺️ <strong>Philippine Address Selector</strong> — Cascading dropdowns for <strong> Region, Province, City/Municipality, Barangay (RPCB)</strong> using PSGC data <br>
-    📁 <strong>Document Upload</strong> — Secure file upload with validation for required student documents <br>
-    📊 <strong>Progress Indicator</strong> — Visual step tracker so students always know where they are in the process <br>
-    📱 <strong>Responsive UI</strong> — Mobile-friendly layout built with Tailwind CSS <br>
+    📝 <strong>Multi-step Registration Form</strong>: Guided form flow covering personal info, address, academic background, and document uploads <br>
+    🗺️ <strong>Philippine Address Selector</strong>: Cascading dropdowns for <strong> Region, Province, City/Municipality, Barangay (RPCB)</strong> using PSGC data <br>
+    📁 <strong>Document Upload</strong>: Secure file upload with validation for required student documents <br>
+    📊 <strong>Progress Indicator</strong>: Visual step tracker so students always know where they are in the process <br>
+    📱 <strong>Responsive UI</strong>: Mobile-friendly layout built with Tailwind CSS <br>
   </p>
 </div>
 
