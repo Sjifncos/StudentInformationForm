@@ -8,7 +8,9 @@
 </p>
 
 <h1 align="center"><span style="color:#7b1228;">University of the Philippines Cebu</span></h1>
-<h3 align="center"><span style="color:#7b1228;">Student Information Form</span></h3>
+<h3 align="center"><span style="color:#7b1228;"><strong>Student Information Form</strong></span></h3>
+<h3>DEVELOPER:</h3>
+<h3><strong>MARK IAN MARGAS</strong> Front End Developer</h3>
 
 ---
 
@@ -35,9 +37,8 @@
 <div style="text-align: center;">
   <p style="text-align: justify; display: inline-block; max-width: 800px; margin: 0 auto;">
     📝 <strong>Multi-step Registration Form</strong> — Guided form flow covering personal info, address, academic background, and document uploads <br>
-    🗺️ <strong>Philippine Address Selector</strong> — Cascading dropdowns for Region → Province → City/Municipality → Barangay using PSGC data <br>
+    🗺️ <strong>Philippine Address Selector</strong> — Cascading dropdowns for <strong> Region, Province, City/Municipality, Barangay (RPCB)</strong> using PSGC data <br>
     📁 <strong>Document Upload</strong> — Secure file upload with validation for required student documents <br>
-    💾 <strong>Data Persistence</strong> — Session-based data retention across form steps, saved to both MySQL database and JSON backup <br>
     📊 <strong>Progress Indicator</strong> — Visual step tracker so students always know where they are in the process <br>
     📱 <strong>Responsive UI</strong> — Mobile-friendly layout built with Tailwind CSS <br>
   </p>
@@ -51,7 +52,6 @@
 
 | Layer | Technology |
 |-------|------------|
-| Backend | Laravel 10 (PHP) |
 | Frontend | Blade Templates + Tailwind CSS |
 | Database | MySQL |
 | Address Data | `rootscratch/psgc` package |
