@@ -55,7 +55,7 @@
 | Frontend | Blade Templates + Tailwind CSS + JavaScript |
 | Database | MySQL |
 | Address Data | `rootscratch/psgc` package |
-| File Storage | Laravel Storage Facade |
+| File Storage | JSON + Public/Storage/Form-submissions |
 | Session Handling | Laravel Session |
 
 </div>
