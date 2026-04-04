@@ -10,7 +10,7 @@
 <h1 align="center"><span style="color:#7b1228;">University of the Philippines Cebu</span></h1>
 <h3 align="center"><span style="color:#7b1228;"><strong>Student Information Form</strong></span></h3>
 <h3>DEVELOPER:</h3>
-<h3><strong>MARK IAN MARGAS</strong> Front End Developer</h3>
+<h3><strong>MARK IAN MARGAS</strong> (Front End Developer)</h3>
 
 ---
 
