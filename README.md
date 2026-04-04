@@ -52,7 +52,7 @@
 
 | Layer | Technology |
 |-------|------------|
-| Frontend | Blade Templates + Tailwind CSS |
+| Frontend | Blade Templates + Tailwind CSS + JavaScript |
 | Database | MySQL |
 | Address Data | `rootscratch/psgc` package |
 | File Storage | Laravel Storage Facade |
