@@ -80,14 +80,14 @@
                 First Name
                 <span class="text-red-500 ml-1">*</span>
             </label>
-            <input required id="fathers_firstname" name="fathers_firstname" type="text" 
+            <input id="fathers_firstname" name="fathers_firstname" type="text" 
                 class="peer w-full px-4 py-3 text-base bg-white outline-none border-2 border-gray-300 rounded-[12px] focus:border-[#0E6021] focus:ring-1 focus:ring-[#0E6021] transition-colors mt-2"/>
         </div>
 
         <!-- Father's Middle Name -->
         <div class="md:col-span-1 flex flex-col w-full">
             <label for="fathers_middlename" class="font-medium">Middle Name</label>
-            <input required id="fathers_middlename" name="fathers_middlename" type="text" 
+            <input id="fathers_middlename" name="fathers_middlename" type="text" 
                 class="peer w-full px-4 py-3 text-base bg-white outline-none border-2 border-gray-300 rounded-[12px] focus:border-[#0E6021] focus:ring-1 focus:ring-[#0E6021] transition-colors mt-2"/>
         </div>
 
@@ -122,7 +122,7 @@
                 Last Name
                 <span class="text-red-500 ml-1">*</span>
             </label>
-            <input required id="fathers_lastname" name="fathers_lastname" type="text" 
+            <input id="fathers_lastname" name="fathers_lastname" type="text" 
                 class="peer w-full px-4 py-3 text-base bg-white outline-none border-2 border-gray-300 rounded-[12px] focus:border-[#0E6021] focus:ring-1 focus:ring-[#0E6021] transition-colors mt-2"/>
         </div>
 
@@ -137,14 +137,14 @@
                 First Name
                 <span class="text-red-500 ml-1">*</span>
             </label>
-            <input required id="mother_firstname" name="mother_firstname" type="text" 
+            <input  id="mother_firstname" name="mother_firstname" type="text" 
                 class="peer w-full px-4 py-3 text-base bg-white outline-none border-2 border-gray-300 rounded-[12px] focus:border-[#0E6021] focus:ring-1 focus:ring-[#0E6021] transition-colors mt-2"/>
         </div>
 
         <!-- Mother's Middle Name -->
         <div class="md:col-span-1 flex flex-col w-full">
             <label for="mother_middlename" class="font-medium">Middle Name</label>
-            <input required id="mother_middlename" name="mother_middlename" type="text" 
+            <input  id="mother_middlename" name="mother_middlename" type="text" 
                 class="peer w-full px-4 py-3 text-base bg-white outline-none border-2 border-gray-300 rounded-[12px] focus:border-[#0E6021] focus:ring-1 focus:ring-[#0E6021] transition-colors mt-2"/>
         </div>
 
@@ -154,7 +154,7 @@
                 Last Name
                 <span class="text-red-500 ml-1">*</span>
             </label>
-            <input required id="mother_lastname" name="mother_lastname" type="text" 
+            <input  id="mother_lastname" name="mother_lastname" type="text" 
                 class="peer w-full px-4 py-3 text-base bg-white outline-none border-2 border-gray-300 rounded-[12px] focus:border-[#0E6021] focus:ring-1 focus:ring-[#0E6021] transition-colors mt-2"/>
         </div>
 

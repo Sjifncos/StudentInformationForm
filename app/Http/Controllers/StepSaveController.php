@@ -10,12 +10,13 @@ use Illuminate\Support\Str;
 class StepSaveController extends Controller
 {
     /**
-     * Cache for location names to avoid repeated API calls.
+     * Cache for location names to avoid repeated API calls during final submission.
      */
     private static $locationNameCache = [];
 
     /**
      * Save a single step data (including files) to JSON.
+     * This method is fast because it does NOT call any external APIs.
      */
     public function saveStep(Request $request)
     {
@@ -92,32 +93,24 @@ class StepSaveController extends Controller
         // --- Prepare request data (excluding files and meta) ---
         $requestData = $request->except([
             'step', 'session_id', '_token',
-            'image', 'medical_certificate', 'notice_of_admission',
-            'honorable_dismissal', 'tor_remarks', 'birth_certificate',
-            'marriage_certificate', 'pwd_card_container', 'marriage_container'
+            'image', 'medical_certificate', 
+            'notice_of_admission',
+            'honorable_dismissal', 
+            'tor_remarks', 
+            'birth_certificate',
+            'marriage_certificate', 
+            'pwd_card_container',
+            'marriage_container'
         ]);
 
-        // --- Convert PSGC codes to location names ---
-        $locationFields = [
-            'region', 'province', 'city', 'barangay',
-            'current_region', 'current_province', 'current_city', 'current_barangay'
-        ];
+        // ✅ OPTIMIZATION: Store raw PSGC codes – NO API CALLS HERE
+        // (The conversion to location names is deferred to finalSubmit())
 
-        foreach ($locationFields as $field) {
-            if (isset($requestData[$field]) && !empty($requestData[$field])) {
-                $code = $requestData[$field];
-                $name = $this->getLocationName($code, $this->getLocationType($field));
-                if ($name) {
-                    $requestData[$field] = $name; // Replace code with name
-                }
-            }
-        }
-
-        // --- Build step data ---
+        // --- Build step data (saved_at removed per step) ---
         $stepData = [
             'data' => $requestData,
             'files' => $uploadedFiles,
-            'saved_at' => now()->toISOString(),
+            // 'saved_at' => now()->toISOString(), // REMOVED: timestamp only on final submission
         ];
 
         // Merge with existing steps
@@ -134,6 +127,72 @@ class StepSaveController extends Controller
             'session_id' => $sessionId,
             'message' => "Step {$step} saved successfully.",
         ]);
+    }
+
+    /**
+     * Final submission: convert all PSGC codes to location names,
+     * then create a permanent JSON file with a submission timestamp.
+     */
+    public function finalSubmit(Request $request)
+    {
+        $sessionId = $request->input('session_id');
+        $jsonPath = storage_path("app/public/form_submissions/{$sessionId}/data.json");
+
+        if (!file_exists($jsonPath)) {
+            return response()->json([
+                'success' => false,
+                'message' => 'No data found for this session.',
+            ], 404);
+        }
+
+        $data = json_decode(file_get_contents($jsonPath), true);
+
+        // Convert PSGC codes to location names for all steps
+        foreach ($data as &$stepData) {
+            if (isset($stepData['data'])) {
+                $this->convertLocationCodesToNames($stepData['data']);
+            }
+        }
+
+        // Add final submission timestamp at the root level
+        $data['submitted_at'] = now()->toISOString();
+
+        // Create final JSON file (copy with timestamp)
+        $finalPath = storage_path("app/public/form_submissions/final_{$sessionId}_" . date('Ymd_His') . ".json");
+        file_put_contents($finalPath, json_encode($data, JSON_PRETTY_PRINT));
+
+        // Optionally store submission in database
+        // FormSubmission::create(['session_id' => $sessionId, 'data' => $data, 'submitted_at' => now()]);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Form submitted successfully.',
+            'json_file' => asset("storage/form_submissions/final_{$sessionId}_" . date('Ymd_His') . ".json"),
+        ]);
+    }
+
+    /**
+     * Convert PSGC codes to human-readable names inside the given data array.
+     *
+     * @param array &$data
+     */
+    private function convertLocationCodesToNames(array &$data)
+    {
+        $locationFields = [
+            'region', 'province', 'city', 'barangay',
+            'current_region', 'current_province', 'current_city', 'current_barangay'
+        ];
+
+        foreach ($locationFields as $field) {
+            if (isset($data[$field]) && !empty($data[$field])) {
+                $code = $data[$field];
+                $type = $this->getLocationType($field);
+                $name = $this->getLocationName($code, $type);
+                if ($name) {
+                    $data[$field] = $name; // Replace code with name
+                }
+            }
+        }
     }
 
     /**
@@ -178,12 +237,11 @@ class StepSaveController extends Controller
             if ($response->successful()) {
                 $data = $response->json();
                 $name = $data['name'] ?? null;
-                // Cache the result (even if null)
                 self::$locationNameCache[$cacheKey] = $name;
                 return $name;
             }
         } catch (\Exception $e) {
-            // Log error if needed
+            // Log error if needed – do not break the submission
         }
 
         self::$locationNameCache[$cacheKey] = null;
@@ -203,40 +261,5 @@ class StepSaveController extends Controller
         if (str_contains($field, 'city')) return 'city';
         if (str_contains($field, 'barangay')) return 'barangay';
         return 'unknown';
-    }
-
-    /**
-     * Final submission: validate all steps, create final JSON, and optionally store in DB.
-     */
-    public function finalSubmit(Request $request)
-    {
-        $sessionId = $request->input('session_id');
-        $jsonPath = storage_path("app/public/form_submissions/{$sessionId}/data.json");
-
-        if (!file_exists($jsonPath)) {
-            return response()->json([
-                'success' => false,
-                'message' => 'No data found for this session.',
-            ], 404);
-        }
-
-        $data = json_decode(file_get_contents($jsonPath), true);
-
-        // (Optional) Run final validation using FormController's validation rules
-        // You can call a method from FormController to validate the merged data
-        // For now, we assume all steps were validated on the frontend.
-
-        // Create final JSON file (copy with timestamp)
-        $finalPath = storage_path("app/public/form_submissions/final_{$sessionId}_" . date('Ymd_His') . ".json");
-        copy($jsonPath, $finalPath);
-
-        // Optionally store submission in database
-        // FormSubmission::create(['session_id' => $sessionId, 'data' => $data, 'submitted_at' => now()]);
-
-        return response()->json([
-            'success' => true,
-            'message' => 'Form submitted successfully.',
-            'json_file' => asset("storage/form_submissions/final_{$sessionId}_" . date('Ymd_His') . ".json"),
-        ]);
     }
 }

@@ -72,7 +72,7 @@
                 <option value="employeed">Employed (salary from an employer)</option>
                 <option value="self-employeed">Self-employed / Freelance / Professional practice</option>
                 <option value="combination">Combination of employment and self-employment</option>
-                <option value="passiveincome">Passive income (e.g., investments, rental, family trust)</option>
+                <option value="passiveincome">Passive    income (e.g., investments, rental, family trust)</option>
                 <option value="notearning">Not currently earning income</option>
             </select>
             <p class="text-[12px] text-gray-500 mt-1">Please select the option that represents your main source of income, even if you have multiple sources.</p>

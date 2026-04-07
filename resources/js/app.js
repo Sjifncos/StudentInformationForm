@@ -371,7 +371,7 @@ $(document).ready(function() {
                 'PSGC',
                 'personalemail',
                 'mobilenumber',
-                'emergenency_fullname',
+                'emergency_fullname',
                 'emergency_mobilenumber',
                 'seniorhighschoolattended',
                 'locationofhighschool',
@@ -759,14 +759,37 @@ $(document).ready(function() {
                 errors.push('2x2 image is required.');
                 $('#imageInput').addClass('border-red-500');
             } else {
-                $('#imageInput').removeClass('border-red-500');
+                // Check file size before upload (max 1 MB after compression)
+                if (profileFile.size > 1024 * 1024) {
+                    errors.push('2x2 image must be smaller than 1 MB. Please compress your image.');
+                    $('#imageInput').addClass('border-red-500');
+                } else if (typeof window.imageUploadValid === 'function' && !window.imageUploadValid()) {
+                    errors.push('2x2 image must be square (1:1 aspect ratio) and at least 600x600 pixels.');
+                    $('#imageInput').addClass('border-red-500');
+                } else {
+                    $('#imageInput').removeClass('border-red-500');
+                }
+            }
+
+            // Helper to validate file size (max 2 MB for documents)
+            function validateFileSize(inputName, maxSizeMB = 2) {
+                const input = $(`input[name="${inputName}"]`)[0];
+                if (input && input.files.length) {
+                    const file = input.files[0];
+                    if (file.size > maxSizeMB * 1024 * 1024) {
+                        errors.push(`${inputName.replace(/_/g, ' ')} exceeds ${maxSizeMB} MB.`);
+                        $(`input[name="${inputName}"]`).addClass('border-red-500');
+                        return false;
+                    }
+                }
+                return true;
             }
 
             const docFields = [
-                { name: 'medical_certificate', label: 'Medical Certificate' },
-                { name: 'notice_of_admission', label: 'Notice of Admission' },
-                { name: 'tor_remarks', label: 'TOR with Remarks' },
-                { name: 'birth_certificate', label: 'Birth Certificate (PSA/LCR)' }
+                { name: 'medical_certificate', label: 'Medical Certificate', maxSize: 2 },
+                { name: 'notice_of_admission', label: 'Notice of Admission', maxSize: 2 },
+                { name: 'tor_remarks', label: 'TOR with Remarks', maxSize: 2 },
+                { name: 'birth_certificate', label: 'Birth Certificate (PSA/LCR)', maxSize: 2 }
             ];
 
             docFields.forEach(field => {
@@ -775,15 +798,25 @@ $(document).ready(function() {
                     errors.push(`${field.label} is required.`);
                     $(`input[name="${field.name}"]`).addClass('border-red-500');
                 } else {
-                    $(`input[name="${field.name}"]`).removeClass('border-red-500');
+                    const file = fileInput.files[0];
+                    if (file.size > field.maxSize * 1024 * 1024) {
+                        errors.push(`${field.label} must be smaller than ${field.maxSize} MB.`);
+                        $(`input[name="${field.name}"]`).addClass('border-red-500');
+                    } else {
+                        $(`input[name="${field.name}"]`).removeClass('border-red-500');
+                    }
                 }
             });
 
+            // Conditional documents (marriage certificate, PWD card, court order) – add size checks
             const civilStatus = $('#civilstatus').val();
             if (civilStatus === 'married') {
                 const marriageInput = $('input[name="marriage_certificate"]')[0];
                 if (!marriageInput || !marriageInput.files.length) {
                     errors.push('Marriage certificate is required because Civil Status is Married.');
+                    $('input[name="marriage_certificate"]').addClass('border-red-500');
+                } else if (marriageInput.files[0].size > 2 * 1024 * 1024) {
+                    errors.push('Marriage certificate must be smaller than 2 MB.');
                     $('input[name="marriage_certificate"]').addClass('border-red-500');
                 } else {
                     $('input[name="marriage_certificate"]').removeClass('border-red-500');
@@ -796,13 +829,22 @@ $(document).ready(function() {
                 if (!pwdCardInput || !pwdCardInput.files.length) {
                     errors.push('PWD Card is required because you identified as a Person With Disability.');
                     $('input[name="pwd_card_container"]').addClass('border-red-500');
+                } else if (pwdCardInput.files[0].size > 2 * 1024 * 1024) {
+                    errors.push('PWD Card must be smaller than 2 MB.');
+                    $('input[name="pwd_card_container"]').addClass('border-red-500');
                 } else {
                     $('input[name="pwd_card_container"]').removeClass('border-red-500');
                 }
             }
 
             if (!$('#marriage_container').hasClass('hidden')) {
-                $('input[name="marriage_container"]').removeClass('border-red-500');
+                const courtOrderInput = $('input[name="marriage_container"]')[0];
+                if (courtOrderInput && courtOrderInput.files.length && courtOrderInput.files[0].size > 2 * 1024 * 1024) {
+                    errors.push('Court order file must be smaller than 2 MB.');
+                    $('input[name="marriage_container"]').addClass('border-red-500');
+                } else {
+                    $('input[name="marriage_container"]').removeClass('border-red-500');
+                }
             }
         }
 
@@ -826,13 +868,22 @@ $(document).ready(function() {
             const mothersLastname = $('#mother_lastname').val()?.trim() || '';
             const fathersLastname = $('#fathers_lastname').val()?.trim() || '';
             if (mothersLastname && fathersLastname && mothersLastname.toLowerCase() === fathersLastname.toLowerCase()) {
-                if (!motherNameConfirmed) {
-                    errors.push("Mother's maiden name should be different from father's last name. Are you sure?");
-                    $('#mother_lastname').addClass('border-red-500');
+            if (!motherNameConfirmed) {
+                errors.push("Mother's maiden name should be different from father's last name. Are you sure?");
+                $('#mother_lastname').addClass('border-red-500');
+                
+                // NEW: Require mother's middle name when conflict exists and not confirmed
+                const motherMiddlename = $('#mother_middlename').val()?.trim() || '';
+                if (!motherMiddlename) {
+                    errors.push("Mother's middle name is required.");
+                    $('#mother_middlename').addClass('border-red-500');
+                } else {
+                    $('#mother_middlename').removeClass('border-red-500');
                 }
-            } else {
-                motherNameConfirmed = false;
             }
+        } else {
+            motherNameConfirmed = false;
+        }
 
             const mobileNumber = $('#mobilenumber').val()?.trim() || '';
             const emergencyMobile = $('#emergency_mobilenumber').val()?.trim() || '';
@@ -868,12 +919,23 @@ $(document).ready(function() {
     });
 
     $(document).on('change', '#citizenship', function() {
-        toggleMobileSublabels();
-        if (currentStep === 5) {
-            validateStep(currentStep);
-        }
-        $(document).trigger('citizenshipChanged');
+    toggleMobileSublabels();
+    if (currentStep === 5) { validateStep(currentStep); }
+    $(document).trigger('citizenshipChanged');
+    
+    // NEW: Remove red borders from all address fields (both PH and foreign)
+    const addressFields = [
+        'room_flr_unit_bldg', 'house_lot_blk', 'street', 'subdivision_line2',
+        'region', 'province', 'city', 'barangay', 'PSGC',
+        'citizenship_country', 'outside_ph_addressline1', 'outside_ph_addressline2',
+        'city_foreign', 'state/province_foreign', 'zipcode_foreign', 'foreign_country'
+    ];
+    addressFields.forEach(id => {
+        $(`#${id}`).removeClass('border-red-500');
     });
+    // Also clear any container-level red borders
+    $('.border-red-500').removeClass('border-red-500');
+});
 
     $(document).on('change', '#typeofincome', function() {
         if (currentStep === 6) {
@@ -994,7 +1056,6 @@ $(document).ready(function() {
                         sessionId = response.session_id;
                         localStorage.setItem('form_session_id', sessionId);
                     }
-                    showToast('Step saved', 'success');
                     // Move to next step
                     if (currentIndex < totalSteps - 1) {
                         currentStep = visibleSteps[currentIndex + 1];
@@ -1558,11 +1619,12 @@ $(document).ready(function() {
             },
             success: function(response) {
                 if (response.success) {
-                    showToast('Form submitted successfully!', 'success');
+                    // ✅ Only toast on final step – changed to "Step Saved"
+                    showToast('Form Saved', 'success');
                     localStorage.removeItem('form_session_id');
                     setTimeout(() => {
                         window.location.href = '/thankyoupage';
-                    }, 2000);
+                    }, 1000);
                 } else {
                     showToast('Submission failed: ' + response.message, 'error');
                 }
@@ -1580,9 +1642,11 @@ $(document).ready(function() {
     toggleFirstPersonFields();
     toggleMobileSublabels();
 
+    /*
     $(document).on('citizenshipChanged', function() {
         if (currentStep === 4) {
             validateStep(currentStep);
         }
     });
+    */
 });
