@@ -1234,6 +1234,28 @@ $(document).ready(function() {
     // ===== NEW: Helper functions for copying Permanent Address to Current Address =====
     const BASE_URL = "https://psgc.cloud/api";
 
+    // ---------- FIXED ENCODING: Convert mojibake (e.g., "NiÃ±o" → "Niño") ----------
+    function fixEncoding(str) {
+        if (!str || typeof str !== 'string') return str;
+        // Attempt to decode percent-encoded UTF-8 (some APIs double-encode)
+        try {
+            // First, try to decodeURIComponent if it looks like it has % sequences
+            if (str.includes('%')) {
+                const decoded = decodeURIComponent(str);
+                // If the result still contains mojibake patterns, try the fallback
+                if (/Ã±|Â©|â€¦/.test(decoded)) {
+                    return decodeURIComponent(escape(decoded));
+                }
+                return decoded;
+            }
+            // If we see mojibake patterns like Ã±, use the classic hack
+            if (/Ã±|Â©|â€¦/.test(str)) {
+                return decodeURIComponent(escape(str));
+            }
+        } catch(e) { /* ignore */ }
+        return str;
+    }
+
     function resetDropdown(select, placeholder = "Please Select") {
         if (!select) return;
         select.innerHTML = `<option value="" disabled selected>${placeholder}</option>`;
@@ -1242,7 +1264,16 @@ $(document).ready(function() {
     async function fetchData(url) {
         const response = await fetch(url);
         if (!response.ok) throw new Error("Failed to fetch");
-        return await response.json();
+        const data = await response.json();
+        // Apply encoding fix to every item's 'name' field
+        if (Array.isArray(data)) {
+            data.forEach(item => {
+                if (item.name) item.name = fixEncoding(item.name);
+            });
+        } else if (data.name) {
+            data.name = fixEncoding(data.name);
+        }
+        return data;
     }
 
     function populateDropdown(select, data) {
@@ -1250,7 +1281,7 @@ $(document).ready(function() {
         data.forEach(item => {
             const option = document.createElement("option");
             option.value = item.code;
-            option.textContent = item.name;
+            option.textContent = item.name; // name already fixed by fetchData
             select.appendChild(option);
         });
     }

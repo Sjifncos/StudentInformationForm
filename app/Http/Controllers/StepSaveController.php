@@ -15,6 +15,63 @@ class StepSaveController extends Controller
     private static $locationNameCache = [];
 
     /**
+     * Fix common mojibake (e.g., "NiÃ±o" -> "Niño") and ensure UTF-8.
+     *
+     * @param string|null $string
+     * @return string|null
+     */
+    private function fixEncoding($string)
+    {
+        if (!is_string($string) || empty($string)) {
+            return $string;
+        }
+
+        // First, ensure it's valid UTF-8
+        if (!mb_check_encoding($string, 'UTF-8')) {
+            $string = mb_convert_encoding($string, 'UTF-8', 'auto');
+        }
+
+        // Fix common mojibake patterns (e.g., Ã± -> ñ, Ã© -> é, etc.)
+        // This is the classic PHP way to revert double-encoded UTF-8
+        $mojibakeMap = [
+            '/Ã±/' => 'ñ',
+            '/Ã©/' => 'é',
+            '/Ã­/' => 'í',
+            '/Ã³/' => 'ó',
+            '/Ãº/' => 'ú',
+            '/Ã¼/' => 'ü',
+            '/Ã±/' => 'ñ',
+            '/Ã‘/' => 'Ñ',
+            '/Â©/' => '©',
+            '/â€¦/' => '…',
+            '/â€“/' => '–',
+            '/â€”/' => '—',
+            '/â€˜/' => '‘',
+            '/â€™/' => '’',
+            '/â€œ/' => '“',
+            '/â€/' => '”',
+            '/Â°/' => '°',
+        ];
+
+        $fixed = preg_replace(array_keys($mojibakeMap), array_values($mojibakeMap), $string);
+
+        // Additional fallback: try to decode percent-encoded UTF-8
+        if (strpos($fixed, '%') !== false) {
+            $decoded = urldecode($fixed);
+            if (mb_check_encoding($decoded, 'UTF-8')) {
+                $fixed = $decoded;
+            }
+        }
+
+        // If still contains mojibake patterns, use the aggressive method (decodeURIComponent equivalent)
+        if (preg_match('/Ã|Â|â€/', $fixed)) {
+            $fixed = utf8_encode($fixed); // This sometimes helps for Latin-1 misinterpreted as UTF-8
+        }
+
+        return $fixed;
+    }
+
+    /**
      * Save a single step data (including files) to JSON.
      * This method is fast because it does NOT call any external APIs.
      */
@@ -30,7 +87,12 @@ class StepSaveController extends Controller
         // Load existing data if any
         $allData = [];
         if (file_exists($jsonPath)) {
-            $allData = json_decode(file_get_contents($jsonPath), true);
+            $content = file_get_contents($jsonPath);
+            // Ensure the content is valid UTF-8 (just in case)
+            $allData = json_decode($content, true);
+            if (!is_array($allData)) {
+                $allData = [];
+            }
         }
 
         // --- Process file uploads (based on your actual field names) ---
@@ -106,27 +168,26 @@ class StepSaveController extends Controller
         // ✅ OPTIMIZATION: Store raw PSGC codes – NO API CALLS HERE
         // (The conversion to location names is deferred to finalSubmit())
 
-        // --- Build step data (saved_at removed per step) ---
+        // --- Build step data ---
         $stepData = [
             'data' => $requestData,
             'files' => $uploadedFiles,
-            // 'saved_at' => now()->toISOString(), // REMOVED: timestamp only on final submission
         ];
 
         // Merge with existing steps
         $allData["step_{$step}"] = $stepData;
 
-        // Save to JSON
+        // Save to JSON with UTF-8 preservation (no Unicode escaping)
         if (!file_exists(dirname($jsonPath))) {
             mkdir(dirname($jsonPath), 0755, true);
         }
-        file_put_contents($jsonPath, json_encode($allData, JSON_PRETTY_PRINT));
+        file_put_contents($jsonPath, json_encode($allData, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
 
         return response()->json([
             'success' => true,
             'session_id' => $sessionId,
             'message' => "Step {$step} saved successfully.",
-        ]);
+        ])->header('Content-Type', 'application/json; charset=utf-8');
     }
 
     /**
@@ -142,10 +203,17 @@ class StepSaveController extends Controller
             return response()->json([
                 'success' => false,
                 'message' => 'No data found for this session.',
-            ], 404);
+            ], 404)->header('Content-Type', 'application/json; charset=utf-8');
         }
 
-        $data = json_decode(file_get_contents($jsonPath), true);
+        $content = file_get_contents($jsonPath);
+        $data = json_decode($content, true);
+        if (!is_array($data)) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Corrupted JSON data for this session.',
+            ], 500)->header('Content-Type', 'application/json; charset=utf-8');
+        }
 
         // Convert PSGC codes to location names for all steps
         foreach ($data as &$stepData) {
@@ -159,7 +227,7 @@ class StepSaveController extends Controller
 
         // Create final JSON file (copy with timestamp)
         $finalPath = storage_path("app/public/form_submissions/final_{$sessionId}_" . date('Ymd_His') . ".json");
-        file_put_contents($finalPath, json_encode($data, JSON_PRETTY_PRINT));
+        file_put_contents($finalPath, json_encode($data, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
 
         // Optionally store submission in database
         // FormSubmission::create(['session_id' => $sessionId, 'data' => $data, 'submitted_at' => now()]);
@@ -168,7 +236,7 @@ class StepSaveController extends Controller
             'success' => true,
             'message' => 'Form submitted successfully.',
             'json_file' => asset("storage/form_submissions/final_{$sessionId}_" . date('Ymd_His') . ".json"),
-        ]);
+        ])->header('Content-Type', 'application/json; charset=utf-8');
     }
 
     /**
@@ -189,7 +257,8 @@ class StepSaveController extends Controller
                 $type = $this->getLocationType($field);
                 $name = $this->getLocationName($code, $type);
                 if ($name) {
-                    $data[$field] = $name; // Replace code with name
+                    // Apply encoding fix to the retrieved name before storing
+                    $data[$field] = $this->fixEncoding($name);
                 }
             }
         }
@@ -237,6 +306,10 @@ class StepSaveController extends Controller
             if ($response->successful()) {
                 $data = $response->json();
                 $name = $data['name'] ?? null;
+                // Apply the same fix immediately when fetching
+                if ($name) {
+                    $name = $this->fixEncoding($name);
+                }
                 self::$locationNameCache[$cacheKey] = $name;
                 return $name;
             }
