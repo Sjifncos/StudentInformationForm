@@ -13,6 +13,7 @@
             <input required id="seniorhighschoolattended" name="seniorhighschoolattended" type="text"
                 class="peer w-full px-4 py-3 text-base bg-white outline-none 
                     border-2 border-gray-300 rounded-[12px] focus:border-[#0E6021] focus:ring-1 focus:ring-[#0E6021] transition-colors mt-2"/>
+            <p class="text-[12px] text-gray-500 mt-1">ex. University of the Philippines Cebu High School</p>
         </div>
         <div class="relative w-full">
             <label for="locationofhighschool" class="font-medium">
@@ -22,6 +23,7 @@
             <input required id="locationofhighschool" name="locationofhighschool" type="text"
                 class="peer w-full px-4 py-3 text-base bg-white outline-none 
                     border-2 border-gray-300 rounded-[12px] focus:border-[#0E6021] focus:ring-1 focus:ring-[#0E6021] transition-colors mt-2"/>
+            <p class="text-[12px] text-gray-500 mt-1">ex. Lahug, Cebu City</p>
         </div>
         
         <!-- Honors Received -->
@@ -42,7 +44,9 @@
         <!-- Scholarship Question -->
         <div class="relative w-full">
             <label for="scholarship" class="font-medium">
-                Are you on a scholarship other than <span class="font-semibold text-[#8A1538]">RA 10931</span>
+                Are you on a scholarship other than <span class="font-semibold text-[#8A1538]">
+                    <a target="_blank" href="https://www.officialgazette.gov.ph/2017/08/03/republic-act-no-10931/"
+                    class="font-medium text-[#8A1538] hover:text-[#8A1538]">RA 10931</a></span>
                 <span class="text-red-500 ml-1">*</span>
             </label>
             <select id="scholarship" name="scholarship" required
