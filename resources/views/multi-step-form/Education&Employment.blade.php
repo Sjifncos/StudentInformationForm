@@ -17,15 +17,15 @@
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
                             <label class="font-medium">School <span class="text-red-500">*</span></label>
-                            <input type="text" name="schools[]" class="w-full px-4 py-3 border-2 border-gray-300 rounded-[12px] focus:border-[#0E6021] focus:ring-1 focus:ring-[#0E6021] transition-colors mt-1">
+                            <input type="text" name="schools[]" class="peer w-full px-4 py-3 text-base bg-white outline-none border-2 border-gray-300 rounded-[12px] focus:border-[#0E6021] focus:ring-1 focus:ring-[#0E6021] transition-colors mt-2"">
                         </div>
                         <div>
                             <label class="font-medium">Program <span class="text-red-500">*</span></label>
-                            <input type="text" name="programs[]" class="w-full px-4 py-3 border-2 border-gray-300 rounded-[12px] focus:border-[#0E6021] focus:ring-1 focus:ring-[#0E6021] transition-colors mt-1">
+                            <input type="text" name="programs[]" class="peer w-full px-4 py-3 text-base bg-white outline-none border-2 border-gray-300 rounded-[12px] focus:border-[#0E6021] focus:ring-1 focus:ring-[#0E6021] transition-colors mt-2"">
                         </div>
                         <div>
                             <label class="font-medium">Degree <span class="text-red-500">*</span></label>
-                            <input type="text" name="degrees[]" class="w-full px-4 py-3 border-2 border-gray-300 rounded-[12px] focus:border-[#0E6021] focus:ring-1 focus:ring-[#0E6021] transition-colors mt-1">
+                            <input type="text" name="degrees[]" class="peer w-full px-4 py-3 text-base bg-white outline-none border-2 border-gray-300 rounded-[12px] focus:border-[#0E6021] focus:ring-1 focus:ring-[#0E6021] transition-colors mt-2"">
                         </div>
                        <div>
                             <label class="font-medium">Year Graduated <span class="text-red-500">*</span></label>
