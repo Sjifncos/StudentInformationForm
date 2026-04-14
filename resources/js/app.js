@@ -365,7 +365,7 @@ $(document).ready(function() {
                 'same_address',
                 'streetaddressline1_ph',
                 'region',
-                'province',
+                //'province',
                 'city',
                 'barangay',
                 'PSGC',
@@ -420,6 +420,15 @@ $(document).ready(function() {
             }
             if (foreignFields.includes(fieldName)) {
                 isRequired = isNonPhilippineCitizen;
+            }
+                        // Skip province validation if NCR is selected
+            if (fieldName === 'province' && $('#region').val() === '1300000000') {
+                isRequired = false;
+            }
+
+            // Skip current_province validation if current NCR is selected
+            if (fieldName === 'current_province' && $('#current_region').val() === '1300000000') {
+                isRequired = false;
             }
 
             if (fieldName && fieldName.startsWith('current_')) {
@@ -1232,7 +1241,7 @@ $(document).ready(function() {
     });
 
     // ===== NEW: Helper functions for copying Permanent Address to Current Address =====
-    const BASE_URL = "https://psgc.cloud/api";
+    const BASE_URL = "https://psgc.cloud/api/v2";
 
     // ---------- FIXED ENCODING: Convert mojibake (e.g., "NiÃ±o" → "Niño") ----------
     function fixEncoding(str) {
@@ -1303,13 +1312,13 @@ $(document).ready(function() {
                 throw new Error('Invalid parameter');
             }
             
-            // Build pathname from fixed literals + validated segments
+            // Build pathname from fixed literals + validated segments (v2 API)
             if (pathParam2) {
-                url.pathname = `/api/${endpoint}/${pathParam1}/${pathParam2}`;
+                url.pathname = `/api/v2/${endpoint}/${pathParam1}/${pathParam2}`;
             } else if (pathParam1) {
-                url.pathname = `/api/${endpoint}/${pathParam1}`;
+                url.pathname = `/api/v2/${endpoint}/${pathParam1}`;
             } else {
-                url.pathname = `/api/${endpoint}`;
+                url.pathname = `/api/v2/${endpoint}`;
             }
             
             return url.href;
@@ -1321,7 +1330,11 @@ $(document).ready(function() {
     async function fetchData(url) {
         const response = await fetch(url);
         if (!response.ok) throw new Error("Failed to fetch");
-        const data = await response.json();
+        const json = await response.json();
+
+        // PSGC v2 API wraps results in { data: [...] }
+        const data = Array.isArray(json) ? json : (json.data ?? json);
+
         // Apply encoding fix to every item's 'name' field
         if (Array.isArray(data)) {
             data.forEach(item => {
@@ -1495,13 +1508,26 @@ $(document).ready(function() {
     }
 
     regionSelect?.addEventListener("change", async function () {
+    resetDropdown(provinceSelect);
+    resetDropdown(citySelect);
+    resetDropdown(barangaySelect);
+    psgcInput.value = "";
+
+    const isNCR = this.value === '1300000000';
+
+    if (isNCR) {
+        // NCR has no provinces — fetch cities directly from the region
+        provinceSelect.disabled = true;
+        provinceSelect.innerHTML = '<option value="">N/A (NCR)</option>';
+        const cities = await fetchData(buildValidatedUrl(BASE_URL, 'regions', this.value, 'cities-municipalities'));
+        populateDropdown(citySelect, cities);
+    } else {
+        provinceSelect.disabled = false;
         resetDropdown(provinceSelect);
-        resetDropdown(citySelect);
-        resetDropdown(barangaySelect);
-        psgcInput.value = "";
         const provinces = await fetchData(buildValidatedUrl(BASE_URL, 'regions', this.value, 'provinces'));
         populateDropdown(provinceSelect, provinces);
-    });
+    }
+});
 
     provinceSelect?.addEventListener("change", async function () {
         resetDropdown(citySelect);
@@ -1539,13 +1565,25 @@ $(document).ready(function() {
     }
 
     currentRegionSelect?.addEventListener("change", async function () {
+    resetDropdown(currentProvinceSelect);
+    resetDropdown(currentCitySelect);
+    resetDropdown(currentBarangaySelect);
+    currentPsgcInput.value = "";
+
+    const isNCR = this.value === '1300000000';
+
+    if (isNCR) {
+        currentProvinceSelect.disabled = true;
+        currentProvinceSelect.innerHTML = '<option value="">N/A (NCR)</option>';
+        const cities = await fetchData(buildValidatedUrl(BASE_URL, 'regions', this.value, 'cities-municipalities'));
+        populateDropdown(currentCitySelect, cities);
+    } else {
+        currentProvinceSelect.disabled = false;
         resetDropdown(currentProvinceSelect);
-        resetDropdown(currentCitySelect);
-        resetDropdown(currentBarangaySelect);
-        currentPsgcInput.value = "";
         const provinces = await fetchData(buildValidatedUrl(BASE_URL, 'regions', this.value, 'provinces'));
         populateDropdown(currentProvinceSelect, provinces);
-    });
+    }
+});
 
     currentProvinceSelect?.addEventListener("change", async function () {
         resetDropdown(currentCitySelect);
