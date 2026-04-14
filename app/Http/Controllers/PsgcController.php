@@ -6,7 +6,7 @@
     {
         public function index()
         {
-            $baseUrl = 'https://psgc.cloud/api';
+            $baseUrl = 'https://psgc.cloud/api/v2';
 
             //HTTP REQUEST FOR REGIONS
             $response = Http::get("$baseUrl/regions");

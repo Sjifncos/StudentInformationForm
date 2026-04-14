@@ -1372,7 +1372,6 @@ $(document).ready(function() {
         }
 
         async function setCurrentProvince(regionCode, provinceCode) {
-            //    const url = `${BASE_URL}/regions/${regionCode}/provinces`;
             const url = buildValidatedUrl(BASE_URL, 'regions', regionCode, 'provinces');
             const provinces = await fetchData(url);
             const $provinceSelect = $('#current_province');
@@ -1384,7 +1383,6 @@ $(document).ready(function() {
         }
 
         async function setCurrentCity(provinceCode, cityCode) {
-            //const url = `${BASE_URL}/provinces/${provinceCode}/cities-municipalities`;
             const url = buildValidatedUrl(BASE_URL, 'provinces', provinceCode, 'cities-municipalities');
             const cities = await fetchData(url);
             const $citySelect = $('#current_city');
@@ -1396,7 +1394,6 @@ $(document).ready(function() {
         }
 
         async function setCurrentBarangay(cityCode, barangayCode) {
-            //const url = `${BASE_URL}/cities-municipalities/${cityCode}/barangays`;
             const url = buildValidatedUrl(BASE_URL, 'cities-municipalities', cityCode, 'barangays');
             const barangays = await fetchData(url);
             const $barangaySelect = $('#current_barangay');
@@ -1492,7 +1489,6 @@ $(document).ready(function() {
     async function loadRegions() {
         if (!regionSelect) return;
         resetDropdown(regionSelect, "Loading regions...");
-        //const regions = await fetchData(`${BASE_URL}/regions`);
         const regions = await fetchData(buildValidatedUrl(BASE_URL, 'regions'));
         resetDropdown(regionSelect);
         populateDropdown(regionSelect, regions);
@@ -1503,7 +1499,6 @@ $(document).ready(function() {
         resetDropdown(citySelect);
         resetDropdown(barangaySelect);
         psgcInput.value = "";
-        //const provinces = await fetchData(`${BASE_URL}/regions/${this.value}/provinces`);
         const provinces = await fetchData(buildValidatedUrl(BASE_URL, 'regions', this.value, 'provinces'));
         populateDropdown(provinceSelect, provinces);
     });
@@ -1512,7 +1507,6 @@ $(document).ready(function() {
         resetDropdown(citySelect);
         resetDropdown(barangaySelect);
         psgcInput.value = "";
-        //const cities = await fetchData(`${BASE_URL}/provinces/${this.value}/cities-municipalities`);
         const cities = await fetchData(buildValidatedUrl(BASE_URL, 'provinces', this.value, 'cities-municipalities'));
         populateDropdown(citySelect, cities);
     });
@@ -1520,7 +1514,6 @@ $(document).ready(function() {
     citySelect?.addEventListener("change", async function () {
         resetDropdown(barangaySelect);
         psgcInput.value = "";
-        //const barangays = await fetchData(`${BASE_URL}/cities-municipalities/${this.value}/barangays`);
         const barangays = await fetchData(buildValidatedUrl(BASE_URL, 'cities-municipalities', this.value, 'barangays'));
         populateDropdown(barangaySelect, barangays);
     });
@@ -1540,7 +1533,6 @@ $(document).ready(function() {
     async function loadCurrentRegions() {
         if (!currentRegionSelect) return;
         resetDropdown(currentRegionSelect, "Loading regions...");
-        //const regions = await fetchData(`${BASE_URL}/regions`);
         const regions = await fetchData(buildValidatedUrl(BASE_URL, 'regions'));
         resetDropdown(currentRegionSelect);
         populateDropdown(currentRegionSelect, regions);
@@ -1551,7 +1543,6 @@ $(document).ready(function() {
         resetDropdown(currentCitySelect);
         resetDropdown(currentBarangaySelect);
         currentPsgcInput.value = "";
-        //const provinces = await fetchData(`${BASE_URL}/regions/${this.value}/provinces`);
         const provinces = await fetchData(buildValidatedUrl(BASE_URL, 'regions', this.value, 'provinces'));
         populateDropdown(currentProvinceSelect, provinces);
     });
@@ -1560,7 +1551,6 @@ $(document).ready(function() {
         resetDropdown(currentCitySelect);
         resetDropdown(currentBarangaySelect);
         currentPsgcInput.value = "";
-        //const cities = await fetchData(`${BASE_URL}/provinces/${this.value}/cities-municipalities`);
         const cities = await fetchData(buildValidatedUrl(BASE_URL, 'provinces', this.value, 'cities-municipalities'));
         populateDropdown(currentCitySelect, cities);
     });
@@ -1568,7 +1558,6 @@ $(document).ready(function() {
     currentCitySelect?.addEventListener("change", async function () {
         resetDropdown(currentBarangaySelect);
         currentPsgcInput.value = "";
-        //const barangays = await fetchData(`${BASE_URL}/cities-municipalities/${this.value}/barangays`);
         const barangays = await fetchData(buildValidatedUrl(BASE_URL, 'cities-municipalities', this.value, 'barangays'));
         populateDropdown(currentBarangaySelect, barangays);
     });
