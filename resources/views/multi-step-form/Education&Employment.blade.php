@@ -30,7 +30,7 @@
                        <div>
                             <label class="font-medium">Year Graduated <span class="text-red-500">*</span></label>
                             <input type="text" name="year_graduateds[]" 
-                                class="w-full px-4 py-3 border-2 border-gray-300 rounded-[12px] focus:border-[#0E6021] transition-colors mt-1"
+                               class="peer w-full px-4 py-3 text-base bg-white outline-none border-2 border-gray-300 rounded-[12px] focus:border-[#0E6021] focus:ring-1 focus:ring-[#0E6021] transition-colors mt-2"
                                 maxlength="4" inputmode="numeric">
                         </div>
                     </div>
