@@ -1,30 +1,38 @@
 FROM php:8.2-cli
 
-# Install system dependencies
+# Install system dependencies + Node.js 20 (more stable than default)
 RUN apt-get update && apt-get install -y \
-    curl unzip git npm nodejs \
+    curl unzip git \
     libzip-dev libxml2-dev \
     && docker-php-ext-install zip
+
+# Install Node.js 20
+RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash - \
+    && apt-get install -y nodejs
 
 # Install Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
 WORKDIR /var/www
 
-# Copy project files
 COPY . .
 
-# Remove any existing .env to force use of Render environment variables
 RUN rm -f .env
 
-# Install dependencies
+# Install PHP dependencies
 RUN composer install --no-dev --optimize-autoloader
-RUN npm install && npm run build
 
-# Permissions
+# Install Node dependencies (including @tailwindcss/vite)
+RUN npm ci
+
+# Build assets (Vite + Tailwind)
+RUN npm run build
+
+# Verify Tailwind compiled correctly
+RUN ls -la public/build/assets/
+
 RUN chmod -R 777 storage bootstrap/cache
 
-# Clear any cached config (so Render env vars are used)
 RUN php artisan config:clear
 RUN php artisan route:clear
 RUN php artisan view:clear
