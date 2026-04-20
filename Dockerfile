@@ -11,6 +11,7 @@ RUN curl -fsSL https://deb.nodesource.com/setup_20.x -o /tmp/setup_20.x \
     && echo "2c4c6683a17b6f4128898a7b521e3c8bb725a99ffaf1b5e32ac97c6fa7d381be /tmp/setup_20.x" | sha256sum -c - \
     && bash /tmp/setup_20.x \
     && rm /tmp/setup_20.x \
+    && apt-get install -y nodejs
 
 # Install Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
