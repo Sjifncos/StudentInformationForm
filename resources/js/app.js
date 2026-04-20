@@ -225,7 +225,7 @@ $(document).ready(function() {
         const sex = $('#sexatbirth').val();
         const civil = $('#civilstatus').val();
         const nameFormat = $('input[name="name_format"]:checked').val();
-        const showCourtOrder = (sex === 'female' && civil === 'married' && ( nameFormat === 'maiden' | nameFormat === 'hyphenated' || nameFormat === 'husband'));
+        const showCourtOrder = (sex === 'female' && civil === 'married' && ( nameFormat === 'maiden' || nameFormat === 'hyphenated' || nameFormat === 'husband'));
 
         if (showCourtOrder) {
             $('#marriage_container').removeClass('hidden');
@@ -1265,13 +1265,7 @@ $(document).ready(function() {
         return str;
     }
 
-    /*
     function resetDropdown(select, placeholder = "Please Select") {
-        if (!select) return;
-        select.innerHTML = `<option value="" disabled selected>${placeholder}</option>`;
-    }
-    */
-   function resetDropdown(select, placeholder = "Please Select") {
         if (!select) return;
 
         // Clear existing options
@@ -1356,86 +1350,121 @@ $(document).ready(function() {
         });
     }
 
+    // ===== NEW: Missing helper functions for copying address =====
+    async function setCurrentProvince(regionCode, provinceCode) {
+        const $provinceSelect = $('#current_province');
+        if (!$provinceSelect.length) return;
+        // Fetch provinces for the given region
+        const provinces = await fetchData(buildValidatedUrl(BASE_URL, 'regions', regionCode, 'provinces'));
+        resetDropdown($provinceSelect[0]);
+        populateDropdown($provinceSelect[0], provinces);
+        if (provinceCode) {
+            $provinceSelect.val(provinceCode);
+        }
+    }
+
+    async function setCurrentCity(provinceCode, cityCode) {
+        const $citySelect = $('#current_city');
+        if (!$citySelect.length) return;
+        const cities = await fetchData(buildValidatedUrl(BASE_URL, 'provinces', provinceCode, 'cities-municipalities'));
+        resetDropdown($citySelect[0]);
+        populateDropdown($citySelect[0], cities);
+        if (cityCode) {
+            $citySelect.val(cityCode);
+        }
+    }
+
+    async function setCurrentBarangay(cityCode, barangayCode) {
+        const $barangaySelect = $('#current_barangay');
+        if (!$barangaySelect.length) return;
+        const barangays = await fetchData(buildValidatedUrl(BASE_URL, 'cities-municipalities', cityCode, 'barangays'));
+        resetDropdown($barangaySelect[0]);
+        populateDropdown($barangaySelect[0], barangays);
+        if (barangayCode) {
+            $barangaySelect.val(barangayCode);
+            $('#current_PSGC').val(barangayCode);
+        }
+    }
+
+    // ===== CORRECTED copyPermanentToCurrent function =====
     async function copyPermanentToCurrent() {
-    const citizenship = $('#citizenship').val();
-    const sameAddress = $('#same_address').val();
-    if (citizenship !== 'yes' || sameAddress !== 'yes') return;
+        const citizenship = $('#citizenship').val();
+        const sameAddress = $('#same_address').val();
+        if (citizenship !== 'yes' || sameAddress !== 'yes') return;
 
-    // Copy text fields
-    const mapping = {
-        room_flr_unit_bldg: 'current_room_flr_unit_bldg',
-        house_lot_blk: 'current_house_lot_blk',
-        street: 'current_street',
-        subdivision_line2: 'current_subdivision_line2'
-    };
-    for (const [src, dest] of Object.entries(mapping)) {
-        const val = $(`#${src}`).val();
-        $(`#${dest}`).val(val);
-    }
+        // Copy text fields
+        const mapping = {
+            room_flr_unit_bldg: 'current_room_flr_unit_bldg',
+            house_lot_blk: 'current_house_lot_blk',
+            street: 'current_street',
+            subdivision_line2: 'current_subdivision_line2'
+        };
+        for (const [src, dest] of Object.entries(mapping)) {
+            const val = $(`#${src}`).val();
+            $(`#${dest}`).val(val);
+        }
 
-    const regionCode = $('#region').val();
-    const provinceCode = $('#province').val();
-    const cityCode = $('#city').val();
-    const barangayCode = $('#barangay').val();
+        const regionCode = $('#region').val();
+        const provinceCode = $('#province').val();
+        const cityCode = $('#city').val();
+        const barangayCode = $('#barangay').val();
 
-    // Helper to reset dropdowns below a certain level
-    function resetCurrentSelects(level = 'all') {
-        if (level === 'all' || level === 'province') resetDropdown($('#current_province')[0]);
-        if (level === 'all' || level === 'city') resetDropdown($('#current_city')[0]);
-        if (level === 'all' || level === 'barangay') resetDropdown($('#current_barangay')[0]);
-        $('#current_PSGC').val('');
-    }
+        // Helper to reset dropdowns below a certain level
+        function resetCurrentSelects(level = 'all') {
+            if (level === 'all' || level === 'province') resetDropdown($('#current_province')[0]);
+            if (level === 'all' || level === 'city') resetDropdown($('#current_city')[0]);
+            if (level === 'all' || level === 'barangay') resetDropdown($('#current_barangay')[0]);
+            $('#current_PSGC').val('');
+        }
 
-    // Set current region
-    if (regionCode) {
-        $('#current_region').val(regionCode);
-        resetCurrentSelects('province');
+        // Set current region
+        if (regionCode) {
+            $('#current_region').val(regionCode);
+            resetCurrentSelects('province');
 
-        const isNCR = (regionCode === '1300000000');
+            const isNCR = (regionCode === '1300000000');
 
-        if (isNCR) {
-            // --- NCR: No province, fetch cities directly from region ---
-            $('#current_province').prop('disabled', true);
-            $('#current_province').html('<option value="">N/A (NCR)</option>');
-            
-            // Fetch cities from region
-            const citiesUrl = buildValidatedUrl(BASE_URL, 'regions', regionCode, 'cities-municipalities');
-            const cities = await fetchData(citiesUrl);
-            const $citySelect = $('#current_city');
-            resetDropdown($citySelect[0]);
-            populateDropdown($citySelect[0], cities);
-            if (cityCode) {
-                $citySelect.val(cityCode);
-                // Fetch barangays for the selected city
-                const barangaysUrl = buildValidatedUrl(BASE_URL, 'cities-municipalities', cityCode, 'barangays');
-                const barangays = await fetchData(barangaysUrl);
-                const $barangaySelect = $('#current_barangay');
-                resetDropdown($barangaySelect[0]);
-                populateDropdown($barangaySelect[0], barangays);
-                if (barangayCode) {
-                    $barangaySelect.val(barangayCode);
-                    $('#current_PSGC').val(barangayCode);
-                }
-            }
-        } else {
-            // --- Normal case (with province) ---
-            $('#current_province').prop('disabled', false);
-            if (provinceCode) {
-                await setCurrentProvince(regionCode, provinceCode);
-                resetCurrentSelects('city');
+            if (isNCR) {
+                // NCR has no provinces – fetch cities directly from region
+                $('#current_province').prop('disabled', true);
+                $('#current_province').html('<option value="">N/A (NCR)</option>');
+                const citiesUrl = buildValidatedUrl(BASE_URL, 'regions', regionCode, 'cities-municipalities');
+                const cities = await fetchData(citiesUrl);
+                const $citySelect = $('#current_city');
+                resetDropdown($citySelect[0]);
+                populateDropdown($citySelect[0], cities);
                 if (cityCode) {
-                    await setCurrentCity(provinceCode, cityCode);
-                    resetCurrentSelects('barangay');
+                    $citySelect.val(cityCode);
+                    // Fetch barangays for the selected city
+                    const barangaysUrl = buildValidatedUrl(BASE_URL, 'cities-municipalities', cityCode, 'barangays');
+                    const barangays = await fetchData(barangaysUrl);
+                    const $barangaySelect = $('#current_barangay');
+                    resetDropdown($barangaySelect[0]);
+                    populateDropdown($barangaySelect[0], barangays);
                     if (barangayCode) {
-                        await setCurrentBarangay(cityCode, barangayCode);
+                        $barangaySelect.val(barangayCode);
+                        $('#current_PSGC').val(barangayCode);
+                    }
+                }
+            } else {
+                // Normal case (with province)
+                $('#current_province').prop('disabled', false);
+                if (provinceCode) {
+                    await setCurrentProvince(regionCode, provinceCode);
+                    resetCurrentSelects('city');
+                    if (cityCode) {
+                        await setCurrentCity(provinceCode, cityCode);
+                        resetCurrentSelects('barangay');
+                        if (barangayCode) {
+                            await setCurrentBarangay(cityCode, barangayCode);
+                        }
                     }
                 }
             }
+        } else {
+            resetCurrentSelects('all');
         }
-    } else {
-        resetCurrentSelects('all');
     }
-}
 
     function toggleCurrentAddress() {
         const currentAddressSection = document.getElementById('current_address_section');
