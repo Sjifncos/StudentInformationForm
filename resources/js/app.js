@@ -60,7 +60,7 @@ $(document).ready(function() {
     let maxStepReached = 1;
     let totalSteps = 10;
     let visibleSteps = [1,2,3,4,5,6,7,8,9,10];
-    let maxVisibleIndex = 1;
+    let maxVisibleIndex = 0;
 
     // Modal confirmation variables
     let motherConfirmPending = false;
