@@ -773,9 +773,9 @@ $(document).ready(function() {
                 errors.push('2x2 image is required.');
                 $('#imageInput').addClass('border-red-500');
             } else {
-                // Check file size before upload (max 1 MB after compression)
-                if (profileFile.size > 1024 * 1024) {
-                    errors.push('2x2 image must be smaller than 1 MB. Please compress your image.');
+                // Check file size before upload (max 2 MB)
+                if (profileFile.size > 2 * 1024 * 1024) {
+                    errors.push('2x2 image must be smaller than 2 MB. Please compress your image.');
                     $('#imageInput').addClass('border-red-500');
                 } else if (typeof window.imageUploadValid === 'function' && !window.imageUploadValid()) {
                     errors.push('2x2 image must be square (1:1 aspect ratio) and at least 600x600 pixels.');
