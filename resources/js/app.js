@@ -305,6 +305,11 @@ $(document).ready(function() {
         if (step === 5) {
             toggleGuardianSection();
         }
+
+        // NEW: Filter degree programs when entering Step 3
+        if (step === 3 && typeof window.filterDegreePrograms === 'function') {
+            window.filterDegreePrograms();
+        }
     }
 
     // ---------- Validation Function ----------
@@ -1774,7 +1779,7 @@ $(document).ready(function() {
             },
             success: function(response) {
                 if (response.success) {
-                    // ✅ Only toast on final step – changed to "Step Saved"
+                    // Show toast on final step – changed to "Step Saved"
                     showToast('Form Saved', 'success');
                     localStorage.removeItem('form_session_id');
                     setTimeout(() => {
@@ -1796,12 +1801,4 @@ $(document).ready(function() {
     toggleCourtOrderContainer();
     toggleFirstPersonFields();
     toggleMobileSublabels();
-
-    /*
-    $(document).on('citizenshipChanged', function() {
-        if (currentStep === 4) {
-            validateStep(currentStep);
-        }
-    });
-    */
 });

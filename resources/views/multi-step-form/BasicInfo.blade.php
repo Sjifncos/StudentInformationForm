@@ -12,45 +12,7 @@
                     focus:outline-none focus:border-[#0E6021] focus:ring-1 focus:ring-[#0E6021] transition-colors mt-1 
                     appearance-none">
                 <option value="" disabled selected>Please Select</option>
-                <option value="AA Sports Studies">AA Sports Studies</option>
-                <option value="B Fine Arts (Product Design)">B Fine Arts (Product Design)</option>
-                <option value="B Fine Arts (Studio Arts)">B Fine Arts (Studio Arts)</option>
-                <option value="B Physical Education">B Physical Education</option>
-                <option value="B Sports Science">B Sports Science</option>
-                <option value="BA Communication">BA Communication</option>
-                <option value="BA Political Science">BA Political Science</option>
-                <option value="BA Psychology">BA Psychology</option>
-                <option value="BA Psychology (2005 curriculum)">BA Psychology (2005 curriculum)</option>
-                <option value="BS Accountancy">BS Accountancy</option>
-                <option value="BS Biology">BS Biology</option>
-                <option value="BS Biology (2005 curriculum)">BS Biology (2005 curriculum)</option>
-                <option value="BS Computer Science">BS Computer Science</option>
-                <option value="BS Management">BS Management</option>
-                <option value="BS Management (Finance)">BS Management (Finance)</option>
-                <option value="BS Management (Marketing)">BS Management (Marketing)</option>
-                <option value="BS Mathematics">BS Mathematics</option>
-                <option value="BS Statistics">BS Statistics</option>
-                <option value="C Fine Arts (Product Design)">C Fine Arts (Product Design)</option>
-                <option value="C Fine Arts (Studio Arts)">C Fine Arts (Studio Arts)</option>
-                <option value="Master in Public Affairs (Agrarian and Rurban Development Studies)">Master in Public Affairs (Agrarian and Rurban Development Studies)</option>
-                <option value="Master in Public Affairs (Education Management)">Master in Public Affairs (Education Management)</option>
-                <option value="Master in Public Affairs (Strategic Planning and Public Policy)">Master in Public Affairs (Strategic Planning and Public Policy)</option>
-                <option value="Master of Arts in Communication and Media">Master of Arts in Communication and Media</option>
-                <option value="Master of Business Administration">Master of Business Administration</option>
-                <option value="Master of Education (Biology)">Master of Education (Biology)</option>
-                <option value="Master of Education (Chemistry)">Master of Education (Chemistry)</option>
-                <option value="Master of Education (English as a Second Language)">Master of Education (English as a Second Language)</option>
-                <option value="Master of Education (Filipino)">Master of Education (Filipino)</option>
-                <option value="Master of Education (Mathematics)">Master of Education (Mathematics)</option>
-                <option value="Master of Education (Physics)">Master of Education (Physics)</option>
-                <option value="Master of Education (Social Studies)">Master of Education (Social Studies)</option>
-                <option value="Master of Science in Computer Science">Master of Science in Computer Science</option>
-                <option value="Master of Science in Environmental Science">Master of Science in Environmental Science</option>
-                <option value="Master of Science in Environmental Studies">Master of Science in Environmental Studies</option>
-                <option value="Master of Science in Mathematics (Applied Mathematics)">Master of Science in Mathematics (Applied Mathematics)</option>
-                <option value="Master of Science in Mathematics (Mathematics Education)">Master of Science in Mathematics (Mathematics Education)</option>
-                <option value="Master of Science in Mathematics (Pure Mathematics)">Master of Science in Mathematics (Pure Mathematics)</option>
-                <option value="Professional Master in Data Science (Computing)">Professional Master in Data Science (Computing)</option>
+                {{-- Options will be populated by JavaScript --}}
             </select>
             <p class="text-[12px] text-gray-500 mt-1">
                 For any questions regarding your primary program, please proceed to <span class="font-semibold text-[#8A1538]">OUR</span>.
@@ -379,7 +341,7 @@
             prevBtnId,
             nextBtnId,
             todayBtnId,
-            yearStart = 1970,      // changed from 1900 to 1970
+            yearStart = 1970,
             yearEnd = new Date().getFullYear()
         } = config;
 
@@ -599,6 +561,104 @@
 
         renderCalendar();
     }
+
+    // ===== Degree Program Filtering based on Category =====
+    function updateDegreeProgramOptions(category) {
+        const $select = $('#degreeprogram');
+        if (!$select.length) return;
+
+        // List of Undergraduate programs (based on the original HTML)
+        const undergraduatePrograms = [
+            "AA Sports Studies",
+            "B Fine Arts (Product Design)",
+            "B Fine Arts (Studio Arts)",
+            "B Physical Education",
+            "B Sports Science",
+            "BA Communication",
+            "BA Political Science",
+            "BA Psychology",
+            "BA Psychology (2005 curriculum)",
+            "BS Accountancy",
+            "BS Biology",
+            "BS Biology (2005 curriculum)",
+            "BS Computer Science",
+            "BS Management",
+            "BS Management (Finance)",
+            "BS Management (Marketing)",
+            "BS Mathematics",
+            "BS Statistics",
+            "C Fine Arts (Product Design)",
+            "C Fine Arts (Studio Arts)"
+        ];
+
+        // List of Graduate programs
+        const graduatePrograms = [
+            "Master in Public Affairs (Agrarian and Rurban Development Studies)",
+            "Master in Public Affairs (Education Management)",
+            "Master in Public Affairs (Strategic Planning and Public Policy)",
+            "Master of Arts in Communication and Media",
+            "Master of Business Administration",
+            "Master of Education (Biology)",
+            "Master of Education (Chemistry)",
+            "Master of Education (English as a Second Language)",
+            "Master of Education (Filipino)",
+            "Master of Education (Mathematics)",
+            "Master of Education (Physics)",
+            "Master of Education (Social Studies)",
+            "Master of Science in Computer Science",
+            "Master of Science in Environmental Science",
+            "Master of Science in Environmental Studies",
+            "Master of Science in Mathematics (Applied Mathematics)",
+            "Master of Science in Mathematics (Mathematics Education)",
+            "Master of Science in Mathematics (Pure Mathematics)",
+            "Professional Master in Data Science (Computing)"
+        ];
+
+        let optionsToShow = [];
+        if (category === 'undergraduate') {
+            optionsToShow = undergraduatePrograms;
+        } else if (category === 'graduate') {
+            optionsToShow = graduatePrograms;
+        } else {
+            // No category selected → show all (or leave empty; here we show all)
+            optionsToShow = [...undergraduatePrograms, ...graduatePrograms];
+        }
+
+        // Preserve currently selected value if still valid
+        const currentVal = $select.val();
+
+        // Rebuild the dropdown
+        $select.empty();
+        $select.append('<option value="" disabled selected>Please Select</option>');
+        optionsToShow.forEach(prog => {
+            $select.append(`<option value="${prog}">${prog}</option>`);
+        });
+
+        // Restore previous value if it still exists in the new list
+        if (currentVal && optionsToShow.includes(currentVal)) {
+            $select.val(currentVal);
+        } else {
+            $select.val('');
+        }
+    }
+
+    // Expose function globally so it can be called from app.js
+    window.filterDegreePrograms = function() {
+        const category = $('#category').val();
+        updateDegreeProgramOptions(category);
+    };
+
+    // Listen to category changes (Step 2)
+    $(document).on('change', '#category', function() {
+        if (window.filterDegreePrograms) window.filterDegreePrograms();
+    });
+
+    // Apply filter on initial load if category is already selected
+    $(function() {
+        if ($('#category').val()) {
+            window.filterDegreePrograms();
+        }
+    });
 
     // Initialize both date pickers with 1970 start
     document.addEventListener('DOMContentLoaded', function() {
