@@ -41,6 +41,8 @@
                 </select>
                 <span class="error-message text-red-500 text-sm hidden" data-for="honorsreceived"></span>
         </div>
+
+        {{--
         <!-- Scholarship Question -->
         <div class="relative w-full">
             <label for="scholarship" class="font-medium">
@@ -60,6 +62,34 @@
             <span class="error-message text-red-500 text-sm hidden" data-for="scholarship"></span>
             <p class="text-[12px] text-gray-500 mt-1">(e.g. from government agencies or private institutions)</p>
         </div>
+        --}}
+        <div class="relative w-full">
+            <label class="font-medium">
+                Are you on a scholarship other than <span class="font-semibold text-[#8A1538]">
+                    <a target="_blank" href="https://www.officialgazette.gov.ph/2017/08/03/republic-act-no-10931/"
+                    class="font-medium text-[#8A1538] hover:text-[#8A1538]">RA 10931</a></span>
+                <span class="text-red-500 ml-0.5">*</span>
+            </label>
+            <div class="flex gap-3 mt-1">
+                <label class="group relative flex items-right justify-right gap-3 px-8 py-3.5 rounded-xl  cursor-pointer transition-all duration-200 {{-- hover:bg-green-50 has-[:checked]:bg-green-50 --}} flex-1">
+                    <input type="radio" name="scholarship" value="yes" class="sr-only peer">
+                    <span class="w-4 h-4 rounded-full border-2 border-gray-400 flex items-center justify-center transition-all duration-200 group-has-[:checked]:border-[#0E6021]">
+                        <span class="w-2 h-2 rounded-full bg-[#0E6021] scale-0 transition-transform duration-200 group-has-[:checked]:scale-100"></span>
+                    </span>
+                    <span class="text-sm font-medium text-gray-500 group-has-[:checked]:text-[#0E6021] transition-colors duration-200">Yes</span>
+                </label>
+
+                <label class="group relative flex items-right justify-right gap-3 px-8 py-3.5 rounded-xl  cursor-pointer transition-all duration-200 {{-- hover:bg-red-50 has-[:checked]:bg-red-50 --}} flex-1">
+                    <input type="radio" name="scholarship" value="no" class="sr-only peer">
+                    <span class="w-4 h-4 rounded-full border-2 border-gray-400 flex items-center justify-center transition-all duration-200 group-has-[:checked]:border-[#850038]">
+                        <span class="w-2 h-2 rounded-full bg-[#850038] scale-0 transition-transform duration-200 group-has-[:checked]:scale-100"></span>
+                    </span>
+                    <span class="text-sm font-medium text-gray-500 group-has-[:checked]:text-[#850038] transition-colors duration-200">No</span>
+                </label>
+            </div>
+        </div>
+
+
         <!-- Specify Scholarship -->
         <div id="specifyScholarshipWrapper" class="col-span-1 md:col-span-2 hidden">
             <div class="relative w-full">
@@ -96,12 +126,22 @@
 </div>
 <script>
     (function() {
-        const scholarshipSelect = document.getElementById('scholarship');
+        // Get radio buttons and containers
+        const scholarshipRadios = document.querySelectorAll('input[name="scholarship"]');
         const specifyWrapper = document.getElementById('specifyScholarshipWrapper');
         const container = document.getElementById('scholarship-inputs');
         const addBtn = document.getElementById('add-scholarship');
 
-        // Helper to create a new scholarship entry
+        // Helper: get selected scholarship value
+        function getSelectedScholarship() {
+            let selected = null;
+            scholarshipRadios.forEach(radio => {
+                if (radio.checked) selected = radio.value;
+            });
+            return selected;
+        }
+
+        // Helper: create a new scholarship entry
         function createScholarshipEntry(value = '') {
             const entry = document.createElement('div');
             entry.className = 'scholarship-entry flex items-center gap-2';
@@ -120,12 +160,11 @@
             removeBtn.addEventListener('click', function() {
                 if (container.children.length > 1) {
                     entry.remove();
-                    // Update remove button visibility on the first entry
                     if (container.children.length === 1) {
-                        container.querySelector('.scholarship-entry:first-child .remove-scholarship').style.display = 'none';
+                        const firstRemove = container.querySelector('.scholarship-entry:first-child .remove-scholarship');
+                        if (firstRemove) firstRemove.style.display = 'none';
                     }
                 } else {
-                    // Show toast if trying to remove the last entry
                     if (typeof window.showToast === 'function') {
                         window.showToast('At least one scholarship entry is required.', 'error');
                     } else {
@@ -136,11 +175,12 @@
             return entry;
         }
 
-        // Toggle scholarship wrapper based on selection
+        // Toggle wrapper visibility and clear/reset entries
         function toggleScholarshipWrapper() {
-            if (scholarshipSelect.value === 'yes') {
+            const selected = getSelectedScholarship();
+            if (selected === 'yes') {
                 specifyWrapper.classList.remove('hidden');
-                // Ensure remove button on first entry is hidden if only one exists
+                // Hide remove button on first entry if only one exists
                 const firstRemove = container.querySelector('.scholarship-entry:first-child .remove-scholarship');
                 if (firstRemove && container.children.length === 1) {
                     firstRemove.style.display = 'none';
@@ -153,18 +193,22 @@
                 }
                 const firstInput = container.querySelector('.scholarship-entry:first-child input');
                 if (firstInput) firstInput.value = '';
-                // Hide remove button on first
                 const firstRemove = container.querySelector('.scholarship-entry:first-child .remove-scholarship');
                 if (firstRemove) firstRemove.style.display = 'none';
             }
         }
 
-        // Initial setup
-        if (scholarshipSelect && specifyWrapper && container && addBtn) {
-            scholarshipSelect.addEventListener('change', toggleScholarshipWrapper);
+        // Event listener for radio changes
+        scholarshipRadios.forEach(radio => {
+            radio.addEventListener('change', toggleScholarshipWrapper);
+        });
 
-            // Add new entry
+        // Add new scholarship entry
+        if (addBtn) {
             addBtn.addEventListener('click', function() {
+                const selected = getSelectedScholarship();
+                if (selected !== 'yes') return;
+
                 const lastInput = container.querySelector('.scholarship-entry:last-child input');
                 if (!lastInput || lastInput.value.trim() === '') {
                     if (typeof window.showToast === 'function') {
@@ -176,36 +220,14 @@
                 }
                 const newEntry = createScholarshipEntry('');
                 container.appendChild(newEntry);
-                // Show remove button on previous entries (they already have it)
-                // Ensure first entry's remove button becomes visible if there are now 2 entries
                 if (container.children.length === 2) {
                     const firstRemove = container.querySelector('.scholarship-entry:first-child .remove-scholarship');
                     if (firstRemove) firstRemove.style.display = 'inline-flex';
                 }
             });
-
-            // Handle remove for the initial entry (if any)
-            const initialRemove = container.querySelector('.scholarship-entry .remove-scholarship');
-            if (initialRemove) {
-                initialRemove.addEventListener('click', function() {
-                    if (container.children.length > 1) {
-                        this.closest('.scholarship-entry').remove();
-                        if (container.children.length === 1) {
-                            container.querySelector('.scholarship-entry:first-child .remove-scholarship').style.display = 'none';
-                        }
-                    } else {
-                        if (typeof window.showToast === 'function') {
-                            window.showToast('At least one scholarship entry is required.', 'error');
-                        } else {
-                            alert('At least one scholarship entry is required.');
-                        }
-                    }
-                });
-                // Initially hide if only one entry
-                if (container.children.length === 1) {
-                    initialRemove.style.display = 'none';
-                }
-            }
         }
+
+        // Initial toggle based on pre‑selected radio (if any)
+        toggleScholarshipWrapper();
     })();
 </script>

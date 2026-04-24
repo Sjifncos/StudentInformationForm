@@ -55,12 +55,17 @@ $(document).ready(function() {
         }
     });
 
+    // ---------- Helper function for same_address radio ----------
+    function getSameAddressValue() {
+        return $('input[name="same_address"]:checked').val() || null;
+    }
+
     // ---------- Step Navigation Variables ----------
     let currentStep = 1;
     let maxStepReached = 1;
     let totalSteps = 10;
     let visibleSteps = [1,2,3,4,5,6,7,8,9,10];
-    let maxVisibleIndex = 0;
+    let maxVisibleIndex = 1;
 
     // Modal confirmation variables
     let motherConfirmPending = false;
@@ -75,6 +80,11 @@ $(document).ready(function() {
 
     // ---------- Session ID for JSON storage ----------
     let sessionId = localStorage.getItem('form_session_id') || null;
+
+    // Helper function to get selected citizenship value
+    function getCitizenshipValue() {
+        return $('input[name="citizenship"]:checked').val();
+    }
 
     // ---------- Helper Functions ----------
     function resetStep5ConfirmationFlags() {
@@ -105,7 +115,7 @@ $(document).ready(function() {
 
     // ---------- Toggle sublabels for mobile number fields based on citizenship ----------
     function toggleMobileSublabels() {
-        const citizenship = $('#citizenship').val();
+        const citizenship = getCitizenshipValue();
         const isNonCitizen = (citizenship === 'no');
 
         const mobileFieldIds = ['mobilenumber', 'emergency_mobilenumber', 'guardian_phonenumber'];
@@ -187,7 +197,7 @@ $(document).ready(function() {
 
             if (!visibleSteps.includes(currentStep)) {
                 currentStep = visibleSteps[0];
-                maxVisibleIndex = 0;
+                maxVisibleIndex = 1;
             } else {
                 maxVisibleIndex = Math.max(maxVisibleIndex, visibleSteps.indexOf(currentStep));
             }
@@ -248,9 +258,6 @@ $(document).ready(function() {
             pendingMobileStep = null;
         }
 
-        // FIX: Do NOT reset confirmation flags when leaving step 5
-        // This allows confirmed conflicts to persist across steps
-
         $('.step').addClass('hidden');
         $(`.step[data-step="${step}"]`).removeClass('hidden');
 
@@ -306,7 +313,6 @@ $(document).ready(function() {
             toggleGuardianSection();
         }
 
-        // NEW: Filter degree programs when entering Step 3
         if (step === 3 && typeof window.filterDegreePrograms === 'function') {
             window.filterDegreePrograms();
         }
@@ -321,13 +327,13 @@ $(document).ready(function() {
         $step.find('.mb-6').removeClass('border-red-500 border rounded p-2');
         $step.find('.border-red-500').removeClass('border-red-500');
 
-        const citizenship = $('#citizenship').val();
+        const citizenship = getCitizenshipValue();
         const isNonPhilippineCitizen = citizenship === 'no';
 
         const typeofincome = $('#typeofincome').val();
         const isNotEarning = typeofincome === 'notearning';
 
-        const sameAddressValue = $('#same_address').val();
+        const sameAddressValue = getSameAddressValue();
 
         $step.find('input:not([type="radio"]), select, textarea').each(function () {
             const $field = $(this);
@@ -346,7 +352,6 @@ $(document).ready(function() {
             let value = $field.val();
             if (typeof value === 'string') value = value.trim();
 
-            // --- IMPROVED LABEL EXTRACTION ---
             let label = fieldName;
             let $label = $field.closest('.mb-4, .relative, .flex-col, .col-span-1, .md\\:col-span-1, .md\\:col-span-2').find('label').first();
             if (!$label.length && $field.attr('id')) {
@@ -366,11 +371,10 @@ $(document).ready(function() {
                 'sexatbirth',
                 'birthplace',
                 'civilstatus',
-                'citizenship',
                 'same_address',
-                'streetaddressline1_ph',
+                'street',
+                'current_street',
                 'region',
-                //'province',
                 'city',
                 'barangay',
                 'PSGC',
@@ -413,7 +417,7 @@ $(document).ready(function() {
                 'citizenship_country',
                 'outside_ph_addressline1',
                 'city_foreign',
-                'state/province_foreign',
+                'state_province_foreign',
                 'zipcode_foreign',
                 'foreign_country'
             ];
@@ -426,7 +430,7 @@ $(document).ready(function() {
             if (foreignFields.includes(fieldName)) {
                 isRequired = isNonPhilippineCitizen;
             }
-                        // Skip province validation if NCR is selected
+            // Skip province validation if NCR is selected
             if (fieldName === 'province' && $('#region').val() === '1300000000') {
                 isRequired = false;
             }
@@ -437,8 +441,7 @@ $(document).ready(function() {
             }
 
             if (fieldName && fieldName.startsWith('current_')) {
-                const citizenshipVal = $('#citizenship').val();
-                const showCurrent = (citizenshipVal === 'no') || (citizenshipVal === 'yes' && sameAddressValue === 'no');
+                const showCurrent = (citizenship === 'no') || (citizenship === 'yes' && sameAddressValue === 'no');
                 if (showCurrent) {
                     const optionalCurrentFields = [
                         'current_room_flr_unit_bldg',
@@ -644,7 +647,8 @@ $(document).ready(function() {
         }
 
         // ===== UPDATED: Scholarship specify validation (dynamic entries) =====
-        if ($('#scholarship').val() === 'yes') {
+        const selectedScholarship = $('input[name="scholarship"]:checked').val();
+        if (selectedScholarship === 'yes') {
             const $scholarshipInputs = $('input[name="scholarships[]"]');
             let hasValue = false;
             $scholarshipInputs.each(function() {
@@ -773,7 +777,6 @@ $(document).ready(function() {
                 errors.push('2x2 image is required.');
                 $('#imageInput').addClass('border-red-500');
             } else {
-                // Check file size before upload (max 2 MB)
                 if (profileFile.size > 2 * 1024 * 1024) {
                     errors.push('2x2 image must be smaller than 2 MB. Please compress your image.');
                     $('#imageInput').addClass('border-red-500');
@@ -785,7 +788,6 @@ $(document).ready(function() {
                 }
             }
 
-            // Helper to validate file size (max 2 MB for documents)
             function validateFileSize(inputName, maxSizeMB = 2) {
                 const input = $(`input[name="${inputName}"]`)[0];
                 if (input && input.files.length) {
@@ -822,7 +824,6 @@ $(document).ready(function() {
                 }
             });
 
-            // Conditional documents (marriage certificate, PWD card, court order) – add size checks
             const civilStatus = $('#civilstatus').val();
             if (civilStatus === 'married') {
                 const marriageInput = $('input[name="marriage_certificate"]')[0];
@@ -877,27 +878,37 @@ $(document).ready(function() {
             }
         }
 
+        // Step 4 specific validation: citizenship radio
+        if (step === 4) {
+            const citizenshipValue = getCitizenshipValue();
+            if (!citizenshipValue) {
+                errors.push(`Are you a Philippine citizen? is required.`);
+                $('input[name="citizenship"]').closest('.relative.w-full').addClass('border-red-500');
+            } else {
+                $('input[name="citizenship"]').closest('.relative.w-full').removeClass('border-red-500');
+            }
+        }
+
         // Step 5 specific validation: mother's last name and mobile number conflicts
         if (step === 5) {
             const mothersLastname = $('#mother_lastname').val()?.trim() || '';
             const fathersLastname = $('#fathers_lastname').val()?.trim() || '';
             if (mothersLastname && fathersLastname && mothersLastname.toLowerCase() === fathersLastname.toLowerCase()) {
-            if (!motherNameConfirmed) {
-                errors.push("Mother's maiden name should be different from father's last name. Are you sure?");
-                $('#mother_lastname').addClass('border-red-500');
-                
-                // NEW: Require mother's middle name when conflict exists and not confirmed
-                const motherMiddlename = $('#mother_middlename').val()?.trim() || '';
-                if (!motherMiddlename) {
-                    errors.push("Mother's middle name is required.");
-                    $('#mother_middlename').addClass('border-red-500');
-                } else {
-                    $('#mother_middlename').removeClass('border-red-500');
+                if (!motherNameConfirmed) {
+                    errors.push("Mother's maiden name should be different from father's last name. Are you sure?");
+                    $('#mother_lastname').addClass('border-red-500');
+                    
+                    const motherMiddlename = $('#mother_middlename').val()?.trim() || '';
+                    if (!motherMiddlename) {
+                        errors.push("Mother's middle name is required.");
+                        $('#mother_middlename').addClass('border-red-500');
+                    } else {
+                        $('#mother_middlename').removeClass('border-red-500');
+                    }
                 }
+            } else {
+                motherNameConfirmed = false;
             }
-        } else {
-            motherNameConfirmed = false;
-        }
 
             const mobileNumber = $('#mobilenumber').val()?.trim() || '';
             const emergencyMobile = $('#emergency_mobilenumber').val()?.trim() || '';
@@ -932,24 +943,29 @@ $(document).ready(function() {
         }
     });
 
-    $(document).on('change', '#citizenship', function() {
-    toggleMobileSublabels();
-    if (currentStep === 5) { validateStep(currentStep); }
-    $(document).trigger('citizenshipChanged');
-    
-    // NEW: Remove red borders from all address fields (both PH and foreign)
-    const addressFields = [
-        'room_flr_unit_bldg', 'house_lot_blk', 'street', 'subdivision_line2',
-        'region', 'province', 'city', 'barangay', 'PSGC',
-        'citizenship_country', 'outside_ph_addressline1', 'outside_ph_addressline2',
-        'city_foreign', 'state/province_foreign', 'zipcode_foreign', 'foreign_country'
-    ];
-    addressFields.forEach(id => {
-        $(`#${id}`).removeClass('border-red-500');
+    $(document).on('change', 'input[name="citizenship"]', function() {
+        toggleMobileSublabels();
+        if (currentStep === 5) { validateStep(currentStep); }
+        $(document).trigger('citizenshipChanged');
+        
+        // Remove red borders from all address fields (both PH and foreign)
+        const addressFields = [
+            'room_flr_unit_bldg', 'house_lot_blk', 'street', 'subdivision_line2',
+            'region', 'province', 'city', 'barangay', 'PSGC',
+            'citizenship_country', 'outside_ph_addressline1', 'outside_ph_addressline2',
+            'city_foreign', 'state_province_foreign', 'zipcode_foreign', 'foreign_country'
+        ];
+        addressFields.forEach(id => {
+            $(`#${id}`).removeClass('border-red-500');
+        });
+        $('.border-red-500').removeClass('border-red-500');
+        
+        toggleForeignFields();
+        if (getCitizenshipValue() === 'yes' && getSameAddressValue() === 'yes') {
+            copyPermanentToCurrent();
+        }
+        toggleCurrentAddress();
     });
-    // Also clear any container-level red borders
-    $('.border-red-500').removeClass('border-red-500');
-});
 
     $(document).on('change', '#typeofincome', function() {
         if (currentStep === 6) {
@@ -1021,14 +1037,12 @@ $(document).ready(function() {
         }
 
         if (errors.length === 0) {
-            // Save current step via AJAX
             const formData = new FormData();
             formData.append('step', currentStep);
             if (sessionId) formData.append('session_id', sessionId);
 
             const $step = $(`.step[data-step="${currentStep}"]`);
 
-            // Gather all form fields (excluding file inputs for now)
             $step.find('input:not([type="file"]), select, textarea').each(function() {
                 const $field = $(this);
                 const name = $field.attr('name');
@@ -1046,7 +1060,6 @@ $(document).ready(function() {
                 }
             });
 
-            // Handle file inputs
             $step.find('input[type="file"]').each(function() {
                 const $fileInput = $(this);
                 const name = $fileInput.attr('name');
@@ -1070,7 +1083,6 @@ $(document).ready(function() {
                         sessionId = response.session_id;
                         localStorage.setItem('form_session_id', sessionId);
                     }
-                    // Move to next step
                     if (currentIndex < totalSteps - 1) {
                         currentStep = visibleSteps[currentIndex + 1];
                         showStep(currentStep);
@@ -1095,7 +1107,6 @@ $(document).ready(function() {
             mobileMatchPending = false;
             pendingMobileStep = null;
         }
-        // FIX: Do NOT reset confirmation flags here
 
         const currentIndex = visibleSteps.indexOf(currentStep);
         if (currentIndex > 0) {
@@ -1129,7 +1140,6 @@ $(document).ready(function() {
                 return;
             }
         }
-        // FIX: Do NOT reset confirmation flags when clicking on step labels
         currentStep = targetStep;
         showStep(currentStep);
     });
@@ -1248,21 +1258,16 @@ $(document).ready(function() {
     // ===== NEW: Helper functions for copying Permanent Address to Current Address =====
     const BASE_URL = "https://psgc.cloud/api/v2";
 
-    // ---------- FIXED ENCODING: Convert mojibake (e.g., "NiÃ±o" → "Niño") ----------
     function fixEncoding(str) {
         if (!str || typeof str !== 'string') return str;
-        // Attempt to decode percent-encoded UTF-8 (some APIs double-encode)
         try {
-            // First, try to decodeURIComponent if it looks like it has % sequences
             if (str.includes('%')) {
                 const decoded = decodeURIComponent(str);
-                // If the result still contains mojibake patterns, try the fallback
                 if (/Ã±|Â©|â€¦/.test(decoded)) {
                     return decodeURIComponent(escape(decoded));
                 }
                 return decoded;
             }
-            // If we see mojibake patterns like Ã±, use the classic hack
             if (/Ã±|Â©|â€¦/.test(str)) {
                 return decodeURIComponent(escape(str));
             }
@@ -1272,29 +1277,21 @@ $(document).ready(function() {
 
     function resetDropdown(select, placeholder = "Please Select") {
         if (!select) return;
-
-        // Clear existing options
         select.innerHTML = "";
-
         const option = document.createElement("option");
         option.value = "";
         option.disabled = true;
         option.selected = true;
-        option.textContent = placeholder;  // safe – escapes HTML entities
-
+        option.textContent = placeholder;
         select.appendChild(option);
     }
 
     function buildValidatedUrl(baseUrl, endpoint, pathParam1, pathParam2) {
         try {
-            // Minimal path validation
             if (baseUrl.includes('/../') || /\/%2e%2e\//i.test(baseUrl)) {
                 throw new Error('Invalid path');
             }
-            
             const url = new URL(baseUrl);
-            
-            // Protocol + host checks
             const allowedDomains = ['psgc.cloud'];
             if (!allowedDomains.includes(url.hostname)) {
                 throw new Error('Invalid host');
@@ -1302,16 +1299,12 @@ $(document).ready(function() {
             if (!['https:'].includes(url.protocol)) {
                 throw new Error('Invalid protocol');
             }
-            
-            // Validate path parameters
             if (pathParam1 && !/^[A-Za-z0-9_-]+$/.test(pathParam1)) {
                 throw new Error('Invalid parameter');
             }
             if (pathParam2 && !/^[A-Za-z0-9_-]+$/.test(pathParam2)) {
                 throw new Error('Invalid parameter');
             }
-            
-            // Build pathname from fixed literals + validated segments (v2 API)
             if (pathParam2) {
                 url.pathname = `/api/v2/${endpoint}/${pathParam1}/${pathParam2}`;
             } else if (pathParam1) {
@@ -1319,7 +1312,6 @@ $(document).ready(function() {
             } else {
                 url.pathname = `/api/v2/${endpoint}`;
             }
-            
             return url.href;
         } catch {
             throw new Error('Invalid URL');
@@ -1330,11 +1322,7 @@ $(document).ready(function() {
         const response = await fetch(url);
         if (!response.ok) throw new Error("Failed to fetch");
         const json = await response.json();
-
-        // PSGC v2 API wraps results in { data: [...] }
         const data = Array.isArray(json) ? json : (json.data ?? json);
-
-        // Apply encoding fix to every item's 'name' field
         if (Array.isArray(data)) {
             data.forEach(item => {
                 if (item.name) item.name = fixEncoding(item.name);
@@ -1350,16 +1338,14 @@ $(document).ready(function() {
         data.forEach(item => {
             const option = document.createElement("option");
             option.value = item.code;
-            option.textContent = item.name; // name already fixed by fetchData
+            option.textContent = item.name;
             select.appendChild(option);
         });
     }
 
-    // ===== NEW: Missing helper functions for copying address =====
     async function setCurrentProvince(regionCode, provinceCode) {
         const $provinceSelect = $('#current_province');
         if (!$provinceSelect.length) return;
-        // Fetch provinces for the given region
         const provinces = await fetchData(buildValidatedUrl(BASE_URL, 'regions', regionCode, 'provinces'));
         resetDropdown($provinceSelect[0]);
         populateDropdown($provinceSelect[0], provinces);
@@ -1391,13 +1377,11 @@ $(document).ready(function() {
         }
     }
 
-    // ===== CORRECTED copyPermanentToCurrent function =====
     async function copyPermanentToCurrent() {
-        const citizenship = $('#citizenship').val();
-        const sameAddress = $('#same_address').val();
+        const citizenship = getCitizenshipValue();
+        const sameAddress = getSameAddressValue();
         if (citizenship !== 'yes' || sameAddress !== 'yes') return;
 
-        // Copy text fields
         const mapping = {
             room_flr_unit_bldg: 'current_room_flr_unit_bldg',
             house_lot_blk: 'current_house_lot_blk',
@@ -1414,7 +1398,6 @@ $(document).ready(function() {
         const cityCode = $('#city').val();
         const barangayCode = $('#barangay').val();
 
-        // Helper to reset dropdowns below a certain level
         function resetCurrentSelects(level = 'all') {
             if (level === 'all' || level === 'province') resetDropdown($('#current_province')[0]);
             if (level === 'all' || level === 'city') resetDropdown($('#current_city')[0]);
@@ -1422,7 +1405,6 @@ $(document).ready(function() {
             $('#current_PSGC').val('');
         }
 
-        // Set current region
         if (regionCode) {
             $('#current_region').val(regionCode);
             resetCurrentSelects('province');
@@ -1430,19 +1412,15 @@ $(document).ready(function() {
             const isNCR = (regionCode === '1300000000');
 
             if (isNCR) {
-                // NCR has no provinces – fetch cities directly from region
                 $('#current_province').prop('disabled', true);
                 $('#current_province').html('<option value="">N/A (NCR)</option>');
-                const citiesUrl = buildValidatedUrl(BASE_URL, 'regions', regionCode, 'cities-municipalities');
-                const cities = await fetchData(citiesUrl);
+                const cities = await fetchData(buildValidatedUrl(BASE_URL, 'regions', regionCode, 'cities-municipalities'));
                 const $citySelect = $('#current_city');
                 resetDropdown($citySelect[0]);
                 populateDropdown($citySelect[0], cities);
                 if (cityCode) {
                     $citySelect.val(cityCode);
-                    // Fetch barangays for the selected city
-                    const barangaysUrl = buildValidatedUrl(BASE_URL, 'cities-municipalities', cityCode, 'barangays');
-                    const barangays = await fetchData(barangaysUrl);
+                    const barangays = await fetchData(buildValidatedUrl(BASE_URL, 'cities-municipalities', cityCode, 'barangays'));
                     const $barangaySelect = $('#current_barangay');
                     resetDropdown($barangaySelect[0]);
                     populateDropdown($barangaySelect[0], barangays);
@@ -1452,7 +1430,6 @@ $(document).ready(function() {
                     }
                 }
             } else {
-                // Normal case (with province)
                 $('#current_province').prop('disabled', false);
                 if (provinceCode) {
                     await setCurrentProvince(regionCode, provinceCode);
@@ -1475,8 +1452,9 @@ $(document).ready(function() {
         const currentAddressSection = document.getElementById('current_address_section');
         if (!currentAddressSection) return;
 
-        const isCitizen = $('#citizenship').val() === 'yes';
-        const isSame = $('#same_address').val() === 'yes';
+        const citizenship = getCitizenshipValue();
+        const isCitizen = citizenship === 'yes';
+        const isSame = getSameAddressValue() === 'yes';
 
         if (isCitizen) {
             currentAddressSection.style.display = '';
@@ -1499,7 +1477,8 @@ $(document).ready(function() {
     }
 
     function syncPermanentToCurrentOnChange() {
-        if ($('#citizenship').val() === 'yes' && $('#same_address').val() === 'yes') {
+        const citizenship = getCitizenshipValue();
+        if (citizenship === 'yes' && getSameAddressValue() === 'yes') {
             copyPermanentToCurrent();
         }
     }
@@ -1542,26 +1521,25 @@ $(document).ready(function() {
     }
 
     regionSelect?.addEventListener("change", async function () {
-    resetDropdown(provinceSelect);
-    resetDropdown(citySelect);
-    resetDropdown(barangaySelect);
-    psgcInput.value = "";
-
-    const isNCR = this.value === '1300000000';
-
-    if (isNCR) {
-        // NCR has no provinces — fetch cities directly from the region
-        provinceSelect.disabled = true;
-        provinceSelect.innerHTML = '<option value="">N/A (NCR)</option>';
-        const cities = await fetchData(buildValidatedUrl(BASE_URL, 'regions', this.value, 'cities-municipalities'));
-        populateDropdown(citySelect, cities);
-    } else {
-        provinceSelect.disabled = false;
         resetDropdown(provinceSelect);
-        const provinces = await fetchData(buildValidatedUrl(BASE_URL, 'regions', this.value, 'provinces'));
-        populateDropdown(provinceSelect, provinces);
-    }
-});
+        resetDropdown(citySelect);
+        resetDropdown(barangaySelect);
+        psgcInput.value = "";
+
+        const isNCR = this.value === '1300000000';
+
+        if (isNCR) {
+            provinceSelect.disabled = true;
+            provinceSelect.innerHTML = '<option value="">N/A (NCR)</option>';
+            const cities = await fetchData(buildValidatedUrl(BASE_URL, 'regions', this.value, 'cities-municipalities'));
+            populateDropdown(citySelect, cities);
+        } else {
+            provinceSelect.disabled = false;
+            resetDropdown(provinceSelect);
+            const provinces = await fetchData(buildValidatedUrl(BASE_URL, 'regions', this.value, 'provinces'));
+            populateDropdown(provinceSelect, provinces);
+        }
+    });
 
     provinceSelect?.addEventListener("change", async function () {
         resetDropdown(citySelect);
@@ -1599,25 +1577,25 @@ $(document).ready(function() {
     }
 
     currentRegionSelect?.addEventListener("change", async function () {
-    resetDropdown(currentProvinceSelect);
-    resetDropdown(currentCitySelect);
-    resetDropdown(currentBarangaySelect);
-    currentPsgcInput.value = "";
-
-    const isNCR = this.value === '1300000000';
-
-    if (isNCR) {
-        currentProvinceSelect.disabled = true;
-        currentProvinceSelect.innerHTML = '<option value="">N/A (NCR)</option>';
-        const cities = await fetchData(buildValidatedUrl(BASE_URL, 'regions', this.value, 'cities-municipalities'));
-        populateDropdown(currentCitySelect, cities);
-    } else {
-        currentProvinceSelect.disabled = false;
         resetDropdown(currentProvinceSelect);
-        const provinces = await fetchData(buildValidatedUrl(BASE_URL, 'regions', this.value, 'provinces'));
-        populateDropdown(currentProvinceSelect, provinces);
-    }
-});
+        resetDropdown(currentCitySelect);
+        resetDropdown(currentBarangaySelect);
+        currentPsgcInput.value = "";
+
+        const isNCR = this.value === '1300000000';
+
+        if (isNCR) {
+            currentProvinceSelect.disabled = true;
+            currentProvinceSelect.innerHTML = '<option value="">N/A (NCR)</option>';
+            const cities = await fetchData(buildValidatedUrl(BASE_URL, 'regions', this.value, 'cities-municipalities'));
+            populateDropdown(currentCitySelect, cities);
+        } else {
+            currentProvinceSelect.disabled = false;
+            resetDropdown(currentProvinceSelect);
+            const provinces = await fetchData(buildValidatedUrl(BASE_URL, 'regions', this.value, 'provinces'));
+            populateDropdown(currentProvinceSelect, provinces);
+        }
+    });
 
     currentProvinceSelect?.addEventListener("change", async function () {
         resetDropdown(currentCitySelect);
@@ -1640,8 +1618,8 @@ $(document).ready(function() {
 
     loadCurrentRegions();
 
-    const citizenshipSelect = document.getElementById('citizenship');
-    const sameAddressSelect = document.getElementById('same_address');
+    const citizenshipSelectRadios = document.querySelectorAll('input[name="citizenship"]');
+    const sameAddressRadioGroup = $('input[name="same_address"]').closest('.relative.w-full');
     const currentAddressSection = document.getElementById('current_address_section');
 
     const foreignFieldIds = [
@@ -1649,7 +1627,7 @@ $(document).ready(function() {
         'outside_ph_addressline1',
         'outside_ph_addressline2',
         'city_foreign',
-        'state/province_foreign',
+        'state_province_foreign',
         'zipcode_foreign',
         'foreign_country'
     ];
@@ -1667,7 +1645,8 @@ $(document).ready(function() {
     ];
 
     function toggleForeignFields() {
-        const showForeign = citizenshipSelect?.value === 'no';
+        const citizenship = getCitizenshipValue();
+        const showForeign = citizenship === 'no';
 
         foreignFieldIds.forEach(id => {
             const element = document.getElementById(id);
@@ -1697,19 +1676,14 @@ $(document).ready(function() {
             }
         });
 
-        const sameAddressContainer = sameAddressSelect?.closest('.relative.w-full');
-
-        if (citizenshipSelect?.value === 'yes') {
-            if (sameAddressContainer) {
-                sameAddressContainer.style.display = '';
-                sameAddressSelect.disabled = false;
-            }
+        // Handle same address radio group
+        if (citizenship === 'yes') {
+            sameAddressRadioGroup.show();
+            $('input[name="same_address"]').prop('disabled', false);
             toggleCurrentAddress();
         } else {
-            if (sameAddressContainer) {
-                sameAddressContainer.style.display = 'none';
-                sameAddressSelect.disabled = true;
-            }
+            sameAddressRadioGroup.hide();
+            $('input[name="same_address"]').prop('disabled', true).prop('checked', false);
             if (currentAddressSection) {
                 currentAddressSection.style.display = '';
                 currentAddressSection.querySelectorAll('input, select').forEach(field => {
@@ -1719,21 +1693,23 @@ $(document).ready(function() {
         }
     }
 
-    citizenshipSelect?.addEventListener('change', function() {
-        toggleForeignFields();
-        if (this.value === 'yes' && sameAddressSelect?.value === 'yes') {
-            copyPermanentToCurrent();
-        }
-    });
-    sameAddressSelect?.addEventListener('change', function() {
-        toggleCurrentAddress();
-        if (this.value === 'yes') {
-            copyPermanentToCurrent();
-        }
+    citizenshipSelectRadios.forEach(radio => {
+        radio.addEventListener('change', function() {
+            toggleForeignFields();
+            if (getCitizenshipValue() === 'yes' && getSameAddressValue() === 'yes') {
+                copyPermanentToCurrent();
+            }
+            toggleCurrentAddress();
+        });
     });
 
-    toggleForeignFields();
-    toggleCurrentAddress();
+    // Event listener for same_address radio buttons
+    $(document).on('change', 'input[name="same_address"]', function() {
+        toggleCurrentAddress();
+        if (getSameAddressValue() === 'yes') {
+            copyPermanentToCurrent();
+        }
+    });
 
     const permanentTextFields = ['room_flr_unit_bldg', 'house_lot_blk', 'street', 'subdivision_line2'];
     permanentTextFields.forEach(id => {
@@ -1741,15 +1717,17 @@ $(document).ready(function() {
     });
     $('#region, #province, #city, #barangay').on('change', syncPermanentToCurrentOnChange);
 
-    if (citizenshipSelect?.value === 'yes' && sameAddressSelect?.value === 'yes') {
+    if (getCitizenshipValue() === 'yes' && getSameAddressValue() === 'yes') {
         copyPermanentToCurrent();
     }
+
+    // Trigger initial state for same_address radio
+    $('input[name="same_address"]').trigger('change');
 
     // ---------- Final Submit Handler (AJAX) ----------
     $('#submitBtn').click(function(e) {
         e.preventDefault();
 
-        // Validate all steps
         let allValid = true;
         let firstInvalidStep = null;
         for (let i = 0; i < visibleSteps.length; i++) {
@@ -1769,7 +1747,6 @@ $(document).ready(function() {
             return;
         }
 
-        // All steps valid – submit final
         $.ajax({
             url: '/final-submit',
             type: 'POST',
@@ -1779,7 +1756,6 @@ $(document).ready(function() {
             },
             success: function(response) {
                 if (response.success) {
-                    // Show toast on final step – changed to "Step Saved"
                     showToast('Form Saved', 'success');
                     localStorage.removeItem('form_session_id');
                     setTimeout(() => {
@@ -1795,7 +1771,6 @@ $(document).ready(function() {
         });
     });
 
-    // Initial calls
     showStep(currentStep);
     updateVisibleSteps();
     toggleCourtOrderContainer();

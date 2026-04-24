@@ -17,21 +17,44 @@
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
                             <label class="font-medium">School <span class="text-red-500">*</span></label>
-                            <input type="text" name="schools[]" class="peer w-full px-4 py-3 text-base bg-white outline-none border-2 border-gray-300 rounded-[12px] focus:border-[#0E6021] focus:ring-1 focus:ring-[#0E6021] transition-colors mt-2"">
+                            <input type="text" name="schools[]" class="peer w-full px-4 py-3 text-base bg-white outline-none border-2 border-gray-300 rounded-[12px] focus:border-[#0E6021] focus:ring-1 focus:ring-[#0E6021] transition-colors mt-2">
                         </div>
                         <div>
                             <label class="font-medium">Program <span class="text-red-500">*</span></label>
-                            <input type="text" name="programs[]" class="peer w-full px-4 py-3 text-base bg-white outline-none border-2 border-gray-300 rounded-[12px] focus:border-[#0E6021] focus:ring-1 focus:ring-[#0E6021] transition-colors mt-2"">
+                            <input type="text" name="programs[]" class="peer w-full px-4 py-3 text-base bg-white outline-none border-2 border-gray-300 rounded-[12px] focus:border-[#0E6021] focus:ring-1 focus:ring-[#0E6021] transition-colors mt-2">
                         </div>
                         <div>
                             <label class="font-medium">Degree <span class="text-red-500">*</span></label>
-                            <input type="text" name="degrees[]" class="peer w-full px-4 py-3 text-base bg-white outline-none border-2 border-gray-300 rounded-[12px] focus:border-[#0E6021] focus:ring-1 focus:ring-[#0E6021] transition-colors mt-2"">
+                            <input type="text" name="degrees[]" class="peer w-full px-4 py-3 text-base bg-white outline-none border-2 border-gray-300 rounded-[12px] focus:border-[#0E6021] focus:ring-1 focus:ring-[#0E6021] transition-colors mt-2">
                         </div>
-                       <div>
-                            <label class="font-medium">Year Graduated <span class="text-red-500">*</span></label>
+                        <div>
+                            <label class="font-medium">Year Graduated/ Last Attended <span class="text-red-500">*</span></label>
                             <input type="text" name="year_graduateds[]" 
                                class="peer w-full px-4 py-3 text-base bg-white outline-none border-2 border-gray-300 rounded-[12px] focus:border-[#0E6021] focus:ring-1 focus:ring-[#0E6021] transition-colors mt-2"
                                 maxlength="4" inputmode="numeric">
+                        </div>
+                        <div class="last-school-container">
+                            <label class="font-medium">
+                                Is this your last school attended?
+                                <span class="text-red-500">*</span>
+                            </label>
+                            <div class="flex gap-3 mt-1">
+                                <label class="group relative flex items-right justify-right gap-3 px-8 py-3.5 rounded-xl cursor-pointer transition-all duration-200 flex-1">
+                                    <input type="radio" name="last_school_attended" value="yes" class="sr-only peer">
+                                    <span class="w-4 h-4 rounded-full border-2 border-gray-400 flex items-center justify-center transition-all duration-200 group-has-[:checked]:border-[#0E6021]">
+                                        <span class="w-2 h-2 rounded-full bg-[#0E6021] scale-0 transition-transform duration-200 group-has-[:checked]:scale-100"></span>
+                                    </span>
+                                    <span class="text-sm font-medium text-gray-500 group-has-[:checked]:text-[#0E6021] transition-colors duration-200">Yes</span>
+                                </label>
+
+                                <label class="group relative flex items-right justify-right gap-3 px-8 py-3.5 rounded-xl cursor-pointer transition-all duration-200 flex-1">
+                                    <input type="radio" name="last_school_attended" value="no" class="sr-only peer">
+                                    <span class="w-4 h-4 rounded-full border-2 border-gray-400 flex items-center justify-center transition-all duration-200 group-has-[:checked]:border-[#850038]">
+                                        <span class="w-2 h-2 rounded-full bg-[#850038] scale-0 transition-transform duration-200 group-has-[:checked]:scale-100"></span>
+                                    </span>
+                                    <span class="text-sm font-medium text-gray-500 group-has-[:checked]:text-[#850038] transition-colors duration-200">No</span>
+                                </label>
+                            </div>
                         </div>
                     </div>
                     <button type="button"
@@ -53,16 +76,6 @@
             <p class="text-[12px] text-gray-500 mt-2">Add all educational backgrounds (e.g., Bachelor's, Master's, etc.).</p>
         </div>
 
-        <!-- Last School Attended (static) -->
-        <div class="relative w-full">
-            <label for="lastschoolattended" class="font-medium">
-                Last School Attended
-                <span class="text-red-500 ml-1">*</span>
-            </label>
-            <input required id="lastschoolattended" name="lastschoolattended" type="text"
-                class="peer w-full px-4 py-3 text-base bg-white outline-none border-2 border-gray-300 rounded-[12px] focus:border-[#0E6021] focus:ring-1 focus:ring-[#0E6021] transition-colors mt-2"/>
-        </div>
-
         <!-- Primary Source Income -->
         <div class="relative w-full">
             <label for="typeofincome" class="font-medium">Primary Source of Income <span class="text-red-500 ml-1">*</span></label>
@@ -72,7 +85,7 @@
                 <option value="employeed">Employed (salary from an employer)</option>
                 <option value="self-employeed">Self-employed / Freelance / Professional practice</option>
                 <option value="combination">Combination of employment and self-employment</option>
-                <option value="passiveincome">Passive    income (e.g., investments, rental, family trust)</option>
+                <option value="passiveincome">Passive income (e.g., investments, rental, family trust)</option>
                 <option value="notearning">Not currently earning income</option>
             </select>
             <p class="text-[12px] text-gray-500 mt-1">Please select the option that represents your main source of income, even if you have multiple sources.</p>
@@ -174,7 +187,7 @@
 
 <script>
     (function() {
-        // Helper: restrict year input to digits only and max 4 digits
+        // Helper: restrict year input to digits and max length 4
         function restrictYearInput(input) {
             input.addEventListener('input', function(e) {
                 let value = this.value.replace(/\D/g, '');
@@ -183,18 +196,93 @@
             });
         }
 
-        // Create a new educational entry (cloned from template)
-        function createEducationalEntry() {
-            const template = document.querySelector('.educational-entry').cloneNode(true);
-            // Clear input values
-            template.querySelectorAll('input').forEach(input => input.value = '');
-            // Ensure remove button is visible and works
-            const removeBtn = template.querySelector('.remove-entry');
+        // Hidden field to store the last school attended (to satisfy validation)
+        let lastSchoolHidden = document.getElementById('lastschoolattended_hidden');
+        if (!lastSchoolHidden) {
+            lastSchoolHidden = document.createElement('input');
+            lastSchoolHidden.type = 'hidden';
+            lastSchoolHidden.name = 'lastschoolattended';
+            lastSchoolHidden.id = 'lastschoolattended_hidden';
+            document.querySelector('.step[data-step="7"]').appendChild(lastSchoolHidden);
+        }
+
+        // Update hidden field based on which entry has "Yes" selected
+        function updateLastSchoolHidden() {
+            const entries = document.querySelectorAll('.educational-entry');
+            let selectedSchool = '';
+            for (let i = 0; i < entries.length; i++) {
+                const yesRadio = entries[i].querySelector('input[name="last_school_attended"][value="yes"]');
+                if (yesRadio && yesRadio.checked) {
+                    const schoolInput = entries[i].querySelector('input[name="schools[]"]');
+                    if (schoolInput) selectedSchool = schoolInput.value.trim();
+                    break;
+                }
+            }
+            lastSchoolHidden.value = selectedSchool;
+        }
+
+        // Update visibility of "last school attended" container based on which entry has "Yes"
+        function updateLastSchoolVisibility() {
+            const entries = document.querySelectorAll('.educational-entry');
+            let selectedYesEntry = null;
+
+            for (let i = 0; i < entries.length; i++) {
+                const yesRadio = entries[i].querySelector('input[name="last_school_attended"][value="yes"]');
+                if (yesRadio && yesRadio.checked) {
+                    selectedYesEntry = entries[i];
+                    break;
+                }
+            }
+
+            for (let i = 0; i < entries.length; i++) {
+                const container = entries[i].querySelector('.last-school-container');
+                if (container) {
+                    if (selectedYesEntry && entries[i] !== selectedYesEntry) {
+                        container.style.display = 'none';
+                    } else {
+                        container.style.display = '';
+                    }
+                }
+            }
+            updateLastSchoolHidden();
+        }
+
+        // Create a new educational entry (clone without checked radios)
+        function createEducationalEntry(hideLastSchool = false) {
+            const template = document.querySelector('.educational-entry');
+            const newEntry = template.cloneNode(true);
+            
+            // Clear all input values
+            newEntry.querySelectorAll('input, select, textarea').forEach(input => {
+                if (input.type !== 'radio') input.value = '';
+            });
+            
+            // Uncheck all radio buttons in the new entry
+            newEntry.querySelectorAll('input[type="radio"]').forEach(radio => {
+                radio.checked = false;
+            });
+            
+            // Handle last school container visibility
+            const lastSchoolContainer = newEntry.querySelector('.last-school-container');
+            if (lastSchoolContainer) {
+                lastSchoolContainer.style.display = hideLastSchool ? 'none' : '';
+            }
+            
+            // Setup remove button
+            const removeBtn = newEntry.querySelector('.remove-entry');
             removeBtn.classList.remove('hidden');
             removeBtn.addEventListener('click', function() {
                 const entriesContainer = document.getElementById('educational-entries');
                 if (entriesContainer.children.length > 1) {
-                    template.remove();
+                    const wasYesSelected = this.closest('.educational-entry').querySelector('input[name="last_school_attended"][value="yes"]')?.checked;
+                    newEntry.remove();
+                    if (wasYesSelected) {
+                        // If the removed entry had "Yes", clear hidden field and re-evaluate visibility
+                        updateLastSchoolVisibility();
+                    } else {
+                        updateLastSchoolHidden();
+                    }
+                    updateRemoveButtons();
                 } else {
                     if (typeof window.showToast === 'function') {
                         window.showToast('At least one educational background is required.', 'error');
@@ -203,10 +291,79 @@
                     }
                 }
             });
-            // Apply digit restriction to the year input of this new entry
-            const yearInput = template.querySelector('input[name="year_graduateds[]"]');
+            
+            // Apply year restriction
+            const yearInput = newEntry.querySelector('input[name="year_graduateds[]"]');
             if (yearInput) restrictYearInput(yearInput);
-            return template;
+            
+            // Add change listeners for radios
+            const radios = newEntry.querySelectorAll('input[name="last_school_attended"]');
+            radios.forEach(radio => {
+                radio.addEventListener('change', function() {
+                    // When a radio changes, we must ensure only one "Yes" exists across all entries
+                    if (this.value === 'yes' && this.checked) {
+                        // Uncheck "Yes" in all other entries
+                        document.querySelectorAll('.educational-entry').forEach(entry => {
+                            if (entry !== newEntry) {
+                                const otherYes = entry.querySelector('input[name="last_school_attended"][value="yes"]');
+                                if (otherYes) otherYes.checked = false;
+                            }
+                        });
+                    }
+                    updateLastSchoolVisibility();
+                });
+            });
+            
+            return newEntry;
+        }
+
+        // Update remove buttons visibility (only show on entries beyond the first)
+        function updateRemoveButtons() {
+            const entries = document.querySelectorAll('.educational-entry');
+            entries.forEach((entry, index) => {
+                const removeBtn = entry.querySelector('.remove-entry');
+                if (entries.length === 1) {
+                    removeBtn.classList.add('hidden');
+                } else {
+                    removeBtn.classList.remove('hidden');
+                }
+            });
+        }
+
+        // Observe school input changes to update hidden field when "Yes" is selected
+        function bindSchoolInputChange(entry) {
+            const schoolInput = entry.querySelector('input[name="schools[]"]');
+            if (schoolInput) {
+                schoolInput.addEventListener('input', function() {
+                    const yesRadio = entry.querySelector('input[name="last_school_attended"][value="yes"]');
+                    if (yesRadio && yesRadio.checked) {
+                        updateLastSchoolHidden();
+                    }
+                });
+            }
+        }
+
+        // Initialize all existing entries
+        function initExistingEntries() {
+            document.querySelectorAll('.educational-entry').forEach(entry => {
+                // Ensure remove button state
+                const removeBtn = entry.querySelector('.remove-entry');
+                if (removeBtn) removeBtn.classList.add('hidden');
+                
+                // Add radio change listeners
+                entry.querySelectorAll('input[name="last_school_attended"]').forEach(radio => {
+                    radio.removeEventListener('change', updateLastSchoolVisibility);
+                    radio.addEventListener('change', updateLastSchoolVisibility);
+                });
+                
+                // Add school input listener
+                bindSchoolInputChange(entry);
+                
+                // Year restriction
+                const yearInput = entry.querySelector('input[name="year_graduateds[]"]');
+                if (yearInput) restrictYearInput(yearInput);
+            });
+            updateLastSchoolVisibility();
         }
 
         const entriesContainer = document.getElementById('educational-entries');
@@ -216,7 +373,7 @@
             addEntryBtn.addEventListener('click', function() {
                 const entries = entriesContainer.querySelectorAll('.educational-entry');
                 const lastEntry = entries[entries.length - 1];
-                const inputs = lastEntry.querySelectorAll('input');
+                const inputs = lastEntry.querySelectorAll('input:not([type="radio"]), select, textarea');
                 let incomplete = false;
                 inputs.forEach(input => {
                     if (!input.value.trim()) incomplete = true;
@@ -230,7 +387,7 @@
                     return;
                 }
 
-                // --- NEW: Validate year is not higher than current year ---
+                // Validate year not > current year
                 const yearInput = lastEntry.querySelector('input[name="year_graduateds[]"]');
                 if (yearInput) {
                     const yearValue = parseInt(yearInput.value.trim(), 10);
@@ -244,34 +401,29 @@
                         return;
                     }
                 }
-                // -----------------------------------------------------------
 
-                const newEntry = createEducationalEntry();
+                // Check if any "Yes" is already selected
+                let hasYesSelected = false;
+                document.querySelectorAll('input[name="last_school_attended"][value="yes"]').forEach(radio => {
+                    if (radio.checked) hasYesSelected = true;
+                });
+
+                const newEntry = createEducationalEntry(hasYesSelected);
                 entriesContainer.appendChild(newEntry);
+                bindSchoolInputChange(newEntry);
+                updateRemoveButtons();
+                updateLastSchoolVisibility();
             });
         }
 
-        // Initially hide remove button on the first entry if only one exists
-        function updateRemoveButtons() {
-            const entries = entriesContainer.querySelectorAll('.educational-entry');
-            entries.forEach((entry, index) => {
-                const removeBtn = entry.querySelector('.remove-entry');
-                if (entries.length === 1) {
-                    removeBtn.classList.add('hidden');
-                } else {
-                    removeBtn.classList.remove('hidden');
-                }
-            });
-        }
+        // Initial setup
+        initExistingEntries();
         updateRemoveButtons();
-
-        // Observe changes to entries to update remove buttons
+        
+        // Observe changes to entries for remove buttons
         const observer = new MutationObserver(updateRemoveButtons);
         observer.observe(entriesContainer, { childList: true, subtree: true });
-
-        // Apply digit restriction to existing year inputs
-        document.querySelectorAll('input[name="year_graduateds[]"]').forEach(restrictYearInput);
-
+        
         // ========== Income type change ==========
         const typeOfIncome = document.getElementById('typeofincome');
         if (typeOfIncome) {

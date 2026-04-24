@@ -5,6 +5,8 @@
                 Other Information
             </h1>
         </div>
+
+        {{--
         <!-- first person in your immediate family-->
         <div class="relative w-full">
             <label for="firstperson_to_attend_college" class="font-medium">
@@ -19,7 +21,30 @@
                 <option value="no">No</option>
             </select>
         </div>
-        
+        --}}
+        <div class="relative w-full">
+            <label class="font-medium">
+                Are you the first person in your immediate family to attend College/University?<span class="text-red-500 ml-1">*</span>
+            </label>
+            <div class="flex gap-3 mt-1">
+                <label class="group relative flex items-right justify-right gap-3 px-8 py-3.5 rounded-xl  cursor-pointer transition-all duration-200 {{-- hover:bg-green-50 has-[:checked]:bg-green-50 --}} flex-1">
+                    <input type="radio" name="firstperson_to_attend_college" value="yes" class="sr-only peer">
+                    <span class="w-4 h-4 rounded-full border-2 border-gray-400 flex items-center justify-center transition-all duration-200 group-has-[:checked]:border-[#0E6021]">
+                        <span class="w-2 h-2 rounded-full bg-[#0E6021] scale-0 transition-transform duration-200 group-has-[:checked]:scale-100"></span>
+                    </span>
+                    <span class="text-sm font-medium text-gray-500 group-has-[:checked]:text-[#0E6021] transition-colors duration-200">Yes</span>
+                </label>
+
+                <label class="group relative flex items-right justify-right gap-3 px-8 py-3.5 rounded-xl  cursor-pointer transition-all duration-200 {{-- hover:bg-red-50 has-[:checked]:bg-red-50 --}} flex-1">
+                    <input type="radio" name="firstperson_to_attend_college" value="no" class="sr-only peer">
+                    <span class="w-4 h-4 rounded-full border-2 border-gray-400 flex items-center justify-center transition-all duration-200 group-has-[:checked]:border-[#850038]">
+                        <span class="w-2 h-2 rounded-full bg-[#850038] scale-0 transition-transform duration-200 group-has-[:checked]:scale-100"></span>
+                    </span>
+                    <span class="text-sm font-medium text-gray-500 group-has-[:checked]:text-[#850038] transition-colors duration-200">No</span>
+                </label>
+            </div>
+        </div>
+        {{--
         <!-- first person in your immediate family to attend the UP-->
         <div class="relative w-full">
             <label for="firstpersonup" class="font-medium">
@@ -33,6 +58,32 @@
                 <option value="yes">Yes</option>
                 <option value="no">No</option>
             </select>
+        </div>
+        --}}
+
+        
+        <div class="relative w-full">
+            <label class="font-medium">
+                Are you the first person in your immediate family to attend the University of the Philippines?
+                <span class="text-red-500 ml-0.5">*</span>
+            </label>
+            <div class="flex gap-3 mt-1">
+                <label class="group relative flex items-right justify-right gap-3 px-8 py-3.5 rounded-xl  cursor-pointer transition-all duration-200 {{-- hover:bg-green-50 has-[:checked]:bg-green-50 --}} flex-1">
+                    <input type="radio" name="firstpersonup" value="yes" class="sr-only peer">
+                    <span class="w-4 h-4 rounded-full border-2 border-gray-400 flex items-center justify-center transition-all duration-200 group-has-[:checked]:border-[#0E6021]">
+                        <span class="w-2 h-2 rounded-full bg-[#0E6021] scale-0 transition-transform duration-200 group-has-[:checked]:scale-100"></span>
+                    </span>
+                    <span class="text-sm font-medium text-gray-500 group-has-[:checked]:text-[#0E6021] transition-colors duration-200">Yes</span>
+                </label>
+
+                <label class="group relative flex items-right justify-right gap-3 px-8 py-3.5 rounded-xl  cursor-pointer transition-all duration-200 {{-- hover:bg-red-50 has-[:checked]:bg-red-50 --}} flex-1">
+                    <input type="radio" name="firstpersonup" value="no" class="sr-only peer">
+                    <span class="w-4 h-4 rounded-full border-2 border-gray-400 flex items-center justify-center transition-all duration-200 group-has-[:checked]:border-[#850038]">
+                        <span class="w-2 h-2 rounded-full bg-[#850038] scale-0 transition-transform duration-200 group-has-[:checked]:scale-100"></span>
+                    </span>
+                    <span class="text-sm font-medium text-gray-500 group-has-[:checked]:text-[#850038] transition-colors duration-200">No</span>
+                </label>
+            </div>
         </div>
         
         <!-- Income-->

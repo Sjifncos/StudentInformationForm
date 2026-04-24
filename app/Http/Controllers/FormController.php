@@ -32,6 +32,7 @@
                 // Access Verification (always required) STEP 2
                 'student_number' => 'required|string|max:255',
                 'category'       => 'required|string|max:255',
+                'UP_email'       => 'nullable|string|max:255',
 
                 // Basic Information (always required) STEP 3
                 'degreeprogram' => 'required',
@@ -55,7 +56,7 @@
                 'outside_ph_addressline1'   => 'exclude_if:citizenship,yes|required|string|max:255',
                 'outside_ph_addressline2'   => 'exclude_if:citizenship,yes|nullable|string|max:255',
                 'city_foreign'              => 'exclude_if:citizenship,yes|required|string|max:255',
-                'state/province_foreign'    => 'exclude_if:citizenship,yes|required|string|max:255',
+                'state_province_foreign'    => 'exclude_if:citizenship,yes|required|string|max:255',
                 'zipcode_foreign'           => 'exclude_if:citizenship,yes|required|string|max:255',
                 'foreign_country'           => 'exclude_if:citizenship,yes|required|string|max:255',
 
@@ -111,6 +112,7 @@
                 'program'               => 'exclude_if:category,undergraduate|required|string|max:255',
                 'degree'                => 'exclude_if:category,undergraduate|nullable|string|max:255',
                 'year_graduated'        => 'exclude_if:category,undergraduate|required|string|max:255',
+                'lastschoolattended' => 'exclude_if:category,undergraduate|required|string|max:255',
 
                 'degrees[]'             => 'required|string|max:255',
                 'typeofincome'          => 'exclude_if:category,undergraduate|required|in:employeed,self-employeed,combination,passiveincome,notearning',

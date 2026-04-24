@@ -25,30 +25,30 @@
             @include('multi-step-form.Undertakings')           
 
             <!-- Navigation Buttons -->
-            <div class="col-span-1 md:col-span-2">
-                <div class="flex flex-col sm:flex-row gap-4 sm:gap-3 mt-6">
-                    
-                    <button type="button" id="prevBtn" 
-                        class="w-full sm:w-auto px-8 py-3 border-2 border-gray-400 text-black-700 
-                            font-semibold rounded hover:bg-gray-50 transition-colors duration-200">
-                        Previous
+           <div class="col-span-1 md:col-span-2">
+            <div class="flex flex-col sm:flex-row gap-4 sm:gap-3 mt-6">
+                
+                <button type="button" id="prevBtn" 
+                    class="order-last sm:order-none w-full sm:w-auto px-8 py-3 border-2 border-gray-400 
+                        text-black-700 font-semibold rounded hover:bg-gray-50 transition-colors duration-200">
+                    Previous
+                </button>
+
+                <div class="order-first sm:order-none flex flex-col sm:flex-row gap-4 sm:gap-2 w-full sm:w-auto sm:ml-auto">
+                    <button type="button" id="nextBtn" 
+                        class="w-full sm:w-auto px-8 py-3 bg-[#8A1538] text-white font-semibold rounded-full
+                            hover:bg-[#FFAD0D] transition-colors duration-200">
+                        Next
                     </button>
 
-                    <div class="flex flex-col sm:flex-row gap-4 sm:gap-2 w-full sm:w-auto sm:ml-auto">
-                        <button type="button" id="nextBtn" 
-                            class="w-full sm:w-auto px-8 py-3 bg-[#8A1538] text-white font-semibold rounded 
-                                hover:bg-[#FFAD0D] transition-colors duration-200">
-                            Next
-                        </button>
-
-                        <button type="submit" id="submitBtn" 
-                            class="w-full sm:w-auto px-8 py-3 bg-[#8A1538] text-white font-semibold rounded 
-                                hover:bg-[#FFAD0D] transition-colors duration-200">
-                            Submit
-                        </button>
-                    </div>
+                    <button type="submit" id="submitBtn" 
+                        class="w-full sm:w-auto px-8 py-3 bg-[#8A1538] text-white font-semibold rounded-full
+                            hover:bg-[#FFAD0D] transition-colors duration-200">
+                        Submit
+                    </button>
                 </div>
             </div>
+        </div>
         </form>
     </div>
     <!-- Toast Container -->
