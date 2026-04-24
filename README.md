@@ -16,7 +16,7 @@
 
 <div style="text-align: center;">
   <p style="text-align: justify; display: inline-block; max-width: 800px; margin: 0 auto;">
-    The <strong>Student Information System</strong> is a web-based application developed for the Office of the University Registrar (OUR). It provides a streamlined, multi-step process for students to submit and update their personal and academic information digitally, reducing paperwork and improving data accuracy across university records.
+    The <strong>Student Information Form</strong> is a web-based application developed for the Office of the University Registrar (OUR). It provides a streamlined, multi-step process for students to submit and update their personal and academic information digitally, reducing paperwork and improving data accuracy across university records.
   </p>
 </div>
 
