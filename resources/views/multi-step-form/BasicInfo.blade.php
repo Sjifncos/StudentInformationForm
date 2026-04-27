@@ -56,7 +56,6 @@
                 class="w-full px-4 py-3 border-2 border-gray-300 rounded-[12px] 
                 focus:outline-none focus:border-[#0E6021] focus:ring-1 focus:ring-[#0E6021] transition-colors mt-2 appearance-none">
                 <option value="" disabled selected>Please Select</option>
-                <option value="none">None</option>
                 <option value="jr">Jr.</option>
                 <option value="sr">Sr.</option>
                 <option value="ii">II</option>

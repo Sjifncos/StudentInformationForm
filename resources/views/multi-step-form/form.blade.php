@@ -30,7 +30,7 @@
                 
                 <button type="button" id="prevBtn" 
                     class="order-last sm:order-none w-full sm:w-auto px-8 py-3 border-2 border-gray-400 
-                        text-black-700 font-semibold rounded hover:bg-gray-50 transition-colors duration-200">
+                        text-black-700 font-semibold rounded-full hover:bg-gray-50 transition-colors duration-200">
                     Previous
                 </button>
 

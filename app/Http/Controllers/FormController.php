@@ -50,7 +50,7 @@
                 // Contact Details (always required) STEP 4
                 'citizenship'               => 'required|in:yes,no',
                 'citizenship_country'       => 'exclude_if:citizenship,yes|required|string|max:255',
-                'same_address'              => 'required|in:yes,no',
+                
 
                 // Foreign address
                 'outside_ph_addressline1'   => 'exclude_if:citizenship,yes|required|string|max:255',
@@ -69,6 +69,8 @@
                 'province'                  => 'required|string|max:255',
                 'city'                      => 'required|string|max:255',
                 'barangay'                  => 'required|string|max:255',
+
+                'same_address'              => 'required|in:yes,no',
 
                 // Current address (inside PH) – required only if same_address == 'no'
                 'current_room_flr_unit_bldg' => 'required_if:same_address,no|nullable|string|max:255',
