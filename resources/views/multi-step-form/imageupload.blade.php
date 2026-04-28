@@ -44,18 +44,17 @@
                             <path d='M10 11.828L6.464 8.293A1 1 0 0 0 5.05 9.707l4.243 4.243a.997.997 0 0 0 1.414 0l4.243-4.243a1 1 0 1 0-1.414-1.414L10 11.828zM10 20C4.477 20 0 15.523 0 10S4.477 0 10 0s10 4.477 10 10-4.477 10-10 10z' />
                         </svg>
                     </summary>
-                    <div class="px-4 pb-4 text-sm text-gray-700">
-                        <ul class="space-y-2 list-disc list-inside">
-                            <li>Click the "Choose File" button.</li>
-                            <li>Select a square image (2x2 format) from your device.</li>
-                            <li>Supported formats: <span class="font-medium">PNG, JPG, JPEG, WEBP</span>.</li>
-                            <li>Ensure the image is clear.</li>
-                            <li>Please upload a recent 2x2 inch photo (square aspect ratio).</li>
-                            <li>Maximum file size: <span class="font-medium">2 MB</span>.</li>
-                            <li>A preview will appear automatically after selection.</li>
-                            {{--    <li>Click “Upload Image” to submit the file.</li> --}}
-                        </ul>
-                    </div>
+                        <div class="px-4 pb-4 text-sm text-gray-700">
+                            <ul class="space-y-2 list-disc list-inside">
+                                <li>Click the "Choose File" button.</li>
+                                <li>Select a recent square photo (2x2 aspect ratio) from your device.</li>
+                                <li>Ensure the photo shows your bare face (without eyeglasses, contact lenses, or any accessories that may cover facial features).</li>
+                                <li>Supported formats: <span class="font-medium">PNG, JPG, JPEG, WEBP</span>.</li>
+                                <li>Ensure the image is clear, well-lit, and not blurry.</li>
+                                <li>Maximum file size: <span class="font-medium">2 MB</span>.</li>
+                                <li>A preview will appear automatically after selection.</li>
+                            </ul>
+                        </div>
                 </details>
             </div>
         </div>
@@ -82,7 +81,7 @@
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
             <!-- Medical Certificate -->
             <div>
-                <label class="block text-sm font-medium text-gray-700 mb-2">Medical Certificate (required)</label>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Medical Certificate (required) pdf only.</label>
                 <input type="file" name="medical_certificate" accept=".pdf" class="w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
             </div>
 
@@ -100,7 +99,7 @@
 
             <!-- TOR with Remarks (UP Cebu) -->
             <div>
-                <label class="block text-sm font-medium text-gray-700 mb-2">TOR with Remarks (UP Cebu) (required)</label>
+                <label class="block text-sm font-medium text-gray-700 mb-2">TOR with Remarks for UP Cebu (required) pdf only.</label>
                 <input type="file" name="tor_remarks" accept=".pdf" class="w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
             </div>
 

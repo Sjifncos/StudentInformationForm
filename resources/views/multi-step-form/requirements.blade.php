@@ -112,7 +112,7 @@
             <button 
                 type="button"
                 onclick="window.location='{{ route('form') }}'"
-                class="w-full sm:w-auto px-8 py-3 bg-[#8A1538] text-white font-semibold rounded hover:bg-[#FFAD0D] transition-colors duration-200">
+                class="w-full sm:w-auto px-8 py-3 bg-[#8A1538] text-white font-semibold rounded-full hover:bg-[#FFAD0D] transition-colors duration-200">
                 Next
             </button>
         </div>

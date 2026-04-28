@@ -76,7 +76,7 @@
                 'current_room_flr_unit_bldg' => 'required_if:same_address,no|nullable|string|max:255',
                 'current_house_lot_blk'      => 'required_if:same_address,no|nullable|string|max:255',
                 'current_street'             => 'required_if:same_address,no|nullable|string|max:255',
-                'current_subdivision_line2'  => 'required_if:same_address,no|nullable|string|max:255',
+                'current_subdivision_line'  => 'required_if:same_address,no|nullable|string|max:255',
                 'current_region'             => 'required_if:same_address,no|nullable|string|max:255',
                 'current_province'           => 'required_if:same_address,no|nullable|string|max:255',
                 'current_city'               => 'required_if:same_address,no|nullable|string|max:255',
@@ -114,7 +114,7 @@
                 'program'               => 'exclude_if:category,undergraduate|required|string|max:255',
                 'degree'                => 'exclude_if:category,undergraduate|nullable|string|max:255',
                 'year_graduated'        => 'exclude_if:category,undergraduate|required|string|max:255',
-                'lastschoolattended' => 'exclude_if:category,undergraduate|required|string|max:255',
+                'lastschoolattended'    => 'exclude_if:category,undergraduate|required|string|max:255',
 
                 'degrees[]'             => 'required|string|max:255',
                 'typeofincome'          => 'exclude_if:category,undergraduate|required|in:employeed,self-employeed,combination,passiveincome,notearning',

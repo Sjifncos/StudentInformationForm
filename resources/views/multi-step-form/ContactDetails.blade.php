@@ -252,8 +252,8 @@
 
                 <!-- Subdivision / Line 2 -->
                 <div class="relative w-full">
-                    <label for="current_subdivision_line2" class="font-medium">Subdivision</label>
-                    <input id="current_subdivision_line2" name="current_subdivision_line2" type="text"
+                    <label for="current_subdivision_line" class="font-medium">Subdivision</label>
+                    <input id="current_subdivision_line" name="current_subdivision_line" type="text"
                         class="peer w-full px-4 py-3 text-base bg-white outline-none border-2 border-gray-300 rounded-[12px] focus:border-[#0E6021] focus:ring-1 focus:ring-[#0E6021] transition-colors mt-2"/>
                 </div>
 

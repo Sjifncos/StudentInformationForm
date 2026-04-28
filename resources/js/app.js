@@ -62,10 +62,9 @@ $(document).ready(function() {
 
     // ---------- Step Navigation Variables ----------
     let currentStep = 1;
-    let maxStepReached = 1;
     let totalSteps = 10;
     let visibleSteps = [1,2,3,4,5,6,7,8,9,10];
-    let maxVisibleIndex = 1;
+    let maxReachedIndex = 0;    // 0-based, so 0 = step 1 completed
 
     // Modal confirmation variables
     let motherConfirmPending = false;
@@ -163,7 +162,7 @@ $(document).ready(function() {
         }
     }
 
-    function updateVisibleSteps() {
+        function updateVisibleSteps() {
         const category = $('#category').val();
         let newVisibleSteps;
 
@@ -174,36 +173,32 @@ $(document).ready(function() {
         } else if (category === 'undergraduate') {
             newVisibleSteps = [1, 2, 3, 4, 5, 6, 8, 9, 10];
         }
+
         if (JSON.stringify(visibleSteps) !== JSON.stringify(newVisibleSteps)) {
             visibleSteps = newVisibleSteps;
 
+            // Update visibility of step elements
             $('.step').each(function() {
                 const stepNum = parseInt($(this).data('step'));
-                if (visibleSteps.includes(stepNum)) {
-                    $(this).removeClass('hidden');
-                } else {
-                    $(this).addClass('hidden');
-                }
+                $(this).toggleClass('hidden', !visibleSteps.includes(stepNum));
             });
-
             $('.step-label').each(function() {
                 const stepNum = parseInt($(this).data('step'));
-                if (visibleSteps.includes(stepNum)) {
-                    $(this).removeClass('hidden');
-                } else {
-                    $(this).addClass('hidden');
-                }
+                $(this).toggleClass('hidden', !visibleSteps.includes(stepNum));
             });
 
+            // Adjust currentStep if it's no longer visible
             if (!visibleSteps.includes(currentStep)) {
                 currentStep = visibleSteps[0];
-                maxVisibleIndex = 1;
-            } else {
-                maxVisibleIndex = Math.max(maxVisibleIndex, visibleSteps.indexOf(currentStep));
             }
 
+            // Recalculate maxReachedIndex based on currentStep's position
+            const currentIdx = visibleSteps.indexOf(currentStep);
+            maxReachedIndex = Math.min(maxReachedIndex, currentIdx);
+            if (currentIdx > maxReachedIndex) maxReachedIndex = currentIdx;
+
             totalSteps = visibleSteps.length;
-            $('#stepCounter').text(`Step Completed ${maxVisibleIndex} / ${totalSteps}`);
+            $('#stepCounter').text(`Step Completed ${maxReachedIndex + 1} / ${totalSteps}`);
             showStep(currentStep);
         }
 
@@ -245,7 +240,7 @@ $(document).ready(function() {
         }
     }
 
-    function showStep(step) {
+        function showStep(step) {
         // Close any open modals when manually navigating
         if (motherConfirmPending) {
             $('#motherLastnameModal').hide().addClass('hidden');
@@ -269,38 +264,35 @@ $(document).ready(function() {
             .addClass('text-[#8A1538] border-b-2 border-[#8A1538]');
 
         const currentIndex = visibleSteps.indexOf(step);
-        if (currentIndex > maxVisibleIndex) {
-            maxVisibleIndex = currentIndex;
+        if (currentIndex > maxReachedIndex) {
+            maxReachedIndex = currentIndex;
         }
-        $('#stepCounter').text(`Step Completed ${maxVisibleIndex} / ${totalSteps}`);
+        $('#stepCounter').text(`Step Completed ${maxReachedIndex + 1} / ${totalSteps}`);
 
+        // Next/Prev/Submit button logic
+        const isLastStep = (currentIndex === totalSteps - 1);
         $('#prevBtn').toggle(currentIndex !== 0);
-        if (currentIndex === totalSteps - 1) {
+        if (isLastStep) {
             $('#nextBtn').hide();
             $('#submitBtn').removeClass('hidden');
             const bothChecked = $('#confirmation').is(':checked') && $('#data-privacy').is(':checked');
             $('#submitBtn').prop('disabled', !bothChecked);
-            if (!bothChecked) {
-                $('#submitBtn').addClass('opacity-50 cursor-not-allowed');
-            } else {
-                $('#submitBtn').removeClass('opacity-50 cursor-not-allowed');
-            }
+            $('#submitBtn').toggleClass('opacity-50 cursor-not-allowed', !bothChecked);
         } else {
             $('#nextBtn').show();
             $('#submitBtn').addClass('hidden');
         }
+
+        // Special handling for Step 1 agreement checkbox
         if (step === 1) {
             const isChecked = $('#agreement').is(':checked');
             $('#nextBtn').prop('disabled', !isChecked);
-            if (!isChecked) {
-                $('#nextBtn').addClass('opacity-50 cursor-not-allowed');
-            } else {
-                $('#nextBtn').removeClass('opacity-50 cursor-not-allowed');
-            }
+            $('#nextBtn').toggleClass('opacity-50 cursor-not-allowed', !isChecked);
         } else {
             $('#nextBtn').prop('disabled', false).removeClass('opacity-50 cursor-not-allowed');
         }
 
+        // Additional per-step UI updates
         if (step === 8) {
             toggleMarriageCertificate();
             toggleFirstPersonFields();
@@ -312,7 +304,6 @@ $(document).ready(function() {
         if (step === 5) {
             toggleGuardianSection();
         }
-
         if (step === 3 && typeof window.filterDegreePrograms === 'function') {
             window.filterDegreePrograms();
         }
@@ -447,7 +438,7 @@ $(document).ready(function() {
                         'current_room_flr_unit_bldg',
                         'current_house_lot_blk',
                         'current_street',
-                        'current_subdivision_line2'
+                        'current_subdivision_line'
                     ];
                     if (!optionalCurrentFields.includes(fieldName)) {
                         isRequired = true;
@@ -1386,7 +1377,7 @@ $(document).ready(function() {
             room_flr_unit_bldg: 'current_room_flr_unit_bldg',
             house_lot_blk: 'current_house_lot_blk',
             street: 'current_street',
-            subdivision_line2: 'current_subdivision_line2'
+            subdivision_line2: 'current_subdivision_line'
         };
         for (const [src, dest] of Object.entries(mapping)) {
             const val = $(`#${src}`).val();
@@ -1759,7 +1750,7 @@ $(document).ready(function() {
                     showToast('Form Saved', 'success');
                     localStorage.removeItem('form_session_id');
                     setTimeout(() => {
-                        window.location.href = '/thankyoupage';
+                        window.location.replace('/thankyoupage');
                     }, 1000);
                 } else {
                     showToast('Submission failed: ' + response.message, 'error');
