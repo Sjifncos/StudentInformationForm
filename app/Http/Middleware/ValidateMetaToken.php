@@ -34,7 +34,6 @@ class ValidateMetaToken
         return redirect()->route('403')
             ->with('error', 'Unable to connect to validation service.');
     }
-    // dd($r);
     if ($r->failed()) {
         return redirect()->route('403')
             ->with('error', 'Invalid or expired key.');

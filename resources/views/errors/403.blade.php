@@ -44,6 +44,7 @@
     <div class="container">
         <h1>403</h1>
         <p>Sorry, you are not authorized to access this page.</p>
+        
     </div>
 </body>
 </html>
