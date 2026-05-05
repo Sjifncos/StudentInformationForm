@@ -1,6 +1,7 @@
 @extends('multi-step-form.body')
     @section('content')
      @include('multi-step-form.header')
+    
     <div class="w-full max-w-2xl lg:max-w-5xl xl:max-w-6xl 
             bg-white rounded-lg rounded-t-none shadow-2xl 
             p-8 md:p-12 
