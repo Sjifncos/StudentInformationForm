@@ -1,7 +1,7 @@
-<div class="step" data-step="5">
+<div class="step" data-step="3">
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">
         <div class="col-span-1 md:col-span-2">
-            <h1 class="text-[24px] font-semibold text-[#0E6021]">
+            <h1 class="text-[24px] font-semibold text-[#850038]">
                 Contact Information
             </h1>
         </div>
@@ -16,9 +16,10 @@
                Personal E-mail <span class="text-red-500 ml-1">*</span>
             </label>
             <input required id="personalemail" name="personalemail" type="text" 
-                {{--    placeholder="ex: myname@example.com" --}}
+                placeholder="ex: myname@example.com"
                 class="peer w-full px-4 py-3 text-base bg-white outline-none border-2 border-gray-300 rounded-[12px] focus:border-[#0E6021] focus:ring-1 focus:ring-[#0E6021] transition-colors mt-2"/>
             {{--    <p class="text-[12px] text-gray-500 mt-1">Personal E-mail will be Autofill</p> --}}
+            <p class="text-[12px] text-gray-500 mt-1">Please use your personal email, not your UP email.</p>
             <span class="error-message text-red-500 text-sm hidden" data-for="personalemail"></span>
         </div>
 

@@ -62,8 +62,8 @@ $(document).ready(function() {
 
     // ---------- Step Navigation Variables ----------
     let currentStep = 1;
-    let totalSteps = 10;
-    let visibleSteps = [1,2,3,4,5,6,7,8,9,10];
+    let totalSteps = 7;
+    let visibleSteps = [1,2,3,4,5,6,7,8];
     let maxReachedIndex = 0;    // 0-based, so 0 = step 1 completed
 
     // Modal confirmation variables
@@ -86,7 +86,7 @@ $(document).ready(function() {
     }
 
     // ---------- Helper Functions ----------
-    function resetStep5ConfirmationFlags() {
+    function resetStep3ConfirmationFlags() {
         motherNameConfirmed = false;
         mobileMatchConfirmed = false;
         pendingModalQueue = [];
@@ -167,11 +167,11 @@ $(document).ready(function() {
         let newVisibleSteps;
 
         if (!category) {
-            newVisibleSteps = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+            newVisibleSteps = [1, 2, 3, 4, 5, 6, 7, 8];
         } else if (category === 'graduate') {
-            newVisibleSteps = [1, 2, 3, 4, 5, 7, 8, 9, 10];
+            newVisibleSteps = [1, 2, 3, 5, 6, 7, 8];
         } else if (category === 'undergraduate') {
-            newVisibleSteps = [1, 2, 3, 4, 5, 6, 8, 9, 10];
+            newVisibleSteps = [1, 2, 3, 4, 6,7, 8];
         }
 
         if (JSON.stringify(visibleSteps) !== JSON.stringify(newVisibleSteps)) {
@@ -282,7 +282,8 @@ $(document).ready(function() {
             $('#nextBtn').show();
             $('#submitBtn').addClass('hidden');
         }
-
+        
+        /*
         // Special handling for Step 1 agreement checkbox
         if (step === 1) {
             const isChecked = $('#agreement').is(':checked');
@@ -291,20 +292,20 @@ $(document).ready(function() {
         } else {
             $('#nextBtn').prop('disabled', false).removeClass('opacity-50 cursor-not-allowed');
         }
-
+        */
         // Additional per-step UI updates
-        if (step === 8) {
+        if (step === 6) {
             toggleMarriageCertificate();
             toggleFirstPersonFields();
         }
-        if (step === 9) {
+        if (step === 6) {
             togglePWDContainer();
             toggleCourtOrderContainer();
         }
-        if (step === 5) {
+        if (step === 3) {
             toggleGuardianSection();
         }
-        if (step === 3 && typeof window.filterDegreePrograms === 'function') {
+        if (step === 1 && typeof window.filterDegreePrograms === 'function') {
             window.filterDegreePrograms();
         }
     }
@@ -353,7 +354,7 @@ $(document).ready(function() {
             }
 
             const requiredFields = [
-                'student_number',
+               // 'student_number',
                 'category',
                 'degreeprogram',
                 'first_name',
@@ -450,7 +451,7 @@ $(document).ready(function() {
                 errors.push(`${label} is required.`);
                 $field.addClass('border-red-500');
             }
-
+            /*
             // --- UP Student Number ---
             if (fieldName === 'student_number' && value) {
                 const studentNumberRegex = /^20\d{2}\d{4,5}$/;
@@ -459,7 +460,7 @@ $(document).ready(function() {
                     $field.addClass('border-red-500');
                 }
             }
-
+            */
             // --- Email validations ---
             if (fieldName === 'UP_email' && value) {
                 const upEmailRegex = /^[a-zA-Z0-9._%+-]+@up\.edu\.ph$/;
@@ -657,7 +658,7 @@ $(document).ready(function() {
         }
 
         // Funding sources validation (at least one checkbox checked)
-        if (step === 7) {
+        if (step === 5) {
             const $checkedCheckboxes = $step.find('input[name="funding_sources[]"]:checked');
             if ($checkedCheckboxes.length === 0) {
                 errors.push(`Please select at least one funding source.`);
@@ -720,7 +721,7 @@ $(document).ready(function() {
         }
 
         // Step 8 (Other Info) validation
-        if (step === 8) {
+        if (step === 6) {
             const pwdValue = $('#pwd').val();
             if (pwdValue === 'Yes') {
                 const $checkedDisabilities = $('input[name="disability_types[]"]:checked');
@@ -762,7 +763,7 @@ $(document).ready(function() {
         }
 
         // Step 9 (Documents) validation
-        if (step === 9) {
+        if (step === 7) {
             const profileFile = $('#imageInput')[0].files[0];
             if (!profileFile) {
                 errors.push('2x2 image is required.');
@@ -855,7 +856,7 @@ $(document).ready(function() {
         }
 
         // Step 10 checkboxes
-        if (step === 10) {
+        if (step === 8) {
             const confirmationChecked = $('#confirmation').is(':checked');
             const dataPrivacyChecked = $('#data-privacy').is(':checked');
             
@@ -870,7 +871,7 @@ $(document).ready(function() {
         }
 
         // Step 4 specific validation: citizenship radio
-        if (step === 4) {
+        if (step === 2) {
             const citizenshipValue = getCitizenshipValue();
             if (!citizenshipValue) {
                 errors.push(`Are you a Philippine citizen? is required.`);
@@ -881,7 +882,7 @@ $(document).ready(function() {
         }
 
         // Step 5 specific validation: mother's last name and mobile number conflicts
-        if (step === 5) {
+        if (step === 3) {
             const mothersLastname = $('#mother_lastname').val()?.trim() || '';
             const fathersLastname = $('#fathers_lastname').val()?.trim() || '';
             if (mothersLastname && fathersLastname && mothersLastname.toLowerCase() === fathersLastname.toLowerCase()) {
@@ -936,7 +937,7 @@ $(document).ready(function() {
 
     $(document).on('change', 'input[name="citizenship"]', function() {
         toggleMobileSublabels();
-        if (currentStep === 5) { validateStep(currentStep); }
+        if (currentStep === 2) { validateStep(currentStep); }
         $(document).trigger('citizenshipChanged');
         
         // Remove red borders from all address fields (both PH and foreign)
@@ -959,11 +960,12 @@ $(document).ready(function() {
     });
 
     $(document).on('change', '#typeofincome', function() {
-        if (currentStep === 6) {
+        if (currentStep === 5) {
             validateStep(currentStep);
         }
     });
 
+    /*
     $(document).on('change', '#agreement', function() {
         if (currentStep === 1) {
             const isChecked = $(this).is(':checked');
@@ -975,9 +977,10 @@ $(document).ready(function() {
             }
         }
     });
+    */
 
     $(document).on('change', '#confirmation, #data-privacy', function() {
-        if (currentStep === 10) {
+        if (currentStep === 8) {
             const bothChecked = $('#confirmation').is(':checked') && $('#data-privacy').is(':checked');
             $('#submitBtn').prop('disabled', !bothChecked);
             if (!bothChecked) {
@@ -1043,7 +1046,7 @@ $(document).ready(function() {
                         formData.append(name, $field.val());
                     }
                 } else if ($field.attr('type') === 'radio') {
-                    if ($field.is(':checked')) {
+                    if ($field.is(':checked') && name !== 'last_school_attended') {
                         formData.append(name, $field.val());
                     }
                 } else {
@@ -1139,6 +1142,7 @@ $(document).ready(function() {
         updateVisibleSteps();
     });
 
+    /*
     $('#validateBtn').click(function(e) {
         e.preventDefault();
         const studentNumber = $('#student_number').val().trim();
@@ -1162,16 +1166,17 @@ $(document).ready(function() {
             $('#UP_email').val('');
         }
     });
+    */
 
     $(document).on('change', '#civilstatus', function() {
-        if (currentStep === 8) {
+        if (currentStep === 6) {
             toggleMarriageCertificate();
         }
         toggleCourtOrderContainer();
     });
 
     $(document).on('change', '#pwd', function() {
-        if (currentStep === 9) {
+        if (currentStep === 6) {
             togglePWDContainer();
         }
     });

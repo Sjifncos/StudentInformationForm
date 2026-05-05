@@ -29,10 +29,13 @@
 
             // ----- VALIDATION (your existing rules, unchanged) -----
             $validated = $request->validate([
+
+                /*
                 // Access Verification (always required) STEP 2
                 'student_number' => 'required|string|max:255',
                 'category'       => 'required|string|max:255',
                 'UP_email'       => 'nullable|string|max:255',
+                */
 
                 // Basic Information (always required) STEP 3
                 'degreeprogram' => 'required',

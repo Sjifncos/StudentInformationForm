@@ -1,9 +1,28 @@
-<div class="step" data-step="3">
+<div class="step" data-step="1">
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">
-        <h1 class="text-[24px] font-semibold text-[#0E6021]">
+        <h1 class="text-[24px] font-semibold text-[#850038]">
             Basic Information
         </h1>
-        <div class="col-span-1 md:col-span-2">
+        
+        <div class="relative w-full">
+            <div class="relative w-full">
+
+            </div>
+        </div>
+        <div class="relative w-full">
+            <label for="category" class="font-medium">
+                Category
+                <span class="text-red-500 ml-1">*</span>
+            </label>
+           <select id="category" name="category" required
+                class="w-full px-4 py-3 border-2 border-gray-300 rounded-[12px] 
+                    focus:outline-none focus:border-[#0E6021] focus:ring-1 focus:ring-[#0E6021] transition-colors mt-2 appearance-none">
+                    <option value="" disabled selected>Please Select</option>
+                    <option value="graduate">Graduate</option>
+                    <option value="undergraduate">Undergraduate</option>
+            </select>
+        </div>
+        <div class="relative w-full">
             <label for="degreeprogram" name="degreeprogram" class="font-medium">
                 Degree Program <span class="text-red-500">*</span>
             </label>

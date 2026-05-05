@@ -1,7 +1,7 @@
-<div class="step hidden" data-step="7">
+<div class="step hidden" data-step="5">
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">
         <div class="col-span-1 md:col-span-2">
-            <h1 class="text-[24px] font-semibold text-[#0E6021]">
+            <h1 class="text-[24px] font-semibold text-[#850038]">
                 Education & Employment
             </h1>
         </div>
@@ -203,7 +203,7 @@
             lastSchoolHidden.type = 'hidden';
             lastSchoolHidden.name = 'lastschoolattended';
             lastSchoolHidden.id = 'lastschoolattended_hidden';
-            document.querySelector('.step[data-step="7"]').appendChild(lastSchoolHidden);
+            document.querySelector('.step[data-step="5"]').appendChild(lastSchoolHidden);
         }
 
         // Update hidden field based on which entry has "Yes" selected

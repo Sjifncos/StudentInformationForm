@@ -1,9 +1,9 @@
-<div class="step hidden" data-step="10">
+<div class="step hidden" data-step="8">
     <div class="step-content">
         <!-- Confirmation Checkbox -->
         <div class="mb-6 flex flex-col gap-2">
             <div class="col-span-1 md:col-span-2">
-                <h1 class="text-[24px] font-semibold text-[#0E6021]">
+                <h1 class="text-[24px] font-semibold text-[#850038]">
                     Undertakings
                 </h1>
             </div>

@@ -9,6 +9,6 @@
                text-[#8A1538] bg-[#fce4ec] px-3 py-1.5 sm:px-4
                rounded-full border border-[#f8bbd0]
                whitespace-nowrap w-fit">
-        Step Completed 0 / 10
+        Step Completed 0 / 8
     </span>
 </div>

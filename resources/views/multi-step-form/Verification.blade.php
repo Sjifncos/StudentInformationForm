@@ -15,6 +15,7 @@
                                 border-2 border-gray-300 rounded-[12px] focus:border-[#0E6021] focus:ring-1 focus:ring-[#0E6021] transition-colors mt-2"/>
                     </div>
                     
+                    {{--
                     <div class="relative w-full">
                         <label for="category" class="font-medium">
                             Category
@@ -28,6 +29,7 @@
                             <option value="undergraduate">Undergraduate</option>
                         </select>
                     </div>
+                    --}}
                     <div class="relative w-full">
                         <button
                             id="validateBtn"
